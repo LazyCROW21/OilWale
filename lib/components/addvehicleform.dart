@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:oilwale/models/vehicle.dart';
 import 'package:oilwale/models/vehiclecompany.dart';
 import 'package:oilwale/service/vehicle_api.dart';
-import 'package:oilwale/components/formelements.dart';
 import 'package:oilwale/theme/themedata.dart';
 
 class AddVehicleForm extends StatefulWidget {

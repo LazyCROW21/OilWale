@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oilwale/theme/themedata.dart';
 import '../models/product.dart';
 import 'package:oilwale/components/product_tile.dart';
 import 'package:oilwale/service/product_api.dart';
@@ -29,42 +30,48 @@ class _ProductListViewState extends State<ProductListView> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        TextFormField(
-          onChanged: (String input) {
-            print("User entered: " + input);
-            setState(() async {
-              _pList = await ProductAPIManager.getAllProducts();
-              String inpLowercase = input.toLowerCase();
-              _pList = _pList.where((p) {
-                if (p.name.toLowerCase().contains(inpLowercase)) {
-                  return true;
-                } else if (p.specification
-                    .toLowerCase()
-                    .contains(inpLowercase)) {
-                  return true;
-                } else {
-                  return false;
-                }
-              }).toList();
-            });
-          },
-          decoration: InputDecoration(
-              fillColor: Colors.white,
-              hintText: 'Search',
-              suffixIcon: Icon(
-                Icons.search,
-                color: Colors.deepOrange,
-              ),
-              labelStyle: TextStyle(color: Colors.deepOrange),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(25.0),
-                borderSide: BorderSide(
+        Container(
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(24.0)),
+          padding: EdgeInsets.all(4.0),
+          child: TextFormField(
+            onChanged: (String input) {
+              print("User entered: " + input);
+              setState(() async {
+                _pList = await ProductAPIManager.getAllProducts();
+                String inpLowercase = input.toLowerCase();
+                _pList = _pList.where((p) {
+                  if (p.name.toLowerCase().contains(inpLowercase)) {
+                    return true;
+                  } else if (p.specification
+                      .toLowerCase()
+                      .contains(inpLowercase)) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                }).toList();
+              });
+            },
+            decoration: InputDecoration(
+                fillColor: Colors.white,
+                hintText: 'Search',
+                suffixIcon: Icon(
+                  Icons.search,
                   color: Colors.deepOrange,
                 ),
-              ),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.deepOrange)),
-              hintStyle: TextStyle(color: Colors.deepOrange)),
+                labelStyle: TextStyle(color: Colors.deepOrange),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(24.0),
+                  borderSide: BorderSide(
+                    color: Colors.deepOrange,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(24.0),
+                    borderSide: BorderSide(color: AppColorSwatche.primary)),
+                hintStyle: textStyle('p1', AppColorSwatche.primary)),
+          ),
         ),
         Expanded(
           child: ListView.builder(

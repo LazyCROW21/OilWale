@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:oilwale/models/customervehicle.dart';
+import 'package:oilwale/theme/themedata.dart';
 
 class VehicleDetailBlock extends StatelessWidget {
   final CustomerVehicle customerVehicle;
-
-  final TextStyle heading = TextStyle(color: Colors.deepOrange, fontSize: 16.0);
-  final TextStyle bodytext = TextStyle(color: Colors.black, fontSize: 24.0);
 
   VehicleDetailBlock({required this.customerVehicle});
 
@@ -18,55 +16,55 @@ class VehicleDetailBlock extends StatelessWidget {
         children: [
           Text(
             "Brand",
-            style: heading,
+            style: textStyle('p2', AppColorSwatche.primary),
           ),
           Text(
             customerVehicle.brand,
-            style: bodytext,
+            style: textStyle('p1', AppColorSwatche.black),
           ),
           SizedBox(
             height: 16.0,
           ),
           Text(
             "Model",
-            style: heading,
+            style: textStyle('p2', AppColorSwatche.primary),
           ),
           Text(
             customerVehicle.model,
-            style: bodytext,
+            style: textStyle('p1', AppColorSwatche.black),
           ),
           SizedBox(
             height: 16.0,
           ),
           Text(
             "Number Plate",
-            style: heading,
+            style: textStyle('p2', AppColorSwatche.primary),
           ),
           Text(
             customerVehicle.numberPlate ?? "Not Available",
-            style: bodytext,
+            style: textStyle('p1', AppColorSwatche.black),
           ),
           SizedBox(
             height: 16.0,
           ),
           Text(
             "KM per day",
-            style: heading,
+            style: textStyle('p2', AppColorSwatche.primary),
           ),
           Text(
             customerVehicle.kmperday.toString(),
-            style: bodytext,
+            style: textStyle('p1', AppColorSwatche.black),
           ),
           SizedBox(
             height: 16.0,
           ),
           Text(
             "Total Travelled Distance",
-            style: heading,
+            style: textStyle('p2', AppColorSwatche.primary),
           ),
           Text(
             customerVehicle.currentKM.toString(),
-            style: bodytext,
+            style: textStyle('p1', AppColorSwatche.black),
           ),
         ],
       ),

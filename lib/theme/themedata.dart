@@ -32,6 +32,9 @@ TextStyle textStyle(String tag, Color? color) {
     case 'p2':
       return TextStyle(
           fontSize: 14.0, fontWeight: FontWeight.normal, color: colorToUse);
+    case 'p3':
+      return TextStyle(
+          fontSize: 12.0, fontWeight: FontWeight.normal, color: colorToUse);
     default:
       return TextStyle();
   }

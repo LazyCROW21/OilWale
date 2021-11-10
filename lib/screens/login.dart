@@ -63,7 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           validator: phoneValidate,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
-                              icon: Icon(
+                              prefixIcon: Icon(
                                 Icons.phone,
                                 color: Colors.deepOrange,
                               ),
@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           validator: pwdValidate,
                           decoration: InputDecoration(
-                              icon: Icon(
+                              prefixIcon: Icon(
                                 Icons.password,
                                 color: Colors.deepOrange,
                               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:oilwale/components/vehiclecard.dart';
 import 'package:oilwale/models/customervehicle.dart';
 import 'package:oilwale/service/customer_api.dart';
+import 'package:oilwale/theme/themedata.dart';
 
 class VehiclesScreen extends StatefulWidget {
   @override
@@ -41,6 +42,11 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
+                style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(18.0),
+                ))),
                 onPressed: () {
                   Navigator.pushNamed(context, '/cust_addvehicle');
                 },
@@ -49,7 +55,7 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
                     child: Center(
                       child: Text(
                         "+ Add Vehicle",
-                        style: TextStyle(fontSize: 24),
+                        style: textStyle('p1', Colors.white),
                       ),
                     )),
               ),

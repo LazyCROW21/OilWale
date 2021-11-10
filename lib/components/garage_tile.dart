@@ -14,7 +14,7 @@ class GarageTile extends StatelessWidget {
     return MaterialButton(
       padding: EdgeInsets.zero,
       onPressed: () {
-        Navigator.pushNamed(context, "/cust_garage", arguments: garage.id);
+        Navigator.pushNamed(context, "/cust_garage", arguments: garage);
       },
       child: Container(
           margin: EdgeInsets.symmetric(vertical: 4.0),
@@ -24,11 +24,14 @@ class GarageTile extends StatelessWidget {
           child: Row(
             children: [
               Container(
-                  margin: EdgeInsets.only(right: 12.0),
-                  // flex: 1,
-                  child: Image.network(
-                      garage.image ?? 'https://picsum.photos/200'),
-                  height: 80),
+                margin: EdgeInsets.only(right: 12.0),
+                // flex: 1,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: Image.network('https://picsum.photos/200'),
+                ),
+                height: 80, width: 80,
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:oilwale/components/editvehicledetail.dart';
 import 'package:oilwale/components/vehicledetailblock.dart';
 import 'package:oilwale/models/customervehicle.dart';
+import 'package:oilwale/theme/themedata.dart';
 
 class VehicleDetails extends StatefulWidget {
   @override
@@ -54,7 +55,7 @@ class _VehicleDetailsState extends State<VehicleDetails> {
           ),
           title: Text(
             "My vehicle",
-            style: TextStyle(color: Colors.deepOrange),
+            style: TextStyle(color: AppColorSwatche.primary),
           ),
         ),
         body: Container(
@@ -73,8 +74,7 @@ class _VehicleDetailsState extends State<VehicleDetails> {
                       children: [
                         Text(
                           "Vehicle Details",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 24.0),
+                          style: textStyle('h4', AppColorSwatche.black),
                         ),
                         ElevatedButton(
                             onPressed: () {
@@ -97,14 +97,14 @@ class _VehicleDetailsState extends State<VehicleDetails> {
               ),
               Text(
                 "Last Serviced",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+                style: textStyle('h4', AppColorSwatche.black),
               ),
               Divider(
                 height: 24.0,
               ),
               Text(
                 "Recommend Products",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24.0),
+                style: textStyle('h4', AppColorSwatche.black),
               )
             ],
           ),

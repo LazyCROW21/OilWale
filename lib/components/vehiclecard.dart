@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oilwale/models/customervehicle.dart';
+import 'package:oilwale/theme/themedata.dart';
 
 class VehicleCard extends StatelessWidget {
   final CustomerVehicle customerVehicle;
@@ -20,7 +21,8 @@ class VehicleCard extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
               border: Border(
-                  left: BorderSide(color: Colors.deepOrange, width: 4.0))),
+                  left:
+                      BorderSide(color: AppColorSwatche.primary, width: 4.0))),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -29,20 +31,18 @@ class VehicleCard extends StatelessWidget {
               children: [
                 Text(
                   customerVehicle.model,
-                  style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                  style: textStyle('h5', Colors.black),
                 ),
                 Text(
                   customerVehicle.numberPlate ?? "Not found",
-                  style:
-                      TextStyle(fontSize: 14.0, fontWeight: FontWeight.normal),
+                  style: textStyle('p1', Colors.black),
                 ),
                 SizedBox(
                   height: 16,
                 ),
                 Text(
                     "KM Reading: ${customerVehicle.currentKM}, ${customerVehicle.kmperday} KM/day",
-                    style: TextStyle(
-                        fontSize: 12.0, fontWeight: FontWeight.normal)),
+                    style: textStyle('p2', Colors.black)),
               ],
             ),
           ),

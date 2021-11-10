@@ -1,19 +1,5 @@
-// address	string
-// alternateNumber	string
-// area	string
-// createdAt	string($date-time)
-// garageId	string
-// garageName	string
-// gstNumber	string
-// image	string
-// name	string
-// phoneNumber	string
-// pincode	string
-// referralCode	string
-// updatedAt	string($date-time)
-
 class Garage {
-  late final String id;
+  late final String garageId;
   late final String address;
   late final String? alternateNumber;
   late final String area;
@@ -26,7 +12,7 @@ class Garage {
   late final String referralCode;
 
   Garage({
-    required this.id,
+    required this.garageId,
     required this.address,
     this.alternateNumber,
     required this.area,
@@ -40,14 +26,14 @@ class Garage {
   });
 
   Garage.fromJSON(Map<String, dynamic> json) {
-    this.id = json['id'];
+    this.garageId = json['garageId'];
     this.address = json['address'];
     this.alternateNumber = json['alternateNumber'];
     this.area = json['area'];
     this.garageName = json['garageName'];
     this.gstNumber = json['gstNumber'];
     this.image = json['image'];
-    this.ownerName = json['ownerName'];
+    this.ownerName = json['name'];
     this.phoneNumber = json['phoneNumber'];
     this.pincode = json['pincode'];
     this.referralCode = json['referralCode'];

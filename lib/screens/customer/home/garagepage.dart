@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/rendering.dart';
+import 'package:oilwale/models/garage.dart';
+import 'package:oilwale/theme/themedata.dart';
 
 class GaragePage extends StatefulWidget {
   @override
@@ -8,16 +10,8 @@ class GaragePage extends StatefulWidget {
 }
 
 class _GaragePageState extends State<GaragePage> {
-  var args;
-  final TextStyle heading1 = const TextStyle(
-    fontWeight: FontWeight.bold,
-    fontSize: 28.0,
-    color: Colors.black,
-  );
-  final TextStyle heading2 = const TextStyle(
-      fontWeight: FontWeight.bold, fontSize: 20.0, color: Colors.black);
-  final TextStyle desc = const TextStyle(
-      fontWeight: FontWeight.normal, fontSize: 14.0, color: Colors.grey);
+  Garage? garage;
+
   final List<String> imageURLList = [
     'https://picsum.photos/200',
     'https://picsum.photos/200',
@@ -33,7 +27,7 @@ class _GaragePageState extends State<GaragePage> {
 
   @override
   Widget build(BuildContext context) {
-    args = ModalRoute.of(context)!.settings.arguments as String;
+    garage = ModalRoute.of(context)!.settings.arguments as Garage;
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -41,7 +35,7 @@ class _GaragePageState extends State<GaragePage> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
-            "Garage name",
+            garage != null ? garage!.garageName : 'Not Found',
             style: TextStyle(color: Colors.deepOrange),
           ),
         ),
@@ -82,51 +76,59 @@ class _GaragePageState extends State<GaragePage> {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Garage A",
+                      garage != null ? garage!.garageName : 'Not Found',
                       textAlign: TextAlign.center,
-                      style: heading1,
+                      style: textStyle('h4', AppColorSwatche.black),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "xyz street, navragpura, ahemdabad.",
-                      style: desc,
+                      garage != null ? garage!.address : 'Not Found',
+                      style: textStyle('p1', AppColorSwatche.grey),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "PINCODE: 345441",
-                      style: desc,
+                      garage != null
+                          ? "PINCODE: ${garage!.pincode}"
+                          : 'PINCODE: Not Found',
+                      style: textStyle('p1', AppColorSwatche.grey),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
                       "Contact Details",
-                      style: heading2,
+                      style: textStyle('h5', AppColorSwatche.black),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Owner: ABC Sharma",
-                      style: desc,
+                      garage != null
+                          ? "Owner: ${garage!.ownerName}"
+                          : 'Owner: Not Found',
+                      style: textStyle('p1', AppColorSwatche.grey),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Phone: 0123456789",
-                      style: desc,
+                      garage != null
+                          ? "Phone: ${garage!.phoneNumber}"
+                          : 'Phone: Not Found',
+                      style: textStyle('p1', AppColorSwatche.grey),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Alt. Phone: 0123456789",
-                      style: desc,
+                      garage != null
+                          ? "Alt. Phone: ${garage!.alternateNumber}"
+                          : 'Alt. Phone: Not Found',
+                      style: textStyle('p1', AppColorSwatche.grey),
                     ),
                   ),
                 ]),

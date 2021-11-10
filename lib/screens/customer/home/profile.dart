@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oilwale/theme/themedata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -14,9 +15,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   String? customerAddress;
   String? customerPincode;
   String? garageReferralCode;
-
-  TextStyle h1 = const TextStyle(fontSize: 12, color: Colors.deepOrange);
-  TextStyle p1 = const TextStyle(fontSize: 18, color: Colors.black);
 
   Future<void> getCustomerPrefs() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -62,11 +60,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Text(
                       'Name',
-                      style: h1,
+                      style: textStyle('p2', AppColorSwatche.primary),
                     ),
                     Text(
                       customerName ?? 'Loading..',
-                      style: p1,
+                      style: textStyle('p1', AppColorSwatche.black),
                     ),
                   ],
                 )
@@ -77,41 +75,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
           SizedBox(height: 10),
           Text(
             'Phone',
-            style: h1,
+            style: textStyle('p2', AppColorSwatche.primary),
           ),
           Text(
             customerPhoneNumber ?? 'Loading..',
-            style: p1,
+            style: textStyle('p1', AppColorSwatche.black),
           ),
           Divider(),
           SizedBox(height: 10),
           Text(
             'Address',
-            style: h1,
+            style: textStyle('p2', AppColorSwatche.primary),
           ),
           Text(
             customerAddress ?? 'Loading..',
-            style: p1,
+            style: textStyle('p1', AppColorSwatche.black),
           ),
           Divider(),
           SizedBox(height: 10),
           Text(
             'PINCODE',
-            style: h1,
+            style: textStyle('p2', AppColorSwatche.primary),
           ),
           Text(
             customerPincode ?? 'Loading..',
-            style: p1,
+            style: textStyle('p1', AppColorSwatche.black),
           ),
           Divider(),
           SizedBox(height: 10),
           Text(
             'Total number of time oil serviced',
-            style: h1,
+            style: textStyle('p2', AppColorSwatche.primary),
           ),
           Text(
             '12',
-            style: p1,
+            style: textStyle('p1', AppColorSwatche.black),
           ),
           Divider(),
           SizedBox(height: 10),
@@ -119,17 +117,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: [
               Expanded(
                 child: ElevatedButton(
+                  style: ButtonStyle(
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  ))),
                   onPressed: () {
                     Navigator.pushReplacementNamed(context, '/login');
                   },
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        "Log out",
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                    ),
+                  child: Text(
+                    "Log out",
+                    style: textStyle('p1', Colors.white),
                   ),
                 ),
               ),

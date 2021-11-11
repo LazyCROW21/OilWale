@@ -43,34 +43,38 @@ class _ProductListViewState extends State<ProductListView> {
           child: TextFormField(
             onChanged: (String input) {
               print("User entered: " + input);
-              setState(() async {
-                _pList = await ProductAPIManager.getAllProducts();
-                String inpLowercase = input.toLowerCase();
-                _pList = _pList.where((p) {
-                  if (p.name.toLowerCase().contains(inpLowercase)) {
-                    return true;
-                  } else if (p.specification
-                      .toLowerCase()
-                      .contains(inpLowercase)) {
-                    return true;
-                  } else {
-                    return false;
-                  }
-                }).toList();
+              String inpLowercase = input.toLowerCase();
+              setState(() {
+                isSearching = true;
               });
+              if (input == "") {
+                ProductAPIManager.getAllProducts().then((_result) {
+                  setState(() {
+                    isSearching = false;
+                    _pList = _result;
+                  });
+                });
+              } else {
+                ProductAPIManager.searchProduct(inpLowercase).then((_result) {
+                  setState(() {
+                    isSearching = false;
+                    _pList = _result;
+                  });
+                });
+              }
             },
             decoration: InputDecoration(
                 fillColor: Colors.white,
                 hintText: 'Search',
                 suffixIcon: Icon(
                   Icons.search,
-                  color: Colors.deepOrange,
+                  color: AppColorSwatche.primary,
                 ),
                 labelStyle: TextStyle(color: Colors.deepOrange),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(24.0),
                   borderSide: BorderSide(
-                    color: Colors.deepOrange,
+                    color: AppColorSwatche.primary,
                   ),
                 ),
                 enabledBorder: OutlineInputBorder(

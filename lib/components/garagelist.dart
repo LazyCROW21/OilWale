@@ -45,12 +45,21 @@ class _GarageListViewState extends State<GarageListView> {
               setState(() {
                 isSearching = true;
               });
-              GarageAPIManager.searchGarage(inpLowercase).then((_result) {
-                setState(() {
-                  isSearching = false;
-                  _gList = _result;
+              if (input == "") {
+                GarageAPIManager.getAllGarages().then((_result) {
+                  setState(() {
+                    isSearching = false;
+                    _gList = _result;
+                  });
                 });
-              });
+              } else {
+                GarageAPIManager.searchGarage(inpLowercase).then((_result) {
+                  setState(() {
+                    isSearching = false;
+                    _gList = _result;
+                  });
+                });
+              }
             },
             decoration: InputDecoration(
               hintText: 'Search',

@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Find Garage',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.sell),
+            icon: Icon(Icons.shopping_bag),
             label: 'Find Product',
           ),
           BottomNavigationBarItem(

@@ -30,4 +30,30 @@ class ProductAPIManager {
     }
     return false;
   }
+
+  // return the search result from all product list
+  static Future<dynamic> searchProduct(String inp) async {
+    try {
+      var client = http.Client();
+      String urlStr = base_url + "/product/search/" + Uri.encodeComponent(inp);
+      var url = Uri.parse(urlStr);
+      var response = await client.get(url);
+      if (response.statusCode == 200) {
+        List<Product> products = [];
+        var jsonString = response.body;
+        List jsonMap = jsonDecode(jsonString);
+        jsonMap.forEach((element) {
+          products.add(Product.fromJSON(element));
+          print(element);
+        });
+        return products;
+      } else {
+        return false;
+      }
+    } catch (e, s) {
+      print("Exception $e");
+      print("StackTrace $s");
+    }
+    return false;
+  }
 }

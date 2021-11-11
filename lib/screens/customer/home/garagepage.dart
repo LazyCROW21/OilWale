@@ -49,7 +49,7 @@ class _GaragePageState extends State<GaragePage> {
                   Container(
                       child: CarouselSlider(
                     options: CarouselOptions(
-                        height: MediaQuery.of(context).size.height / 2,
+                        height: MediaQuery.of(context).size.height / 2.4,
                         enlargeCenterPage: true,
                         enableInfiniteScroll: false),
                     items: imageURLList

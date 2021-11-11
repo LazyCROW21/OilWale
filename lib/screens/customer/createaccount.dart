@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:oilwale/service/customer_api.dart';
+import 'package:oilwale/theme/themedata.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   @override
@@ -13,14 +14,14 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   String? _addr;
   String? _pin;
   String? _refcode;
+
   // constants
-  final Color _customColor = Colors.deepOrange;
   final double _textInputfontSize = 16.0;
-  final TextStyle _customTStyle = TextStyle(color: Colors.deepOrange);
+  final TextStyle _customTStyle = TextStyle(color: AppColorSwatche.primary);
   final OutlineInputBorder _customOutlineBorder = OutlineInputBorder(
-    borderRadius: BorderRadius.circular(25.0),
+    borderRadius: BorderRadius.circular(24.0),
     borderSide: BorderSide(
-      color: Colors.deepOrange,
+      color: AppColorSwatche.primary,
     ),
   );
 
@@ -39,7 +40,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
           ),
         ),
         body: Container(
-          padding: EdgeInsets.all(48.0),
+          padding: EdgeInsets.all(16.0),
           child: Center(
               child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -55,9 +56,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   },
                   style: TextStyle(fontSize: _textInputfontSize),
                   decoration: InputDecoration(
-                    icon: Icon(
+                    prefixIcon: Icon(
                       Icons.person,
-                      color: _customColor,
+                      color: AppColorSwatche.primary,
                     ),
                     hintText: 'Your name',
                     labelText: 'Enter name',
@@ -65,7 +66,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     focusedBorder: _customOutlineBorder,
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: _customColor)),
+                        borderRadius: BorderRadius.circular(24.0),
+                        borderSide: BorderSide(color: AppColorSwatche.primary)),
                     hintStyle: _customTStyle,
                   ),
                 ),
@@ -82,14 +84,16 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   ],
                   style: TextStyle(fontSize: _textInputfontSize),
                   decoration: InputDecoration(
-                    icon: Icon(Icons.person, color: _customColor),
+                    prefixIcon:
+                        Icon(Icons.person, color: AppColorSwatche.primary),
                     hintText: 'Your phone',
                     labelText: 'Enter phone',
                     labelStyle: _customTStyle,
                     focusedBorder: _customOutlineBorder,
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: _customColor)),
+                        borderRadius: BorderRadius.circular(24.0),
+                        borderSide: BorderSide(color: AppColorSwatche.primary)),
                     hintStyle: _customTStyle,
                   ),
                 ),
@@ -103,9 +107,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     maxLines: 4,
                     style: TextStyle(fontSize: _textInputfontSize),
                     decoration: InputDecoration(
-                      icon: Icon(
+                      prefixIcon: Icon(
                         Icons.location_pin,
-                        color: _customColor,
+                        color: AppColorSwatche.primary,
                       ),
                       hintText: 'xyz society, abc area ...',
                       labelText: 'Enter address',
@@ -113,7 +117,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       focusedBorder: _customOutlineBorder,
                       border: OutlineInputBorder(),
                       enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: _customColor)),
+                          borderRadius: BorderRadius.circular(24.0),
+                          borderSide:
+                              BorderSide(color: AppColorSwatche.primary)),
                       hintStyle: _customTStyle,
                     ),
                   )),
@@ -129,9 +135,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     FilteringTextInputFormatter.digitsOnly
                   ],
                   decoration: InputDecoration(
-                    icon: Icon(
+                    prefixIcon: Icon(
                       Icons.fiber_pin_outlined,
-                      color: _customColor,
+                      color: AppColorSwatche.primary,
                     ),
                     hintText: '000000',
                     labelText: 'PINCODE',
@@ -139,7 +145,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     focusedBorder: _customOutlineBorder,
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: _customColor)),
+                        borderRadius: BorderRadius.circular(24.0),
+                        borderSide: BorderSide(color: AppColorSwatche.primary)),
                     hintStyle: _customTStyle,
                   ),
                 ),
@@ -152,21 +159,19 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   },
                   style: TextStyle(fontSize: _textInputfontSize),
                   decoration: InputDecoration(
-                    icon: Icon(Icons.code, color: _customColor),
+                    prefixIcon:
+                        Icon(Icons.code, color: AppColorSwatche.primary),
                     hintText: 'REFERRALCODE',
                     labelText: 'Referral code (optional)',
                     labelStyle: _customTStyle,
                     focusedBorder: _customOutlineBorder,
                     border: OutlineInputBorder(),
                     enabledBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: _customColor)),
+                        borderRadius: BorderRadius.circular(24.0),
+                        borderSide: BorderSide(color: AppColorSwatche.primary)),
                     hintStyle: _customTStyle,
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Container(),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -180,6 +185,10 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   // Navigator.pushNamed(context, '/cust_addvehicle');
                 },
                 style: ButtonStyle(
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    )),
                     // textStyle: MaterialStateProperty.all<TextStyle>(
                     //     TextStyle(fontSize: 20.0)),
                     fixedSize: MaterialStateProperty.all(
@@ -188,7 +197,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     'Create Account',
-                    style: TextStyle(fontSize: 16.0),
+                    style: textStyle('p1', Colors.white),
                   ),
                 ),
               )

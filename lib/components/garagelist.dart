@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:oilwale/components/garage_tile.dart';
 import 'package:oilwale/models/garage.dart';
 import 'package:oilwale/service/garage_api.dart';
@@ -13,12 +14,17 @@ class GarageListView extends StatefulWidget {
 
 class _GarageListViewState extends State<GarageListView> {
   List<Garage> _gList = [];
+  SpinKitRing loadingRing = SpinKitRing(
+    color: AppColorSwatche.primary,
+  );
+  bool isSearching = true;
 
   @override
   void initState() {
     super.initState();
     GarageAPIManager.getAllGarages().then((_result) {
       setState(() {
+        isSearching = false;
         _gList = _result;
       });
     });
@@ -35,20 +41,16 @@ class _GarageListViewState extends State<GarageListView> {
           child: TextFormField(
             onChanged: (String input) {
               print("User entered: " + input);
-              // setState(() {
-              //   String inpLowercase = input.toLowerCase();
-              //   _gList = allGarages.where((g) {
-              //     if (g.garageName.toLowerCase().contains(inpLowercase)) {
-              //       return true;
-              //     } else if (g.pincode.toLowerCase().contains(inpLowercase)) {
-              //       return true;
-              //     } else if (g.address.toLowerCase().contains(inpLowercase)) {
-              //       return true;
-              //     } else {
-              //       return false;
-              //     }
-              //   }).toList();
-              // });
+              String inpLowercase = input.toLowerCase();
+              setState(() {
+                isSearching = true;
+              });
+              GarageAPIManager.searchGarage(inpLowercase).then((_result) {
+                setState(() {
+                  isSearching = false;
+                  _gList = _result;
+                });
+              });
             },
             decoration: InputDecoration(
               hintText: 'Search',
@@ -72,12 +74,14 @@ class _GarageListViewState extends State<GarageListView> {
         ),
         Expanded(
           // height: (MediaQuery.of(context).size.height - 179),
-          child: ListView.builder(
-            itemCount: _gList.length,
-            itemBuilder: (context, index) {
-              return GarageTile(garage: _gList[index]);
-            },
-          ),
+          child: isSearching
+              ? loadingRing
+              : ListView.builder(
+                  itemCount: _gList.length,
+                  itemBuilder: (context, index) {
+                    return GarageTile(garage: _gList[index]);
+                  },
+                ),
         ),
       ],
     );

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:oilwale/theme/themedata.dart';
-import '../models/product.dart';
+import 'package:oilwale/models/product.dart';
 import 'package:oilwale/components/product_tile.dart';
 import 'package:oilwale/service/product_api.dart';
 
@@ -13,12 +14,17 @@ class ProductListView extends StatefulWidget {
 
 class _ProductListViewState extends State<ProductListView> {
   List<Product> _pList = [];
+  SpinKitRing loadingRing = SpinKitRing(
+    color: AppColorSwatche.primary,
+  );
+  bool isSearching = true;
 
   @override
   void initState() {
     super.initState();
     ProductAPIManager.getAllProducts().then((resp) {
       setState(() {
+        isSearching = false;
         _pList = resp;
       });
     }).onError((error, stackTrace) {
@@ -74,12 +80,14 @@ class _ProductListViewState extends State<ProductListView> {
           ),
         ),
         Expanded(
-          child: ListView.builder(
-            itemCount: _pList.length,
-            itemBuilder: (context, index) {
-              return ProductTile(product: _pList[index]);
-            },
-          ),
+          child: isSearching
+              ? loadingRing
+              : ListView.builder(
+                  itemCount: _pList.length,
+                  itemBuilder: (context, index) {
+                    return ProductTile(product: _pList[index]);
+                  },
+                ),
         ),
       ],
     );

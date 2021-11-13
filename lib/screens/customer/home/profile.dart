@@ -8,13 +8,33 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool? active;
+  bool isLoading = true;
+  bool isEditing = false;
   String? customerId;
   String? customerName;
   String? customerPhoneNumber;
   String? customerAddress;
   String? customerPincode;
   String? garageReferralCode;
+
+  CustomerDetail loadingCustomer = CustomerDetail(
+    customerId: 'loading..',
+    customerAddress: 'loading..',
+    customerName: 'loading..',
+    customerPhoneNumber: 'loading..',
+    garageReferralCode: 'loading..',
+    customerPincode: 'loading..',
+  );
+
+  Widget showCustomerForm() {
+    if (isLoading) {
+      return loadingCustomer;
+    } else if (isEditing) {
+      return Container();
+    } else {
+      return Container();
+    }
+  }
 
   Future<void> getCustomerPrefs() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -31,10 +51,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
       setState(() {});
     });
     return Container(
-      color: Colors.white,
-      padding: EdgeInsets.all(16.0),
-      child: Center(
-          child: Column(
+        color: Colors.white,
+        padding: EdgeInsets.all(16.0),
+        child: Center(
+          child: showCustomerForm(),
+        ));
+  }
+}
+
+class CustomerDetail extends StatelessWidget {
+  late final String customerId;
+  late final String customerName;
+  late final String customerPhoneNumber;
+  late final String customerAddress;
+  late final String customerPincode;
+  late final String garageReferralCode;
+  CustomerDetail(
+      {Key? key,
+      required this.customerId,
+      required this.customerName,
+      required this.customerPhoneNumber,
+      required this.customerAddress,
+      required this.customerPincode,
+      required this.garageReferralCode})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -51,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       size: 72,
                     ),
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.deepOrange),
+                        border: Border.all(color: AppColorSwatche.primary),
                         borderRadius: BorderRadius.circular(36.0)),
                   ),
                 ),
@@ -63,7 +108,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       style: textStyle('p2', AppColorSwatche.primary),
                     ),
                     Text(
-                      customerName ?? 'Loading..',
+                      customerName,
                       style: textStyle('p1', AppColorSwatche.black),
                     ),
                   ],
@@ -78,7 +123,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             style: textStyle('p2', AppColorSwatche.primary),
           ),
           Text(
-            customerPhoneNumber ?? 'Loading..',
+            customerPhoneNumber,
             style: textStyle('p1', AppColorSwatche.black),
           ),
           Divider(),
@@ -88,7 +133,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             style: textStyle('p2', AppColorSwatche.primary),
           ),
           Text(
-            customerAddress ?? 'Loading..',
+            customerAddress,
             style: textStyle('p1', AppColorSwatche.black),
           ),
           Divider(),
@@ -98,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             style: textStyle('p2', AppColorSwatche.primary),
           ),
           Text(
-            customerPincode ?? 'Loading..',
+            customerPincode,
             style: textStyle('p1', AppColorSwatche.black),
           ),
           Divider(),
@@ -134,7 +179,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
         ],
-      )),
+      ),
     );
   }
 }

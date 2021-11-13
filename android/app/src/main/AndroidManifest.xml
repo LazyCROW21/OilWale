@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mplubs.oilwale">
    <application
-        android:label="oilwale"
+        android:label="Oilwale"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

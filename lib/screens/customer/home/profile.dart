@@ -72,7 +72,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
       });
     });
     return SingleChildScrollView(
-      reverse: true,
       child: Container(
           color: Colors.white,
           // padding: EdgeInsets.all(16.0),

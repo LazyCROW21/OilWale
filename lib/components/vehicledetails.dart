@@ -11,8 +11,8 @@ class VehicleDetails extends StatefulWidget {
 
 class _VehicleDetailsState extends State<VehicleDetails> {
   late CustomerVehicle customerVehicle;
-  VehicleDetailBlock? _vehicleDetailBlock;
-  EditVehicleDetailBlock? _editVehicleDetailBlock;
+  late VehicleDetailBlock _vehicleDetailBlock;
+  late EditVehicleDetailBlock _editVehicleDetailBlock;
   bool isEditing = false;
 
   // @override
@@ -21,7 +21,7 @@ class _VehicleDetailsState extends State<VehicleDetails> {
   //   args = ModalRoute.of(context)!.settings.arguments as String;
   // }
 
-  Widget? toggleForm() {
+  Widget toggleForm() {
     if (isEditing) {
       return _editVehicleDetailBlock;
     }
@@ -99,7 +99,7 @@ class _VehicleDetailsState extends State<VehicleDetails> {
                       SizedBox(
                         height: 16.0,
                       ),
-                      toggleForm() ?? Container(),
+                      toggleForm(),
                     ],
                   ),
                 ),

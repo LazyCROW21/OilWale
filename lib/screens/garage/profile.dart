@@ -23,84 +23,39 @@ class _ProfileState extends State<Profile> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 30.0, bottom: 30.0),
-                child: Row(children: [
-                  Expanded(
-                      flex: 2,
-                      child: Divider(
-                        height: 30.0,
-                        thickness: 1.0,
-                        color: Colors.orange,
-                      )),
-                  Expanded(
-                    flex: 1,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: const Text("Edit Password",
-                          style: TextStyle(
-                              fontSize: 11.0, color: Colors.orangeAccent)),
-                    ),
-                  )
-                ]),
+                padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),
+                child: Divider(
+                  height: 30.0,
+                  thickness: 1.0,
+                  color: Colors.orange,
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        "User ID:",
-                        style: TextStyle(color: Colors.grey[600]),
-                      ),
-                      SizedBox(height: 10.0),
-                      Text("Password :",
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                          )),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "123456",
-                        style: TextStyle(color: Colors.grey[700]),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Text(
-                        "*******",
-                        style: TextStyle(color: Colors.grey[700]),
-                      ),
-                    ],
-                  )
-                ],
+              Center(
+                child: Column(
+
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      "User ID:",
+                        style:
+                        TextStyle(color: Colors.grey[700], fontSize: 13.0),
+                    ),
+                    SizedBox(height: 10.0),
+                    Text(
+                      "1234567",
+                      style: TextStyle(
+                          fontSize: 18.0, fontWeight: FontWeight.w500),
+                    )
+                  ],
+                ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 30.0, bottom: 30.0),
-                child: Row(children: [
-                  Expanded(
-                      flex: 3,
-                      child: Divider(
-                        height: 30.0,
-                        thickness: 1.0,
-                        color: Colors.orange,
-                      )),
-                  Expanded(
-                    flex: 1,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        "Edit Details",
-                        style: TextStyle(
-                            fontSize: 11.0, color: Colors.orangeAccent),
-                      ),
-                    ),
-                  ),
-                ]),
+                padding: const EdgeInsets.only(top: 10.0, bottom: 30.0),
+                child: Divider(
+                  height: 30.0,
+                  thickness: 1.0,
+                  color: Colors.orange,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 12.0),
@@ -109,7 +64,7 @@ class _ProfileState extends State<Profile> {
                   children: [
                     Text(" Garage Name",
                         style:
-                            TextStyle(color: Colors.grey[700], fontSize: 10.0)),
+                            TextStyle(color: Colors.orangeAccent[700], fontSize: 10.0)),
                     Text(
                       "Sonu Ka garage",
                       style: TextStyle(
@@ -120,7 +75,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     Text(" Owner's Name",
                         style:
-                            TextStyle(color: Colors.grey[700], fontSize: 10.0)),
+                            TextStyle(color: Colors.orangeAccent[700], fontSize: 10.0)),
                     Text(
                       "Sonu Paisewala ",
                       style: TextStyle(
@@ -131,7 +86,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     Text(" Numnber",
                         style:
-                            TextStyle(color: Colors.grey[700], fontSize: 10.0)),
+                            TextStyle(color: Colors.orangeAccent[700], fontSize: 10.0)),
                     Text(
                       " 8781115157 ",
                       style: TextStyle(
@@ -142,7 +97,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     Text("Alternate Numnber",
                         style:
-                            TextStyle(color: Colors.grey[700], fontSize: 10.0)),
+                            TextStyle(color: Colors.orangeAccent[700], fontSize: 10.0)),
                     Text(
                       " 8781115157 ",
                       style: TextStyle(
@@ -153,7 +108,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     Text(" Address",
                         style:
-                            TextStyle(color: Colors.grey[700], fontSize: 10.0)),
+                            TextStyle(color: Colors.orangeAccent[700], fontSize: 10.0)),
                     Text(
                       "21, Neelkamal Society Opp. Takshshila Society Galaxy Naroda Ahmedabad",
                       style: TextStyle(
@@ -164,7 +119,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     Text("Area ",
                         style:
-                            TextStyle(color: Colors.grey[700], fontSize: 10.0)),
+                            TextStyle(color: Colors.orangeAccent[700], fontSize: 10.0)),
                     Text(
                       "Naroda ",
                       style: TextStyle(
@@ -175,7 +130,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     Text(" PinCode",
                         style:
-                            TextStyle(color: Colors.grey[700], fontSize: 10.0)),
+                            TextStyle(color: Colors.orangeAccent[700], fontSize: 10.0)),
                     Text(
                       "382330 ",
                       style: TextStyle(

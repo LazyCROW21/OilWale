@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:oilwale/components/oilwale_theme.dart';
 import '../models/product.dart';
-import '../screens/garage/globals.dart';
 
-class ItemWidget extends StatefulWidget {
+class CartWidget extends StatefulWidget {
   final Product item;
 
-  const ItemWidget({Key? key, required this.item}) : super(key: key);
+  const CartWidget({Key? key, required this.item}) : super(key: key);
 
   @override
-  State<ItemWidget> createState() => _ItemWidgetState();
+  State<CartWidget> createState() => _CartWidgetState();
 }
 
-class _ItemWidgetState extends State<ItemWidget> {
-  // var _message = "Add to cart";
 
-  var count = " Add to Cart ";
-  Color added = Colors.deepOrange[200]!.withOpacity(.1);
-  Color cartaddedtext = Colors.deepOrange;
+class _CartWidgetState extends State<CartWidget> {
+  // var _message = "Add to cart";
+  var count = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -82,31 +78,38 @@ class _ItemWidgetState extends State<ItemWidget> {
                         SizedBox(
                           width: 100.0,
                           height: 35.0,
-                          child: TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  if (count == "Added to Cart") {
-                                    added =
-                                        Colors.deepOrange[200]!.withOpacity(.3);
-                                    count = "Add to Cart";
-                                    cartaddedtext = Colors.deepOrange;
-                                    cartnum--;
-                                  } else {
-                                    count = "Added to Cart";
-                                    added = Colors.green;
-                                    cartaddedtext = Colors.white;
-                                    cartnum++;
-                                  }
-                                });
-                              },
-                              style: TextButton.styleFrom(
-                                  backgroundColor: added.withOpacity(0.7)),
-                              child: Text(
-                                count,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: cartaddedtext, fontSize: 12.0),
-                              )),
+                          child: Container(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    child: TextButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            if(count >0)
+                                            count --;
+                                          });
+                                        }, child: Icon(Icons.remove,color: Colors.deepOrange,),
+
+                                    )
+                                ),
+                                Expanded(
+                                  child: Center(
+                                    child: Text(
+                                        "$count"
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: TextButton(onPressed: () {
+                                    setState(() {
+                                      count++;
+                                    });
+                                  },
+                                      child: Icon(Icons.add,color: Colors.deepOrange,)),
+                                )
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     )
@@ -114,7 +117,9 @@ class _ItemWidgetState extends State<ItemWidget> {
                 ),
               )
             ],
-          ),
-        ));
+          )
+          ,
+        )
+    );
   }
 }

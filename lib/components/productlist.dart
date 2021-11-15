@@ -1,48 +1,7 @@
 import 'package:flutter/material.dart';
-import './oilwale_theme.dart';
 import '../models/product.dart';
-
-class ProductTile extends StatelessWidget {
-  final Product product;
-
-  const ProductTile({Key? key, required this.product}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.symmetric(vertical: 4.0),
-        padding: EdgeInsets.all(8.0),
-        decoration: BoxDecoration(
-            border: Border(bottom: BorderSide(color: Colors.deepOrange))),
-        // color: Colors.deepOrange,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "${product.name}",
-              style: deepOrangeTS(fontSize: 20),
-            ),
-            Text(
-              "${product.price}",
-              style: deepOrangeTS(fontSize: 12),
-            ),
-            Text(
-              "${product.specification}",
-              style: deepOrangeTS(fontSize: 12),
-            )
-          ],
-        ));
-  }
-}
-
-List<Product> allProducts = [
-  new Product(
-      id: '1', name: "Product1", price: 1500, specification: "example product"),
-  new Product(
-      id: '2', name: "Product2", price: 100, specification: "example product"),
-  new Product(
-      id: '3', name: "Product3", price: 250, specification: "example product"),
-];
+import 'package:oilwale/components/product_tile.dart';
+import 'package:oilwale/service/product_api.dart';
 
 class ProductListView extends StatefulWidget {
   ProductListView({Key? key}) : super(key: key);
@@ -57,7 +16,11 @@ class _ProductListViewState extends State<ProductListView> {
   @override
   void initState() {
     super.initState();
-    _pList = allProducts;
+    ProductAPIManager.getProducts().then((resp) {
+      _pList = resp;
+    }).onError((error, stackTrace) {
+      print(error);
+    });
   }
 
   @override
@@ -67,12 +30,13 @@ class _ProductListViewState extends State<ProductListView> {
         TextFormField(
           onChanged: (String input) {
             print("User entered: " + input);
-            setState(() {
+            setState(() async {
+              _pList = await ProductAPIManager.getProducts();
               String inpLowercase = input.toLowerCase();
-              _pList = allProducts.where((p) {
+              _pList = _pList.where((p) {
                 if (p.name.toLowerCase().contains(inpLowercase)) {
                   return true;
-                } else if (p.specification
+                } else if (p.specification!
                     .toLowerCase()
                     .contains(inpLowercase)) {
                   return true;
@@ -83,6 +47,7 @@ class _ProductListViewState extends State<ProductListView> {
             });
           },
           decoration: InputDecoration(
+              fillColor: Colors.white,
               hintText: 'Search',
               suffixIcon: Icon(
                 Icons.search,

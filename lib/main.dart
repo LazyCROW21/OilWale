@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'screens/index.dart';
+import 'package:oilwale/screens/garage/cart.dart';
+import 'package:oilwale/screens/garage/offerdetails.dart';
+import 'package:oilwale/screens/garage/offers.dart';
+import 'screens/customer/index.dart';
 import 'components/addvehicleform.dart';
-
-// import 'PAGES/home_page.dart';
-import 'PAGES/garage_scaffold.dart';
+import 'package:oilwale/screens/garage/garage_scaffold.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -31,6 +32,9 @@ void main() {
       '/cust_createAccount': (context) => CreateAccountScreen(),
       '/cust_addvehicle': (context) => AddVehicleForm(),
       '/garage_home': (context) => GarageScaffold(),
+      '/garage_offers': (context) => OffersPage(),
+      '/cart' : (context) => CartPage(),
+      '/offer_details' : (context) => OfferDetails(),
     },
   ));
 }

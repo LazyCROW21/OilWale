@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../components/vehiclecard.dart';
+import 'package:oilwale/components/vehiclecard.dart';
 
 class VehiclesScreen extends StatelessWidget {
   @override

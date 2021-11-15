@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oilwale/components/oilwale_theme.dart';
-import '../models/product.dart';
-import '../screens/garage/globals.dart';
+import 'package:oilwale/models/product.dart';
+import 'package:oilwale/screens/garage/globals.dart';
 
 class ItemWidget extends StatefulWidget {
   final Product item;
@@ -61,7 +60,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                     Container(
                       width: 175.0,
                       child: Text(
-                        widget.item.specification ?? 'NULL',
+                        widget.item.specification,
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontSize: 12.0,

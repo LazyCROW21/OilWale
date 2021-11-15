@@ -4,7 +4,10 @@ import 'package:oilwale/screens/customer/home/productpage.dart';
 import 'package:oilwale/components/vehicledetails.dart';
 import 'package:oilwale/screens/customer/index.dart';
 import 'package:oilwale/components/addvehicleform.dart';
+import 'package:oilwale/screens/garage/cart.dart';
 import 'package:oilwale/screens/garage/garage_scaffold.dart';
+import 'package:oilwale/screens/garage/offerdetails.dart';
+import 'package:oilwale/screens/garage/offers.dart';
 import 'package:oilwale/theme/themedata.dart';
 
 void main() {
@@ -38,6 +41,9 @@ void main() {
       '/cust_createAccount': (context) => CreateAccountScreen(),
       '/cust_addvehicle': (context) => AddVehicleForm(),
       '/garage_home': (context) => GarageScaffold(),
+      '/garage_offers': (context) => OffersPage(),
+      '/cart': (context) => CartPage(),
+      '/offer_details': (context) => OfferDetails(),
     },
   ));
 }

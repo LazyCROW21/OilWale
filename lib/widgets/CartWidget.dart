@@ -10,7 +10,6 @@ class CartWidget extends StatefulWidget {
   State<CartWidget> createState() => _CartWidgetState();
 }
 
-
 class _CartWidgetState extends State<CartWidget> {
   // var _message = "Add to cart";
   var count = 0;
@@ -57,7 +56,7 @@ class _CartWidgetState extends State<CartWidget> {
                     Container(
                       width: 175.0,
                       child: Text(
-                        widget.item.specification ?? 'NULL',
+                        widget.item.specification,
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontSize: 12.0,
@@ -83,29 +82,32 @@ class _CartWidgetState extends State<CartWidget> {
                               children: [
                                 Expanded(
                                     child: TextButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            if(count >0)
-                                            count --;
-                                          });
-                                        }, child: Icon(Icons.remove,color: Colors.deepOrange,),
-
-                                    )
-                                ),
+                                  onPressed: () {
+                                    setState(() {
+                                      if (count > 0) count--;
+                                    });
+                                  },
+                                  child: Icon(
+                                    Icons.remove,
+                                    color: Colors.deepOrange,
+                                  ),
+                                )),
                                 Expanded(
                                   child: Center(
-                                    child: Text(
-                                        "$count"
-                                    ),
+                                    child: Text("$count"),
                                   ),
                                 ),
                                 Expanded(
-                                  child: TextButton(onPressed: () {
-                                    setState(() {
-                                      count++;
-                                    });
-                                  },
-                                      child: Icon(Icons.add,color: Colors.deepOrange,)),
+                                  child: TextButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          count++;
+                                        });
+                                      },
+                                      child: Icon(
+                                        Icons.add,
+                                        color: Colors.deepOrange,
+                                      )),
                                 )
                               ],
                             ),
@@ -117,9 +119,7 @@ class _CartWidgetState extends State<CartWidget> {
                 ),
               )
             ],
-          )
-          ,
-        )
-    );
+          ),
+        ));
   }
 }

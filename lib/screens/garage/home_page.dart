@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oilwale/screens/garage/garage_scaffold.dart';
 import 'package:oilwale/widgets/OffersWidget.dart';
 import 'package:oilwale/models/OffersCatalog.dart';
 
@@ -14,12 +13,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  int custNumber = 0;
+  String refferalCode = "";
+  int credPoints = 0;
   get offers => null;
   late Function gotoOffer;
 
   _HomePageState(Function jabadaba) {
     this.gotoOffer = jabadaba;
   }
+  @override
+  void initState() {
+    super.initState();
+    custNumber = 500;
+    refferalCode = "ADF657";
+    credPoints = 786;
+  }
+
 
   bool showoffers = false;
 
@@ -62,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                           Container(
                             padding: EdgeInsets.fromLTRB(30.0, 40.0, 5.0, 25.0),
                             child: Text(
-                              "786",
+                              "$custNumber",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
@@ -72,12 +82,12 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
 
-                      Container(
-                        margin: EdgeInsets.fromLTRB(30.0, 0.0, 10.0, 0.0),
-                        width: 1,
-                        height: 50.0,
-                        color: Colors.deepOrange,
-                      ),
+                      // Container(
+                      //   margin: EdgeInsets.fromLTRB(30.0, 0.0, 10.0, 0.0),
+                      //   width: 1,
+                      //   height: 50.0,
+                      //   color: Colors.deepOrange,
+                      // ),
                       Stack(
                         children: [
                           Container(
@@ -94,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                             padding: EdgeInsets.fromLTRB(38.0, 40.0, 5.0, 25.0),
                             child: Center(
                               child: Text(
-                                "500",
+                                "$credPoints",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold,
@@ -127,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                           padding: EdgeInsets.symmetric(vertical: 20.0),
                           child: Center(
                             child: Text(
-                              "RFDC56",
+                              "$refferalCode",
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,

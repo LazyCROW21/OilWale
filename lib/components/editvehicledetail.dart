@@ -3,6 +3,7 @@ import 'package:oilwale/components/formelements.dart';
 import 'package:oilwale/models/vehicle.dart';
 import 'package:oilwale/models/vehiclecompany.dart';
 import 'package:oilwale/service/vehicle_api.dart';
+import 'package:oilwale/theme/themedata.dart';
 
 class EditVehicleDetailBlock extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
   bool loadingVMList = true;
   Text loadingDDM = Text(
     'Loading Options..',
-    style: TextStyle(fontSize: 24.0),
+    style: textStyle('p1', AppColorSwatche.black),
   );
 
   @override
@@ -45,12 +46,17 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
   DropdownMenuItem<String> vehicleCompanyDDMB(VehicleCompany vehicleCompany) {
     return DropdownMenuItem(
         value: vehicleCompany.vehicleCompanyId,
-        child: Text(vehicleCompany.vehicleCompany));
+        child: Text(
+          vehicleCompany.vehicleCompany,
+          style: textStyle('p1', AppColorSwatche.black),
+        ));
   }
 
   DropdownMenuItem<String> vehicleModelDDMB(Vehicle vehicle) {
     return DropdownMenuItem(
-        value: vehicle.vehicleId, child: Text(vehicle.vehicleModel));
+        value: vehicle.vehicleId,
+        child: Text(vehicle.vehicleModel,
+            style: textStyle('p1', AppColorSwatche.black)));
   }
 
   @override
@@ -65,7 +71,10 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
                 border: Border.all(color: Colors.deepOrange),
                 borderRadius: BorderRadius.all(Radius.circular(8.0))),
             child: loadingVCList
-                ? loadingDDM
+                ? Container(
+                    padding: EdgeInsets.all(4.0),
+                    width: MediaQuery.of(context).size.width - 44,
+                    child: loadingDDM)
                 : DropdownButton<String>(
                     icon: const Icon(Icons.arrow_downward),
                     iconSize: 24,
@@ -91,7 +100,10 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
                 border: Border.all(color: Colors.deepOrange),
                 borderRadius: BorderRadius.all(Radius.circular(8.0))),
             child: loadingVMList
-                ? loadingDDM
+                ? Container(
+                    padding: EdgeInsets.all(4.0),
+                    width: MediaQuery.of(context).size.width - 44,
+                    child: loadingDDM)
                 : DropdownButton<String>(
                     icon: const Icon(Icons.arrow_downward),
                     iconSize: 24,
@@ -107,29 +119,80 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
                     value: _models.length != 0 ? _models[0].vehicleId : null,
                     items: _models.map((e) => vehicleModelDDMB(e)).toList()),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: TextInput(
-              hint: 'AB-XX-CD-XXXX',
-              label: 'Enter vehicle reg. number',
-              icon: Icon(Icons.drive_eta),
-            ),
+          TextFormField(
+            obscureText: true,
+            onChanged: (String inp) {
+              // _pwd = inp;
+            },
+            // validator: pwdValidate,
+            decoration: InputDecoration(
+                prefixIcon: Icon(
+                  Icons.drive_eta,
+                  color: Colors.deepOrange,
+                ),
+                hintText: "AB01CD2345",
+                labelText: 'Enter vehicle reg. numer',
+                labelStyle: TextStyle(color: Colors.deepOrange),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.deepOrange,
+                  ),
+                ),
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: AppColorSwatche.primary)),
+                hintStyle: TextStyle(color: AppColorSwatche.primary)),
           ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: TextInput(
-              hint: '102453',
-              label: 'Enter KM travelled',
-              icon: Icon(Icons.linear_scale),
-            ),
+          SizedBox(
+            height: 8.0,
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: TextInput(
-              hint: '102453',
-              label: 'Daily KM travel',
-              icon: Icon(Icons.timeline),
-            ),
+          TextFormField(
+            obscureText: true,
+            onChanged: (String inp) {
+              // _pwd = inp;
+            },
+            // validator: pwdValidate,
+            decoration: InputDecoration(
+                prefixIcon: Icon(
+                  Icons.linear_scale,
+                  color: Colors.deepOrange,
+                ),
+                hintText: "102453",
+                labelText: 'Enter KM travelled',
+                labelStyle: TextStyle(color: Colors.deepOrange),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.deepOrange,
+                  ),
+                ),
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: AppColorSwatche.primary)),
+                hintStyle: TextStyle(color: AppColorSwatche.primary)),
+          ),
+          SizedBox(
+            height: 8.0,
+          ),
+          TextFormField(
+            obscureText: true,
+            onChanged: (String inp) {
+              // _pwd = inp;
+            },
+            // validator: pwdValidate,
+            decoration: InputDecoration(
+                prefixIcon: Icon(
+                  Icons.drive_eta,
+                  color: Colors.deepOrange,
+                ),
+                hintText: "102453",
+                labelText: 'Daily KM travel',
+                labelStyle: TextStyle(color: Colors.deepOrange),
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Colors.deepOrange,
+                  ),
+                ),
+                enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: AppColorSwatche.primary)),
+                hintStyle: TextStyle(color: AppColorSwatche.primary)),
           )
         ],
       ),

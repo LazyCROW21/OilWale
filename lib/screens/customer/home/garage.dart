@@ -8,7 +8,7 @@ import 'package:oilwale/theme/themedata.dart';
 class GarageScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.all(8.0),
       child: GarageListView(),
     );

@@ -23,28 +23,4 @@ class AuthManager {
     }
     return false;
   }
-
-  static Future<bool> addCustomer(Map<String, dynamic> data) async {
-    try {
-      String dataString = jsonEncode(data);
-      var client = http.Client();
-      String urlStr = base_url + "/addCustomer";
-      var url = Uri.parse(urlStr);
-      print(dataString);
-      var response = await client.post(url,
-          body: dataString, headers: {'Content-Type': 'application/json'});
-      if (response.statusCode == 200) {
-        var jsonString = response.body;
-        Map<String, dynamic> jsonMap = jsonDecode(jsonString);
-        print(jsonMap);
-        return true;
-      } else {
-        return false;
-      }
-    } catch (e, s) {
-      print("Exception $e");
-      print("StackTrace $s");
-    }
-    return false;
-  }
 }

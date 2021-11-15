@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:oilwale/models/customer.dart';
 import 'package:oilwale/theme/themedata.dart';
@@ -73,19 +75,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
       reverse: true,
       child: Container(
           color: Colors.white,
-          padding: EdgeInsets.all(16.0),
+          // padding: EdgeInsets.all(16.0),
           child: Stack(
             children: [
-              Align(
-                  alignment: Alignment.topRight,
+              showCustomerForm(),
+              Positioned(
+                  top: 0,
+                  right: 0,
                   child: ElevatedButton(
                       onPressed: () {
                         setState(() {
                           isEditing = !isEditing;
                         });
                       },
-                      child: Icon(isEditing ? Icons.save : Icons.edit))),
-              showCustomerForm()
+                      style: ButtonStyle(
+                          shape: MaterialStateProperty.all<CircleBorder>(
+                              CircleBorder(
+                                  // borderRadius: BorderRadius.circular(18.0),
+                                  side: BorderSide(
+                                      color: AppColorSwatche.primary)))),
+                      child: Icon(isEditing ? Icons.save : Icons.edit)))
             ],
           )),
     );
@@ -100,114 +109,121 @@ class CustomerDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      // padding: EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Padding(
+          Container(
             padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 16.0, 0),
-                  child: Container(
-                    child: Icon(
-                      Icons.person,
-                      color: Colors.grey,
-                      size: 72,
-                    ),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: AppColorSwatche.primary),
-                        borderRadius: BorderRadius.circular(36.0)),
-                  ),
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    colors: <Color>[Colors.deepOrange.shade100, Colors.white],
+                    end: Alignment.bottomCenter)),
+            child: Align(
+              alignment: Alignment.center,
+              child: Container(
+                child: Icon(
+                  Icons.person,
+                  color: Colors.grey,
+                  size: 72,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: AppColorSwatche.primary),
+                    borderRadius: BorderRadius.circular(36.0)),
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  'Name',
+                  style: textStyle('p2', AppColorSwatche.primary),
+                ),
+                Text(
+                  customer.customerName,
+                  style: textStyle('p1', AppColorSwatche.black),
+                ),
+                Divider(),
+                SizedBox(height: 10),
+                Text(
+                  'Phone',
+                  style: textStyle('p2', AppColorSwatche.primary),
+                ),
+                Text(
+                  customer.customerPhoneNumber,
+                  style: textStyle('p1', AppColorSwatche.black),
+                ),
+                Divider(),
+                SizedBox(height: 10),
+                Text(
+                  'Address',
+                  style: textStyle('p2', AppColorSwatche.primary),
+                ),
+                Text(
+                  customer.customerAddress,
+                  style: textStyle('p1', AppColorSwatche.black),
+                ),
+                Divider(),
+                SizedBox(height: 10),
+                Text(
+                  'PINCODE',
+                  style: textStyle('p2', AppColorSwatche.primary),
+                ),
+                Text(
+                  customer.customerPincode,
+                  style: textStyle('p1', AppColorSwatche.black),
+                ),
+                Divider(),
+                SizedBox(height: 10),
+                Text(
+                  'Total number of time oil serviced',
+                  style: textStyle('p2', AppColorSwatche.primary),
+                ),
+                Text(
+                  '12',
+                  style: textStyle('p1', AppColorSwatche.black),
+                ),
+                Divider(),
+                SizedBox(height: 10),
+                Text(
+                  'Referral Code',
+                  style: textStyle('p2', AppColorSwatche.primary),
+                ),
+                Text(
+                  customer.garageReferralCode ?? '-',
+                  style: textStyle('p1', AppColorSwatche.black),
+                ),
+                Divider(),
+                SizedBox(height: 10),
+                Row(
                   children: [
-                    Text(
-                      'Name',
-                      style: textStyle('p2', AppColorSwatche.primary),
-                    ),
-                    Text(
-                      customer.customerName,
-                      style: textStyle('p1', AppColorSwatche.black),
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ))),
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, '/login');
+                        },
+                        child: Text(
+                          "Log out",
+                          style: textStyle('p1', Colors.white),
+                        ),
+                      ),
                     ),
                   ],
                 )
               ],
             ),
-          ),
-          Divider(),
-          SizedBox(height: 10),
-          Text(
-            'Phone',
-            style: textStyle('p2', AppColorSwatche.primary),
-          ),
-          Text(
-            customer.customerPhoneNumber,
-            style: textStyle('p1', AppColorSwatche.black),
-          ),
-          Divider(),
-          SizedBox(height: 10),
-          Text(
-            'Address',
-            style: textStyle('p2', AppColorSwatche.primary),
-          ),
-          Text(
-            customer.customerAddress,
-            style: textStyle('p1', AppColorSwatche.black),
-          ),
-          Divider(),
-          SizedBox(height: 10),
-          Text(
-            'PINCODE',
-            style: textStyle('p2', AppColorSwatche.primary),
-          ),
-          Text(
-            customer.customerPincode,
-            style: textStyle('p1', AppColorSwatche.black),
-          ),
-          Divider(),
-          SizedBox(height: 10),
-          Text(
-            'Total number of time oil serviced',
-            style: textStyle('p2', AppColorSwatche.primary),
-          ),
-          Text(
-            '12',
-            style: textStyle('p1', AppColorSwatche.black),
-          ),
-          Divider(),
-          SizedBox(height: 10),
-          Text(
-            'Referral Code',
-            style: textStyle('p2', AppColorSwatche.primary),
-          ),
-          Text(
-            customer.garageReferralCode ?? '-',
-            style: textStyle('p1', AppColorSwatche.black),
-          ),
-          Divider(),
-          SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                  ))),
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/login');
-                  },
-                  child: Text(
-                    "Log out",
-                    style: textStyle('p1', Colors.white),
-                  ),
-                ),
-              ),
-            ],
           ),
         ],
       ),
@@ -240,116 +256,116 @@ class _EditCustomerState extends State<EditCustomer> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Padding(
+          Container(
             padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 16.0, 0),
-                  child: Container(
-                    child: Icon(
-                      Icons.person,
-                      color: Colors.grey,
-                      size: 72,
-                    ),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: AppColorSwatche.primary),
-                        borderRadius: BorderRadius.circular(36.0)),
-                  ),
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    colors: <Color>[Colors.deepOrange.shade100, Colors.white],
+                    end: Alignment.bottomCenter)),
+            child: Align(
+              alignment: Alignment.center,
+              child: Container(
+                child: Icon(
+                  Icons.person,
+                  color: Colors.grey,
+                  size: 72,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Name',
-                      style: textStyle('p2', AppColorSwatche.primary),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width / 2,
-                      child: TextFormField(
-                        initialValue:
-                            customer != null ? customer!.customerName : '',
-                        decoration: const InputDecoration(
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.deepOrange),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.deepOrange),
-                            )),
-                      ),
-                    ),
-                  ],
-                )
-              ],
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(color: AppColorSwatche.primary),
+                    borderRadius: BorderRadius.circular(36.0)),
+              ),
             ),
           ),
-          Divider(),
-          SizedBox(height: 10),
-          Text(
-            'Phone',
-            style: textStyle('p2', AppColorSwatche.primary),
-          ),
-          TextFormField(
-            initialValue: customer != null ? customer!.customerPhoneNumber : '',
-            decoration: const InputDecoration(
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.deepOrange),
+          Container(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                TextFormField(
+                  initialValue: customer != null ? customer!.customerName : '',
+                  style: textStyle('p1', AppColorSwatche.primary),
+                  decoration: const InputDecoration(
+                      labelText: 'Name',
+                      labelStyle: TextStyle(color: Colors.deepOrange),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.deepOrange),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.deepOrange),
+                      )),
                 ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.deepOrange),
-                )),
-          ),
-          Divider(),
-          SizedBox(height: 10),
-          Text(
-            'Address',
-            style: textStyle('p2', AppColorSwatche.primary),
-          ),
-          TextFormField(
-            initialValue: customer != null ? customer!.customerAddress : '',
-            decoration: const InputDecoration(
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.deepOrange),
+                TextFormField(
+                  initialValue:
+                      customer != null ? customer!.customerPhoneNumber : '',
+                  style: textStyle('p1', AppColorSwatche.primary),
+                  decoration: const InputDecoration(
+                      labelText: 'Phone',
+                      labelStyle: TextStyle(color: Colors.deepOrange),
+                      focusColor: Colors.deepOrange,
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.deepOrange),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.deepOrange),
+                      )),
                 ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.deepOrange),
-                )),
-          ),
-          Divider(),
-          SizedBox(height: 10),
-          Text(
-            'PINCODE',
-            style: textStyle('p2', AppColorSwatche.primary),
-          ),
-          TextFormField(
-            initialValue: customer != null ? customer!.customerPincode : '',
-            decoration: const InputDecoration(
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.deepOrange),
+                TextFormField(
+                  initialValue:
+                      customer != null ? customer!.customerAddress : '',
+                  style: textStyle('p1', AppColorSwatche.primary),
+                  decoration: const InputDecoration(
+                      labelText: 'Address',
+                      labelStyle: TextStyle(color: Colors.deepOrange),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.deepOrange),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.deepOrange),
+                      )),
                 ),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Colors.deepOrange),
-                )),
-          ),
-          Divider(),
-          SizedBox(height: 10),
-          Text(
-            'Total number of time oil serviced',
-            style: textStyle('p2', AppColorSwatche.primary),
-          ),
-          Text(
-            '12',
-            style: textStyle('p1', AppColorSwatche.black),
-          ),
-          Divider(),
-          SizedBox(height: 10),
-          Text(
-            'Referral Code',
-            style: textStyle('p2', AppColorSwatche.primary),
-          ),
-          Text(
-            'G45H2111',
-            style: textStyle('p1', AppColorSwatche.black),
+                TextFormField(
+                  initialValue:
+                      customer != null ? customer!.customerPincode : '',
+                  style: textStyle('p1', AppColorSwatche.primary),
+                  decoration: const InputDecoration(
+                      labelText: 'Pincode',
+                      labelStyle: TextStyle(color: Colors.deepOrange),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.deepOrange),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.deepOrange),
+                      )),
+                ),
+                // Divider(),
+                SizedBox(
+                  height: 8.0,
+                ),
+                Text(
+                  'Total number of time oil serviced',
+                  style: textStyle('p2', AppColorSwatche.primary),
+                ),
+                Text(
+                  '12',
+                  style: textStyle('p1', AppColorSwatche.black),
+                ),
+                Divider(),
+                SizedBox(
+                  height: 8.0,
+                ),
+                Text(
+                  'Referral Code',
+                  style: textStyle('p2', AppColorSwatche.primary),
+                ),
+                Text(
+                  'G45H2111',
+                  style: textStyle('p1', AppColorSwatche.black),
+                ),
+              ],
+            ),
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:oilwale/theme/themedata.dart';
 import 'package:oilwale/service/auth.dart';
 
@@ -35,118 +36,115 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        systemNavigationBarColor: AppColorSwatche.white,
+        statusBarColor: AppColorSwatche.white));
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Oilwale",
-            style: TextStyle(color: AppColorSwatche.primary),
-          ),
-          centerTitle: true,
-        ),
+        // appBar: AppBar(
+        //   systemOverlayStyle: SystemUiOverlayStyle(
+        //       systemNavigationBarColor: AppColorSwatche.white,
+        //       statusBarColor: AppColorSwatche.white),
+        // ),
         body: Container(
-          padding: EdgeInsets.all(36.0),
-          child: Center(
-              child: SingleChildScrollView(
-            reverse: true,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Form(
-                    key: _formkey,
-                    child: Column(children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: TextFormField(
-                          onChanged: (String inp) {
-                            _phone = inp;
-                          },
-                          validator: phoneValidate,
-                          keyboardType: TextInputType.number,
-                          decoration: InputDecoration(
-                              prefixIcon: Icon(
-                                Icons.phone,
-                                color: Colors.deepOrange,
-                              ),
-                              hintText: '000-000-0000',
-                              labelText: 'Enter phone',
-                              labelStyle:
-                                  TextStyle(color: AppColorSwatche.primary),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(24.0),
-                                borderSide: BorderSide(
-                                  color: AppColorSwatche.primary,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(24.0),
-                                  borderSide: BorderSide(
-                                      color: AppColorSwatche.primary)),
-                              hintStyle:
-                                  TextStyle(color: AppColorSwatche.primary)),
+      padding: EdgeInsets.all(36.0),
+      child: Center(
+          child: SingleChildScrollView(
+        reverse: true,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              child: Image.asset('assets/img/bgsq.jpg'),
+            ),
+            Form(
+                key: _formkey,
+                child: Column(children: [
+                  TextFormField(
+                    onChanged: (String inp) {
+                      _phone = inp;
+                    },
+                    validator: phoneValidate,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.phone,
+                          color: Colors.deepOrange,
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0),
-                        child: TextFormField(
-                          obscureText: true,
-                          onChanged: (String inp) {
-                            _pwd = inp;
-                          },
-                          validator: pwdValidate,
-                          decoration: InputDecoration(
-                              prefixIcon: Icon(
-                                Icons.password,
-                                color: Colors.deepOrange,
-                              ),
-                              hintText: "Secret",
-                              labelText: 'Enter password',
-                              labelStyle: TextStyle(color: Colors.deepOrange),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(24.0),
-                                borderSide: BorderSide(
-                                  color: Colors.deepOrange,
-                                ),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(24.0),
-                                  borderSide: BorderSide(
-                                      color: AppColorSwatche.primary)),
-                              hintStyle:
-                                  TextStyle(color: AppColorSwatche.primary)),
+                        hintText: '000-000-0000',
+                        labelText: 'Enter phone',
+                        labelStyle: TextStyle(color: AppColorSwatche.primary),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: AppColorSwatche.primary,
+                          ),
                         ),
-                      ),
-                      RadioListTile<Choice>(
-                        title: const Text('Login as Customer'),
-                        value: Choice.Customer,
-                        groupValue: _choice,
-                        onChanged: (Choice? value) {
-                          setState(() {
-                            _choice = value;
-                          });
-                        },
-                      ),
-                      RadioListTile<Choice>(
-                        title: const Text('Login as Garage Dealer'),
-                        value: Choice.Garage,
-                        groupValue: _choice,
-                        onChanged: (Choice? value) {
-                          setState(() {
-                            _choice = value;
-                          });
-                        },
-                      ),
-                    ])),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 8.0),
-                  child: Text(
-                    _errorText,
-                    style: textStyle('p1', Colors.red),
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(color: AppColorSwatche.primary)),
+                        hintStyle: TextStyle(color: AppColorSwatche.primary)),
                   ),
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    Navigator.pushReplacementNamed(context, '/cust_home');
-                    /*
+                  TextFormField(
+                    obscureText: true,
+                    onChanged: (String inp) {
+                      _pwd = inp;
+                    },
+                    validator: pwdValidate,
+                    decoration: InputDecoration(
+                        prefixIcon: Icon(
+                          Icons.lock,
+                          color: Colors.deepOrange,
+                        ),
+                        hintText: "Secret",
+                        labelText: 'Enter password',
+                        labelStyle: TextStyle(color: Colors.deepOrange),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.deepOrange,
+                          ),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide:
+                                BorderSide(color: AppColorSwatche.primary)),
+                        hintStyle: TextStyle(color: AppColorSwatche.primary)),
+                  ),
+                  SizedBox(
+                    height: 36,
+                    child: RadioListTile<Choice>(
+                      title: const Text('Login as Customer'),
+                      value: Choice.Customer,
+                      groupValue: _choice,
+                      onChanged: (Choice? value) {
+                        setState(() {
+                          _choice = value;
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 36,
+                    child: RadioListTile<Choice>(
+                      title: const Text('Login as Garage Dealer'),
+                      value: Choice.Garage,
+                      groupValue: _choice,
+                      onChanged: (Choice? value) {
+                        setState(() {
+                          _choice = value;
+                        });
+                      },
+                    ),
+                  ),
+                ])),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 8.0),
+              child: Text(
+                _errorText,
+                style: textStyle('p1', Colors.red),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                Navigator.pushReplacementNamed(context, '/cust_home');
+                /*
                     if (_formkey.currentState != null &&
                         !_formkey.currentState!.validate()) {
                       return;
@@ -169,54 +167,48 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     }
                     */
-                  },
-                  style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                      )),
-                      fixedSize: MaterialStateProperty.all(
-                          Size.fromWidth(MediaQuery.of(context).size.width))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Login',
-                      style: textStyle('p1', Colors.white),
-                    ),
-                  ),
+              },
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  )),
+                  fixedSize: MaterialStateProperty.all(
+                      Size.fromWidth(MediaQuery.of(context).size.width))),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Login',
+                  style: textStyle('p1', Colors.white),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                  child: Row(
-                    children: [
-                      Expanded(child: Divider()),
-                      Text("or"),
-                      Expanded(child: Divider())
-                    ],
-                  ),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/cust_createAccount');
-                  },
-                  style: ButtonStyle(
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18.0),
-                      )),
-                      fixedSize: MaterialStateProperty.all(
-                          Size.fromWidth(MediaQuery.of(context).size.width))),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Create New Customer Account',
-                      style: textStyle('p1', Colors.white),
-                    ),
-                  ),
-                )
-              ],
+              ),
             ),
-          )),
-        ));
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 4.0),
+              child: Divider(),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/cust_createAccount');
+              },
+              style: ButtonStyle(
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(18.0),
+                  )),
+                  fixedSize: MaterialStateProperty.all(
+                      Size.fromWidth(MediaQuery.of(context).size.width))),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Create New Customer Account',
+                  style: textStyle('p1', Colors.white),
+                ),
+              ),
+            )
+          ],
+        ),
+      )),
+    ));
   }
 }

@@ -16,7 +16,7 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
   bool loadingVMList = true;
   Text loadingDDM = Text(
     'Loading Options..',
-    style: TextStyle(fontSize: 24.0),
+    style: textStyle('p1', AppColorSwatche.black),
   );
 
   @override
@@ -45,12 +45,17 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
   DropdownMenuItem<String> vehicleCompanyDDMB(VehicleCompany vehicleCompany) {
     return DropdownMenuItem(
         value: vehicleCompany.vehicleCompanyId,
-        child: Text(vehicleCompany.vehicleCompany));
+        child: Text(vehicleCompany.vehicleCompany,
+            style: textStyle('p1', AppColorSwatche.black)));
   }
 
   DropdownMenuItem<String> vehicleModelDDMB(Vehicle vehicle) {
     return DropdownMenuItem(
-        value: vehicle.vehicleId, child: Text(vehicle.vehicleModel));
+        value: vehicle.vehicleId,
+        child: Text(
+          vehicle.vehicleModel,
+          style: textStyle('p1', AppColorSwatche.black),
+        ));
   }
 
   @override
@@ -75,13 +80,16 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(4.0),
                       margin: const EdgeInsets.only(bottom: 8.0),
                       decoration: BoxDecoration(
                           border: Border.all(color: AppColorSwatche.primary),
                           borderRadius: BorderRadius.all(Radius.circular(8.0))),
                       child: loadingVCList
-                          ? loadingDDM
+                          ? Container(
+                              padding: EdgeInsets.all(14.0),
+                              width: MediaQuery.of(context).size.width - 44,
+                              child: loadingDDM)
                           : DropdownButton<String>(
                               icon: const Icon(Icons.arrow_downward),
                               iconSize: 24,
@@ -103,13 +111,16 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                                   .toList()),
                     ),
                     Container(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(4.0),
                       margin: const EdgeInsets.only(bottom: 8.0),
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.deepOrange),
                           borderRadius: BorderRadius.all(Radius.circular(8.0))),
                       child: loadingVMList
-                          ? loadingDDM
+                          ? Container(
+                              padding: EdgeInsets.all(14.0),
+                              width: MediaQuery.of(context).size.width - 44,
+                              child: loadingDDM)
                           : DropdownButton<String>(
                               icon: const Icon(Icons.arrow_downward),
                               iconSize: 24,

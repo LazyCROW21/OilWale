@@ -46,7 +46,7 @@ class CustomerAPIManager {
     try {
       String dataString = jsonEncode(data);
       var client = http.Client();
-      String urlStr = base_url + "/addCustomer";
+      String urlStr = base_url + "/customer";
       var url = Uri.parse(urlStr);
       print(dataString);
       var response = await client.post(url,

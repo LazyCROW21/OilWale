@@ -43,7 +43,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       body: Container(
-        color: Colors.grey[200],
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/img/bgsq.jpg'),
+                colorFilter: ColorFilter.mode(
+                    Colors.black.withOpacity(0.2), BlendMode.dstATop))),
         child: getItem(idx),
       ),
       bottomNavigationBar: BottomNavigationBar(

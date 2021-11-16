@@ -153,16 +153,16 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                               labelText: 'Enter vehicle reg. number',
                               labelStyle:
                                   TextStyle(color: AppColorSwatche.primary),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(24.0),
+                              focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                  color: AppColorSwatche.primary,
+                                  color: Colors.deepOrange,
                                 ),
                               ),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(24.0),
-                                  borderSide: BorderSide(
-                                      color: AppColorSwatche.primary)),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Colors.deepOrange,
+                                ),
+                              ),
                               hintStyle:
                                   TextStyle(color: AppColorSwatche.primary)),
                         )),
@@ -179,16 +179,16 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                             labelText: 'Total KM travelled',
                             labelStyle:
                                 TextStyle(color: AppColorSwatche.primary),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(24.0),
+                            focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: AppColorSwatche.primary,
+                                color: Colors.deepOrange,
                               ),
                             ),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(24.0),
-                                borderSide:
-                                    BorderSide(color: AppColorSwatche.primary)),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.deepOrange,
+                              ),
+                            ),
                             hintStyle:
                                 TextStyle(color: AppColorSwatche.primary)),
                       ),
@@ -206,16 +206,16 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                             labelText: 'Daily KM travel',
                             labelStyle:
                                 TextStyle(color: AppColorSwatche.primary),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(24.0),
+                            focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
-                                color: AppColorSwatche.primary,
+                                color: Colors.deepOrange,
                               ),
                             ),
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(24.0),
-                                borderSide:
-                                    BorderSide(color: AppColorSwatche.primary)),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.deepOrange,
+                              ),
+                            ),
                             hintStyle:
                                 TextStyle(color: AppColorSwatche.primary)),
                       ),

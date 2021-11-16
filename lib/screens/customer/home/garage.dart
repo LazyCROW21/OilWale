@@ -72,6 +72,9 @@ class _GarageListViewState extends State<GarageListView> {
               }
             },
             decoration: InputDecoration(
+              isDense: true,
+              contentPadding:
+                  EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
               hintText: 'Search',
               suffixIcon: Icon(
                 Icons.search,

@@ -36,9 +36,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        systemNavigationBarColor: AppColorSwatche.white,
-        statusBarColor: AppColorSwatche.white));
     return Scaffold(
         // appBar: AppBar(
         //   systemOverlayStyle: SystemUiOverlayStyle(
@@ -54,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              child: Image.asset('assets/img/bgsq.jpg'),
+              child: Image.asset('assets/img/bgsq.png'),
             ),
             Form(
                 key: _formkey,
@@ -143,30 +140,30 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
-                Navigator.pushReplacementNamed(context, '/cust_home');
-                /*
-                    if (_formkey.currentState != null &&
-                        !_formkey.currentState!.validate()) {
-                      return;
-                    }
-                    if (_choice == Choice.Customer) {
-                      if (await AuthManager.login(_phone, _pwd, true)) {
-                        Navigator.pushReplacementNamed(context, '/cust_home');
-                      } else {
-                        setState(() {
-                          _errorText = "Invalid phone number";
-                        });
-                      }
-                    } else if (_choice == Choice.Garage) {
-                      if (await AuthManager.login(_phone, _pwd, false)) {
-                        Navigator.pushReplacementNamed(context, '/garage_home');
-                      } else {
-                        setState(() {
-                          _errorText = "Unregistered phone number";
-                        });
-                      }
-                    }
-                    */
+                if (_formkey.currentState != null &&
+                    !_formkey.currentState!.validate()) {
+                  return;
+                }
+                if (_choice == Choice.Customer) {
+                  if (await AuthManager.login(_phone, _pwd, true)) {
+                    Navigator.pushNamedAndRemoveUntil(context, '/cust_home',
+                        (Route<dynamic> route) {
+                      return false;
+                    });
+                  } else {
+                    setState(() {
+                      _errorText = "Invalid credentials";
+                    });
+                  }
+                } else if (_choice == Choice.Garage) {
+                  if (await AuthManager.login(_phone, _pwd, false)) {
+                    Navigator.pushReplacementNamed(context, '/garage_home');
+                  } else {
+                    setState(() {
+                      _errorText = "Invalid credentials";
+                    });
+                  }
+                }
               },
               style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -183,10 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 4.0),
-              child: Divider(),
-            ),
+            Divider(),
             ElevatedButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/cust_createAccount');

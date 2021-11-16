@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:oilwale/screens/customer/home/garagepage.dart';
 import 'package:oilwale/screens/customer/home/productpage.dart';
 import 'package:oilwale/components/vehicledetails.dart';
@@ -11,6 +12,9 @@ import 'package:oilwale/screens/garage/offers.dart';
 import 'package:oilwale/theme/themedata.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarColor: AppColorSwatche.white,
+      statusBarColor: AppColorSwatche.white));
   runApp(MaterialApp(
     theme: ThemeData(
         accentColor: AppColorSwatche.primary,

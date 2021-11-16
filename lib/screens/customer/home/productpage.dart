@@ -39,7 +39,7 @@ class _ProductPageState extends State<ProductPage> {
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
-            product == null ? 'Not found' : product!.name,
+            'Product',
             style: TextStyle(color: Colors.deepOrange),
           ),
         ),
@@ -85,6 +85,7 @@ class _ProductPageState extends State<ProductPage> {
                       style: heading1,
                     ),
                   ),
+                  Divider(),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(

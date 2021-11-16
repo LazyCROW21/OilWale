@@ -74,6 +74,9 @@ class _ProductListViewState extends State<ProductListView> {
               }
             },
             decoration: InputDecoration(
+                isDense: true,
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
                 fillColor: Colors.white,
                 hintText: 'Search',
                 suffixIcon: Icon(

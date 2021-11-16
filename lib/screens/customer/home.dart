@@ -3,6 +3,7 @@ import 'package:oilwale/screens/customer/home/vehicles.dart';
 import 'package:oilwale/screens/customer/home/profile.dart';
 import 'package:oilwale/screens/customer/home/garage.dart';
 import 'package:oilwale/screens/customer/home/products.dart';
+import 'package:oilwale/theme/themedata.dart';
 
 Widget getItem(idx) {
   switch (idx) {
@@ -32,6 +33,11 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         title: Text(
           "Oilwale",
-          style: TextStyle(color: Colors.deepOrange),
+          style: TextStyle(color: AppColorSwatche.primary),
         ),
       ),
       body: Container(
@@ -48,13 +54,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 image: AssetImage('assets/img/bgsq.jpg'),
                 colorFilter: ColorFilter.mode(
                     Colors.black.withOpacity(0.2), BlendMode.dstATop))),
-        child: getItem(idx),
+        child: AnimatedSwitcher(
+            reverseDuration: Duration.zero,
+            duration: Duration(milliseconds: 500),
+            child: getItem(idx),
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              return SlideTransition(
+                key: ValueKey(idx),
+                position: Tween<Offset>(begin: Offset(2, 0), end: Offset.zero)
+                    .animate(animation),
+                child: child,
+              );
+            }),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.directions_car),
+            label: 'My vehicles',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.garage_outlined),

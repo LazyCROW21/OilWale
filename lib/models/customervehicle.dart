@@ -15,10 +15,10 @@ class CustomerVehicle {
       this.currentKM});
 
   CustomerVehicle.fromJSON(Map<String, dynamic> json) {
-    this.id = json['id'];
+    this.id = json['customerVehicleId'];
     this.model = json['model'];
     this.brand = json['brand'];
-    this.kmperday = json['kmperday'];
+    this.kmperday = json['dailyKMTravelled'];
     this.numberPlate = json['numberPlate'];
     this.currentKM = json['currentKM'];
   }

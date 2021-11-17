@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:oilwale/models/customer.dart';
 import 'package:http/http.dart' as http;
 import 'package:oilwale/models/customervehicle.dart';
+import 'package:oilwale/service/vehicle_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String base_url = "https://oilwale.herokuapp.com/api";
@@ -71,20 +72,24 @@ class CustomerAPIManager {
   static Future<List<CustomerVehicle>> getCustomerVehicles(
       String customerId) async {
     List<CustomerVehicle> customerVehicles = [];
-    /*
     try {
       var client = http.Client();
-      String urlStr = base_url + "/customervehicle";
+      String urlStr = base_url + "/customervehicle/customer/" + customerId;
       var url = Uri.parse(urlStr);
       var response = await client.get(url);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         print(jsonString);
         List jsonMap = jsonDecode(jsonString);
-        jsonMap.forEach((element) {
+        for (int i = 0; i < jsonMap.length; i++) {
+          dynamic element = jsonMap[i];
+          dynamic vehicleDetails =
+              await VehicleAPIManager.getVehicle(element['vehicleId']);
+          element['model'] = vehicleDetails['vehicleModel'];
+          element['brand'] = vehicleDetails['vehicleCompany']['vehicleCompany'];
           customerVehicles.add(CustomerVehicle.fromJSON(element));
           print(element);
-        });
+        }
         return customerVehicles;
       } else {
         return customerVehicles;
@@ -93,7 +98,6 @@ class CustomerAPIManager {
       print("Exception $e");
       print("StackTrace $s");
     }
-  */
     return customerVehicles;
   }
 }

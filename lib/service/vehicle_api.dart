@@ -30,6 +30,26 @@ class VehicleAPIManager {
     return vehicles;
   }
 
+  static Future<dynamic> getVehicle(String vehicleId) async {
+    try {
+      var client = http.Client();
+      String urlStr = base_url + "/vehicle/" + vehicleId;
+      var url = Uri.parse(urlStr);
+      var response = await client.get(url);
+      if (response.statusCode == 200) {
+        var jsonString = response.body;
+        dynamic jsonMap = jsonDecode(jsonString);
+        return jsonMap;
+      } else {
+        return null;
+      }
+    } catch (e, s) {
+      print("Exception $e");
+      print("StackTrace $s");
+    }
+    return null;
+  }
+
   // return list of all Vehicle Companies on success or false on error
   static Future<dynamic> getAllVehicleCompanies() async {
     try {

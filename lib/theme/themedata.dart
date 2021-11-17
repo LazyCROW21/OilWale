@@ -5,7 +5,7 @@ const fontFamily = {'': ''};
 class AppColorSwatche {
   static final Color primary = Colors.deepOrange;
   static final Color black = Colors.black;
-  static final Color grey = Colors.grey;
+  static final Color grey = Colors.grey.shade700;
   static final Color white = Colors.white;
 }
 

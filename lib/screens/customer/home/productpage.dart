@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:oilwale/models/product.dart';
+import 'package:oilwale/theme/themedata.dart';
 
 class ProductPage extends StatefulWidget {
   @override
@@ -51,60 +52,65 @@ class _ProductPageState extends State<ProductPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Container(
-                      child: CarouselSlider(
-                    options: CarouselOptions(
-                        height: MediaQuery.of(context).size.height / 2.4,
-                        enlargeCenterPage: true,
-                        enableInfiniteScroll: false),
-                    items: imageURLList
-                        .map((e) => ClipRRect(
-                              borderRadius: BorderRadius.circular(12.0),
-                              child: Stack(
-                                fit: StackFit.expand,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: Image.network(
-                                      e,
-                                      height: 600,
-                                      width: 600,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ))
-                        .toList(),
+                      child: Hero(
+                    tag: ValueKey(product!.id),
+                    child: CarouselSlider(
+                      options: CarouselOptions(
+                          height: MediaQuery.of(context).size.height / 2.4,
+                          enlargeCenterPage: true,
+                          enableInfiniteScroll: false),
+                      items: imageURLList
+                          .map((e) => ClipRRect(
+                                borderRadius: BorderRadius.circular(12.0),
+                                child: Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: Image.network(
+                                        e,
+                                        height: 600,
+                                        width: 600,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ))
+                          .toList(),
+                    ),
                   )),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       product == null ? 'Not found' : product!.name,
                       textAlign: TextAlign.center,
-                      style: heading1,
+                      style: textStyle('h4', AppColorSwatche.black),
                     ),
                   ),
-                  Divider(),
+                  Divider(
+                    color: Colors.deepOrange,
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       'Description:',
-                      style: heading2,
+                      style: textStyle('h5', AppColorSwatche.black),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       product == null ? 'Not found' : product!.specification,
-                      style: desc,
+                      style: textStyle('p1', Colors.grey),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       'Details:',
-                      style: heading2,
+                      style: textStyle('h5', AppColorSwatche.black),
                     ),
                   ),
                   Padding(
@@ -114,28 +120,33 @@ class _ProductPageState extends State<ProductPage> {
                           TableRow(children: [
                             Container(
                               padding: p1,
-                              child: Text(
-                                'Grade',
-                                style: desc,
-                              ),
+                              child: Text('Grade',
+                                  style:
+                                      textStyle('p1', AppColorSwatche.primary)),
                             ),
                             Container(
                               padding: p1,
-                              child: Text(product == null
-                                  ? 'Not found'
-                                  : product!.grade),
+                              child: Text(
+                                product == null ? 'Not found' : product!.grade,
+                                style: textStyle('p1', AppColorSwatche.black),
+                              ),
                             )
                           ]),
                           TableRow(children: [
                             Container(
                               padding: p1,
-                              child: Text('Package Size', style: desc),
+                              child: Text('Package Size',
+                                  style:
+                                      textStyle('p1', AppColorSwatche.primary)),
                             ),
                             Container(
                               padding: p1,
-                              child: Text(product == null
-                                  ? 'Not found'
-                                  : (product!.packageSize ?? 'NA')),
+                              child: Text(
+                                product == null
+                                    ? 'Not found'
+                                    : product!.packingSize,
+                                style: textStyle('p1', AppColorSwatche.black),
+                              ),
                             )
                           ])
                         ],
@@ -144,14 +155,27 @@ class _ProductPageState extends State<ProductPage> {
                     padding: EdgeInsets.all(8.0),
                     child: Text(
                       "Recommended Models:",
-                      style: heading2,
+                      style: textStyle('h5', AppColorSwatche.black),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "\nModel1 Brand1" + "\nModel1 Brand2" + "\nModel2 Brand1",
-                      style: desc,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "> Model1 Brand1",
+                          style: textStyle('p1', AppColorSwatche.black),
+                        ),
+                        Text(
+                          "> Model2 Brand2",
+                          style: textStyle('p1', AppColorSwatche.black),
+                        ),
+                        Text(
+                          "> Model3 Brand3",
+                          style: textStyle('p1', AppColorSwatche.black),
+                        ),
+                      ],
                     ),
                   ),
                 ]),

@@ -3,7 +3,7 @@ class Product {
   late final String name;
   late final String grade;
   late final String specification;
-  late final String? packageSize;
+  late final String packingSize;
   late final String? image;
 
   Product(
@@ -11,7 +11,7 @@ class Product {
       required this.name,
       required this.grade,
       required this.specification,
-      this.packageSize,
+      required this.packingSize,
       this.image});
 
   Product.fromJSON(Map<String, dynamic> json) {
@@ -19,7 +19,7 @@ class Product {
     this.name = json['productName'];
     this.grade = json['grade'];
     this.specification = json['specification'];
-    this.packageSize = json['packageSize'];
+    this.packingSize = json['packingSize'];
     this.image = json['productImage'];
   }
 }

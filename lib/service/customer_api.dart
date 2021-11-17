@@ -11,7 +11,7 @@ class CustomerAPIManager {
   static Future<dynamic> getCustomerDetail(String customerId) async {
     try {
       var client = http.Client();
-      String urlStr = base_url + "/getCustomerById/" + customerId;
+      String urlStr = base_url + "/customer/" + customerId;
       var url = Uri.parse(urlStr);
       var response = await client.get(url);
       if (response.statusCode == 200) {
@@ -24,6 +24,8 @@ class CustomerAPIManager {
         // store in preferences
         preferences.setString('customerId', jsonMap['customerId']);
         preferences.setString('customerName', jsonMap['customerName']);
+        preferences.setString(
+            'customerPhoneNumber', jsonMap['customerPhoneNumber']);
         preferences.setString('customerAddress', jsonMap['customerAddress']);
         preferences.setString('customerPincode', jsonMap['customerPincode']);
         if (jsonMap['garageReferralCode'] != null) {
@@ -68,34 +70,30 @@ class CustomerAPIManager {
 
   static Future<List<CustomerVehicle>> getCustomerVehicles(
       String customerId) async {
+    List<CustomerVehicle> customerVehicles = [];
+    /*
     try {
-      return [
-        CustomerVehicle(
-            id: "123",
-            model: "Hayabusa",
-            brand: "Suzuki",
-            numberPlate: "GJ02FX4567",
-            kmperday: 1,
-            currentKM: 100),
-        CustomerVehicle(
-            id: "133",
-            model: "Z1",
-            brand: "Yamaha",
-            numberPlate: "GJ01RX7867",
-            kmperday: 4,
-            currentKM: 500),
-        CustomerVehicle(
-            id: "143",
-            model: "Dream Yuga",
-            brand: "Hero",
-            numberPlate: "GJ01FF1044",
-            kmperday: 5,
-            currentKM: 450),
-      ];
+      var client = http.Client();
+      String urlStr = base_url + "/customervehicle";
+      var url = Uri.parse(urlStr);
+      var response = await client.get(url);
+      if (response.statusCode == 200) {
+        var jsonString = response.body;
+        print(jsonString);
+        List jsonMap = jsonDecode(jsonString);
+        jsonMap.forEach((element) {
+          customerVehicles.add(CustomerVehicle.fromJSON(element));
+          print(element);
+        });
+        return customerVehicles;
+      } else {
+        return customerVehicles;
+      }
     } catch (e, s) {
       print("Exception $e");
       print("StackTrace $s");
     }
-    return [];
+  */
+    return customerVehicles;
   }
 }

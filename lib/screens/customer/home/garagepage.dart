@@ -47,31 +47,34 @@ class _GaragePageState extends State<GaragePage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Container(
-                      child: CarouselSlider(
-                    options: CarouselOptions(
-                        height: MediaQuery.of(context).size.height / 2.4,
-                        enlargeCenterPage: true,
-                        enableInfiniteScroll: false),
-                    items: imageURLList
-                        .map((e) => ClipRRect(
-                              borderRadius: BorderRadius.circular(12.0),
-                              child: Stack(
-                                fit: StackFit.expand,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: Image.network(
-                                      e,
-                                      height: 600,
-                                      width: 600,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ))
-                        .toList(),
+                      child: Hero(
+                    tag: ValueKey(garage!.garageId),
+                    child: CarouselSlider(
+                      options: CarouselOptions(
+                          height: MediaQuery.of(context).size.height / 2.4,
+                          enlargeCenterPage: true,
+                          enableInfiniteScroll: false),
+                      items: imageURLList
+                          .map((e) => ClipRRect(
+                                borderRadius: BorderRadius.circular(12.0),
+                                child: Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: Image.network(
+                                        e,
+                                        height: 600,
+                                        width: 600,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ))
+                          .toList(),
+                    ),
                   )),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -80,6 +83,18 @@ class _GaragePageState extends State<GaragePage> {
                       textAlign: TextAlign.center,
                       style: textStyle('h4', AppColorSwatche.black),
                     ),
+                  ),
+                  Divider(
+                    color: AppColorSwatche.primary,
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.location_pin),
+                      Text(
+                        'Location',
+                        style: textStyle('h5', AppColorSwatche.black),
+                      )
+                    ],
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -92,17 +107,22 @@ class _GaragePageState extends State<GaragePage> {
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
                       garage != null
-                          ? "PINCODE: ${garage!.pincode}"
-                          : 'PINCODE: Not Found',
+                          ? "Pincode: ${garage!.pincode}"
+                          : 'Pincode: Not Found',
                       style: textStyle('p1', AppColorSwatche.grey),
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      "Contact Details",
-                      style: textStyle('h5', AppColorSwatche.black),
-                    ),
+                  Divider(
+                    color: AppColorSwatche.primary,
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.contact_page),
+                      Text(
+                        "Contact Details",
+                        style: textStyle('h5', AppColorSwatche.black),
+                      )
+                    ],
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),

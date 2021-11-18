@@ -36,7 +36,7 @@ class _GaragePageState extends State<GaragePage> {
           ),
           title: Text(
             garage != null ? garage!.garageName : 'Not Found',
-            style: TextStyle(color: Colors.deepOrange),
+            style: textStyle('h4', AppColorSwatche.primary),
           ),
         ),
         body: SingleChildScrollView(

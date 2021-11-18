@@ -41,7 +41,7 @@ class _ProductPageState extends State<ProductPage> {
           ),
           title: Text(
             'Product',
-            style: TextStyle(color: Colors.deepOrange),
+            style: textStyle('h4', AppColorSwatche.primary),
           ),
         ),
         body: SingleChildScrollView(

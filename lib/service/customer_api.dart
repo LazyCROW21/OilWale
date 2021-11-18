@@ -69,6 +69,7 @@ class CustomerAPIManager {
     return false;
   }
 
+  // returns list of customer vehicle under the specified customer
   static Future<List<CustomerVehicle>> getCustomerVehicles(
       String customerId) async {
     List<CustomerVehicle> customerVehicles = [];
@@ -99,5 +100,55 @@ class CustomerAPIManager {
       print("StackTrace $s");
     }
     return customerVehicles;
+  }
+
+  // return true on successfully adding customervehicle, else false
+  static Future<bool> addCustomerVehicle(Map<String, dynamic> data) async {
+    try {
+      String dataString = jsonEncode(data);
+      var client = http.Client();
+      String urlStr = base_url + "/customervehicle";
+      var url = Uri.parse(urlStr);
+      print(dataString);
+      var response = await client.post(url,
+          body: dataString, headers: {'Content-Type': 'application/json'});
+      if (response.statusCode == 200) {
+        var jsonString = response.body;
+        Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+        print(jsonMap);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e, s) {
+      print("Exception $e");
+      print("StackTrace $s");
+    }
+    return false;
+  }
+
+  // returns true/false upon trying to delete customervehicle under the specified customer
+  static Future<bool> deleteCustomerVehicle(String customerVehicleId) async {
+    try {
+      var client = http.Client();
+      String urlStr =
+          base_url + "/customervehicle/vehicle/" + customerVehicleId;
+      var url = Uri.parse(urlStr);
+      var response = await client.get(url);
+      if (response.statusCode == 200) {
+        var jsonString = response.body;
+        print(jsonString);
+        dynamic jsonMap = jsonDecode(jsonString);
+        if (jsonMap['customerVehicleId'] != null &&
+            jsonMap['customerVehicleId'] == customerVehicleId) {
+          return true;
+        }
+      }
+      return false;
+    } catch (e, s) {
+      print("Exception $e");
+      print("StackTrace $s");
+    }
+    return false;
   }
 }

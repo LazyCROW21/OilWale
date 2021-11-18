@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:oilwale/models/vehicle.dart';
 import 'package:oilwale/models/vehiclecompany.dart';
+import 'package:oilwale/service/customer_api.dart';
 import 'package:oilwale/service/vehicle_api.dart';
 import 'package:oilwale/theme/themedata.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddVehicleForm extends StatefulWidget {
   @override
@@ -12,6 +15,7 @@ class AddVehicleForm extends StatefulWidget {
 class _AddVehicleFormState extends State<AddVehicleForm> {
   List<VehicleCompany> _company = [];
   List<Vehicle> _models = [];
+  Map<String, dynamic> newCustomerVehicle = {'active': true};
   bool loadingVCList = true;
   bool loadingVMList = true;
   Text loadingDDM = Text(
@@ -19,14 +23,47 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
     style: textStyle('p1', AppColorSwatche.black),
   );
 
+  // TextFormField Inputs
+  String? vehicleCompanyIdInput;
+  String? vehicleIdInput;
+  String? totalKMTravelledInput;
+  String? numberplateInput;
+  String? dailyKMTravelInput;
+
+  // TextFormField Error
+  String? vehicleCompanyIdErrorText;
+  String? vehicleIdErrorText;
+  String? totalKMTravelledErrorText;
+  String? numberplateErrorText;
+  String? dailyKMTravelErrorText;
+
+  // regex [A-Z]{2}[0-9]{1,2}[A-Z0-9]{1,2}[0-9]{4}
+  RegExp numberPlateRegExp = new RegExp(
+    r"^[A-Z]{2}[0-9]{1,2}[A-Z0-9]{1,2}[0-9]{4}$",
+    caseSensitive: true,
+    multiLine: false,
+  );
+
   @override
   void initState() {
     super.initState();
+    SharedPreferences.getInstance().then((SharedPreferences preferences) {
+      String? customerId = preferences.getString('customerId');
+      if (customerId == null) {
+        Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+        return;
+      }
+      newCustomerVehicle['customerId'] = customerId;
+    });
     VehicleAPIManager.getAllVehicleCompanies().then((result) {
       setState(() {
         loadingVCList = false;
         _company = result;
       });
+      if (_company.length != 0) {
+        vehicleCompanyIdInput = _company[0].vehicleCompanyId;
+        changeModelList(_company[0].vehicleCompanyId);
+      }
     });
   }
 
@@ -56,6 +93,59 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
           vehicle.vehicleModel,
           style: textStyle('p1', AppColorSwatche.black),
         ));
+  }
+
+  bool validateForm() {
+    bool error = false;
+    // check VehicleCompanyId
+    if (vehicleCompanyIdInput == null || vehicleCompanyIdInput == '') {
+      vehicleCompanyIdErrorText = '* Required';
+      error = true;
+    } else {
+      vehicleCompanyIdErrorText = null;
+    }
+
+    // check VehicleId
+    if (vehicleIdInput == null || vehicleIdInput == '') {
+      vehicleIdErrorText = '* Required';
+      error = true;
+    } else {
+      vehicleIdErrorText = null;
+    }
+
+    // check totalKMTravelledInput
+    if (totalKMTravelledInput == null || totalKMTravelledInput == '') {
+      totalKMTravelledErrorText = '* Required';
+      error = true;
+    } else if (int.tryParse(totalKMTravelledInput ?? '') == null) {
+      totalKMTravelledErrorText = '* Invalid number';
+      error = true;
+    } else {
+      totalKMTravelledErrorText = null;
+    }
+
+    // check numberplateInput
+    if (numberplateInput == null || numberplateInput == '') {
+      numberplateErrorText = '* Required';
+      error = true;
+    } else if (!numberPlateRegExp.hasMatch(numberplateInput ?? '')) {
+      numberplateErrorText = '* Invalid format';
+      error = true;
+    } else {
+      numberplateErrorText = null;
+    }
+
+    // check dailyKMTravelInput
+    if (dailyKMTravelInput == null || dailyKMTravelInput == '') {
+      dailyKMTravelErrorText = '* Required';
+      error = true;
+    } else if (int.tryParse(totalKMTravelledInput ?? '') == null) {
+      dailyKMTravelErrorText = '* Invalid number';
+      error = true;
+    } else {
+      dailyKMTravelErrorText = null;
+    }
+    return !error;
   }
 
   @override
@@ -102,10 +192,11 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                               onChanged: (String? vehicleCompanyId) {
                                 print('Selected: ' + (vehicleCompanyId ?? ''));
                                 changeModelList(vehicleCompanyId ?? '');
+                                setState(() {
+                                  vehicleCompanyIdInput = vehicleCompanyId;
+                                });
                               },
-                              value: _company.length != 0
-                                  ? _company[0].vehicleCompanyId
-                                  : null,
+                              value: vehicleCompanyIdInput,
                               items: _company
                                   .map((e) => vehicleCompanyDDMB(e))
                                   .toList()),
@@ -132,6 +223,7 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                               ),
                               onChanged: (String? vehicleId) {
                                 print('Selected: ' + (vehicleId ?? ''));
+                                vehicleIdInput = vehicleId;
                               },
                               value: _models.length != 0
                                   ? _models[0].vehicleId
@@ -143,7 +235,9 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                     Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: TextFormField(
-                          onChanged: (String inp) {},
+                          onChanged: (String inp) {
+                            numberplateInput = inp;
+                          },
                           // validator: null,
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
@@ -164,12 +258,15 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                                 ),
                               ),
                               hintStyle:
-                                  TextStyle(color: AppColorSwatche.primary)),
+                                  TextStyle(color: AppColorSwatche.primary),
+                              errorText: numberplateErrorText),
                         )),
                     Padding(
                       padding: EdgeInsets.only(bottom: 8.0),
                       child: TextFormField(
-                        onChanged: (String inp) {},
+                        onChanged: (String inp) {
+                          totalKMTravelledInput = inp;
+                        },
                         // validator: null,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
@@ -190,13 +287,16 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                               ),
                             ),
                             hintStyle:
-                                TextStyle(color: AppColorSwatche.primary)),
+                                TextStyle(color: AppColorSwatche.primary),
+                            errorText: totalKMTravelledErrorText),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 8.0),
                       child: TextFormField(
-                        onChanged: (String inp) {},
+                        onChanged: (String inp) {
+                          dailyKMTravelInput = inp;
+                        },
                         // validator: null,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
@@ -217,7 +317,8 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                               ),
                             ),
                             hintStyle:
-                                TextStyle(color: AppColorSwatche.primary)),
+                                TextStyle(color: AppColorSwatche.primary),
+                            errorText: dailyKMTravelErrorText),
                       ),
                     )
                   ],
@@ -226,8 +327,45 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
-                onPressed: () {
-                  print("vehicle added");
+                onPressed: () async {
+                  bool validate = false;
+                  setState(() {
+                    validate = validateForm();
+                  });
+                  if (!validate) {
+                    return;
+                  }
+
+                  newCustomerVehicle['vehicleCompanyId'] =
+                      vehicleCompanyIdInput;
+                  newCustomerVehicle['vehicleId'] = vehicleIdInput;
+                  newCustomerVehicle['currentKM'] =
+                      int.parse(totalKMTravelledInput ?? '0');
+                  newCustomerVehicle['numberPlate'] = numberplateInput;
+                  newCustomerVehicle['dailyKMTravelled'] =
+                      int.parse(dailyKMTravelInput ?? '0');
+                  bool result = await CustomerAPIManager.addCustomerVehicle(
+                      newCustomerVehicle);
+                  if (result) {
+                    Navigator.pop(context);
+                    Fluttertoast.showToast(
+                        msg: "Vehicle Added",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.grey,
+                        textColor: Colors.white,
+                        fontSize: 16.0);
+                    return;
+                  }
+                  Fluttertoast.showToast(
+                      msg: "Error in adding vehicle",
+                      toastLength: Toast.LENGTH_SHORT,
+                      gravity: ToastGravity.BOTTOM,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.grey,
+                      textColor: Colors.white,
+                      fontSize: 16.0);
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),

@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:oilwale/models/customer.dart';
+import 'package:oilwale/service/customer_api.dart';
 import 'package:oilwale/theme/themedata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,6 +13,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool isEditing = false;
+  Customer? undoCustomer;
   Customer customer = Customer(
       active: true,
       createdAt: '',
@@ -30,6 +33,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     getCustomerPrefs().then((value) {
       setState(() {
         customerDetail = CustomerDetail(customer);
+        undoCustomer = new Customer(
+            active: customer.active,
+            createdAt: '',
+            customerAddress: customer.customerAddress,
+            customerId: customer.customerId,
+            customerName: customer.customerName,
+            customerPhoneNumber: customer.customerPhoneNumber,
+            customerPincode: customer.customerPincode,
+            updatedAt: '');
       });
     });
   }
@@ -56,6 +68,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
         preferences.getString("garageReferralCode") ?? '-';
   }
 
+  void saveCustomerEdit() async {
+    bool result = await CustomerAPIManager.updateCustomer(customer);
+    if (result) {
+      Fluttertoast.showToast(
+          msg: "Changes saved!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.setString("customerName", customer.customerName);
+      preferences.setString(
+          "customerPhoneNumber", customer.customerPhoneNumber);
+      preferences.setString("customerAddress", customer.customerAddress);
+      preferences.setString("customerPincode", customer.customerPincode);
+    } else {
+      Fluttertoast.showToast(
+          msg: "Error in updating! try later",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey,
+          textColor: Colors.white,
+          fontSize: 16.0);
+      setState(() {
+        customer.customerName = undoCustomer!.customerName;
+        customer.customerAddress = undoCustomer!.customerAddress;
+        customer.customerPhoneNumber = undoCustomer!.customerPhoneNumber;
+        customer.customerPincode = undoCustomer!.customerPincode;
+      });
+    }
+  }
+
   void setCustomer(Customer editCustomer) {
     this.customer.customerName = editCustomer.customerName;
     this.customer.customerAddress = editCustomer.customerAddress;
@@ -79,6 +126,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         setState(() {
                           isEditing = !isEditing;
                         });
+                        if (!isEditing) {
+                          saveCustomerEdit();
+                        }
                       },
                       style: ButtonStyle(
                           shape: MaterialStateProperty.all<CircleBorder>(

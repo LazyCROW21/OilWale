@@ -45,6 +45,7 @@ class CustomerAPIManager {
     return false;
   }
 
+  // adds customer and return bool representing success of operation
   static Future<bool> addCustomer(Map<String, dynamic> data) async {
     try {
       String dataString = jsonEncode(data);
@@ -53,6 +54,39 @@ class CustomerAPIManager {
       var url = Uri.parse(urlStr);
       print(dataString);
       var response = await client.post(url,
+          body: dataString, headers: {'Content-Type': 'application/json'});
+      if (response.statusCode == 200) {
+        var jsonString = response.body;
+        Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+        print(jsonMap);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e, s) {
+      print("Exception $e");
+      print("StackTrace $s");
+    }
+    return false;
+  }
+
+  // updates existing customer return true on success
+  static Future<bool> updateCustomer(Customer customer) async {
+    try {
+      Map<String, dynamic> data = {
+        "active": true,
+        "customerAddress": customer.customerAddress,
+        "customerId": customer.customerId,
+        "customerName": customer.customerName,
+        "customerPhoneNumber": customer.customerPhoneNumber,
+        "customerPincode": customer.customerPincode,
+      };
+      String dataString = jsonEncode(data);
+      var client = http.Client();
+      String urlStr = base_url + "/customer";
+      var url = Uri.parse(urlStr);
+      print(dataString);
+      var response = await client.put(url,
           body: dataString, headers: {'Content-Type': 'application/json'});
       if (response.statusCode == 200) {
         var jsonString = response.body;

@@ -5,21 +5,6 @@ import 'package:oilwale/screens/customer/home/garage.dart';
 import 'package:oilwale/screens/customer/home/products.dart';
 import 'package:oilwale/theme/themedata.dart';
 
-Widget getItem(idx) {
-  switch (idx) {
-    case 0:
-      return VehiclesScreen();
-    case 1:
-      return GarageScreen();
-    case 2:
-      return ProductScreen();
-    case 3:
-      return ProfileScreen();
-    default:
-      return Container();
-  }
-}
-
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -33,10 +18,29 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  VehiclesScreen vehiclesScreen = VehiclesScreen();
+  GarageScreen garageScreen = GarageScreen();
+  ProductScreen productScreen = ProductScreen();
+  ProfileScreen profileScreen = ProfileScreen();
   // @override
   // void initState() {
   //   super.initState();
   // }
+
+  Widget getItem(idx) {
+    switch (idx) {
+      case 0:
+        return vehiclesScreen;
+      case 1:
+        return garageScreen;
+      case 2:
+        return productScreen;
+      case 3:
+        return profileScreen;
+      default:
+        return Container();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -74,6 +74,9 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
     VehicleAPIManager.getVehiclesByCompanyId(vehicleCompanyId).then((_result) {
       setState(() {
         _models = _result;
+        if (_result.length != 0) {
+          vehicleIdInput = _result[0].vehicleId;
+        }
         loadingVMList = false;
       });
     });
@@ -223,11 +226,11 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                               ),
                               onChanged: (String? vehicleId) {
                                 print('Selected: ' + (vehicleId ?? ''));
-                                vehicleIdInput = vehicleId;
+                                setState(() {
+                                  vehicleIdInput = vehicleId;
+                                });
                               },
-                              value: _models.length != 0
-                                  ? _models[0].vehicleId
-                                  : null,
+                              value: vehicleIdInput,
                               items: _models
                                   .map((e) => vehicleModelDDMB(e))
                                   .toList()),

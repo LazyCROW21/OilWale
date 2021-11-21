@@ -37,9 +37,10 @@ class VehicleCard extends StatelessWidget {
                   )),
               TextButton(
                   onPressed: () async {
+                    print("Deleting: ${customerVehicle.customerVehicleId}");
                     bool result =
                         await CustomerAPIManager.deleteCustomerVehicle(
-                            customerVehicle.id);
+                            customerVehicle.customerVehicleId);
                     if (!result) {
                       Navigator.pop(context, false);
                       Fluttertoast.showToast(
@@ -75,7 +76,7 @@ class VehicleCard extends StatelessWidget {
             ),
           ),
         ),
-        key: ValueKey(customerVehicle.id),
+        key: ValueKey(customerVehicle.customerVehicleId),
         child: MaterialButton(
           padding: EdgeInsets.zero,
           onPressed: () {

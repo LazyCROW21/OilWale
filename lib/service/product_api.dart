@@ -29,6 +29,26 @@ class ProductAPIManager {
     return products;
   }
 
+  // return full details of particular product
+  static Future<dynamic> getProduct(String productId) async {
+    try {
+      var client = http.Client();
+      String urlStr = base_url + "/product/" + productId;
+      var url = Uri.parse(urlStr);
+      var response = await client.get(url);
+      if (response.statusCode == 200) {
+        var jsonString = response.body;
+        dynamic jsonMap = jsonDecode(jsonString);
+        return jsonMap;
+      }
+      return null;
+    } catch (e, s) {
+      print("Exception $e");
+      print("StackTrace $s");
+    }
+    return null;
+  }
+
   // return the search result from all product list
   static Future<dynamic> searchProduct(String inp) async {
     try {

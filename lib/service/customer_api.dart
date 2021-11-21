@@ -88,6 +88,8 @@ class CustomerAPIManager {
               await VehicleAPIManager.getVehicle(element['vehicleId']);
           element['model'] = vehicleDetails['vehicleModel'];
           element['brand'] = vehicleDetails['vehicleCompany']['vehicleCompany'];
+          element['suggestedProducts'] = vehicleDetails['suggestedProduct'];
+          print(vehicleDetails['suggestedProduct']);
           customerVehicles.add(CustomerVehicle.fromJSON(element));
           print(element);
         }
@@ -134,7 +136,7 @@ class CustomerAPIManager {
       String urlStr =
           base_url + "/customervehicle/vehicle/" + customerVehicleId;
       var url = Uri.parse(urlStr);
-      var response = await client.get(url);
+      var response = await client.delete(url);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         print(jsonString);

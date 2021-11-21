@@ -211,7 +211,14 @@ class CustomerDetail extends StatelessWidget {
                           borderRadius: BorderRadius.circular(18.0),
                         ))),
                         onPressed: () {
-                          Navigator.pushReplacementNamed(context, '/login');
+                          SharedPreferences.getInstance()
+                              .then((SharedPreferences preferences) {
+                            preferences.clear();
+                          });
+                          Navigator.pushNamedAndRemoveUntil(context, '/login',
+                              (Route<dynamic> route) {
+                            return false;
+                          });
                         },
                         child: Text(
                           "Log out",

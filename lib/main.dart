@@ -4,6 +4,7 @@ import 'package:oilwale/screens/customer/home/productpage.dart';
 import 'package:oilwale/components/vehicledetails.dart';
 import 'package:oilwale/screens/customer/index.dart';
 import 'package:oilwale/components/addvehicleform.dart';
+import 'package:oilwale/screens/garage/PurdchaseHistory.dart';
 import 'package:oilwale/screens/garage/cart.dart';
 import 'package:oilwale/screens/garage/garage_scaffold.dart';
 import 'package:oilwale/screens/garage/offerdetails.dart';
@@ -44,6 +45,7 @@ void main() {
       '/garage_offers': (context) => OffersPage(),
       '/cart': (context) => CartPage(),
       '/offer_details': (context) => OfferDetails(),
+      '/garage_history': (context) => PurchaseHistory(),
     },
   ));
 }

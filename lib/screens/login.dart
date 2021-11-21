@@ -143,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             ElevatedButton(
               onPressed: () async {
-                Navigator.pushReplacementNamed(context, '/cust_home');
+                Navigator.pushReplacementNamed(context, '/garage_home');
                 /*
                     if (_formkey.currentState != null &&
                         !_formkey.currentState!.validate()) {

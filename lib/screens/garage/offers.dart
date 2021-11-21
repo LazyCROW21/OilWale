@@ -23,22 +23,19 @@ class OffersPageState extends State<OffersPage> {
   Widget build(BuildContext context) {
     return showoffer ? OfferDetails() :
 
-         Material(
-           
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: CatalogModel.offers.length,
-                        itemBuilder: (context, index) {
-                          return OffersWidget(
-                            offers: CatalogModel.offers[index],
-                          );
-                        }),
-                  ],
-                ),
-              ),
-            );
+         SingleChildScrollView(
+           child: Column(
+             children: [
+               ListView.builder(
+                   shrinkWrap: true,
+                   itemCount: CatalogModel.offers.length,
+                   itemBuilder: (context, index) {
+                     return OffersWidget(
+                       offers: CatalogModel.offers[index],
+                     );
+                   }),
+             ],
+           ),
+         );
   }
 }

@@ -387,10 +387,20 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: formSubmit
-                          ? SpinKitRing(
-                              color: AppColorSwatche.white,
-                              size: 24,
-                              lineWidth: 4,
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SpinKitRing(
+                                  color: AppColorSwatche.white,
+                                  size: 24,
+                                  lineWidth: 4,
+                                ),
+                                Text(
+                                  'Creating account..',
+                                  style: textStyle('p1', Colors.white),
+                                )
+                              ],
                             )
                           : Text(
                               'Create Account',

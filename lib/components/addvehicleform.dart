@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:oilwale/models/vehicle.dart';
 import 'package:oilwale/models/vehiclecompany.dart';
@@ -18,6 +19,7 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
   Map<String, dynamic> newCustomerVehicle = {'active': true};
   bool loadingVCList = true;
   bool loadingVMList = true;
+  bool formSubmit = false;
   Text loadingDDM = Text(
     'Loading Options..',
     style: textStyle('p1', AppColorSwatche.black),
@@ -331,11 +333,18 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
                 onPressed: () async {
+                  if (formSubmit) {
+                    return;
+                  }
                   bool validate = false;
                   setState(() {
+                    formSubmit = true;
                     validate = validateForm();
                   });
                   if (!validate) {
+                    setState(() {
+                      formSubmit = false;
+                    });
                     return;
                   }
 
@@ -372,10 +381,26 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Submit",
-                    style: textStyle('p1', Colors.white),
-                  ),
+                  child: formSubmit
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SpinKitRing(
+                              color: AppColorSwatche.white,
+                              size: 24,
+                              lineWidth: 4,
+                            ),
+                            Text(
+                              "Adding..",
+                              style: textStyle('p1', Colors.white),
+                            )
+                          ],
+                        )
+                      : Text(
+                          "Submit",
+                          style: textStyle('p1', Colors.white),
+                        ),
                 ),
                 style: ButtonStyle(
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(

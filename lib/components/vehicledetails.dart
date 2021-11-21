@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:oilwale/components/editvehicledetail.dart';
 import 'package:oilwale/components/vehicledetailblock.dart';
 import 'package:oilwale/models/customervehicle.dart';
-import 'package:oilwale/service/product_api.dart';
-import 'package:oilwale/service/vehicle_api.dart';
 import 'package:oilwale/theme/themedata.dart';
 
 class VehicleDetails extends StatefulWidget {
@@ -22,6 +20,12 @@ class _VehicleDetailsState extends State<VehicleDetails> {
   // void initState() {
   //   super.initState();
   // }
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   Widget toggleForm() {
     if (isEditing) {
@@ -36,23 +40,6 @@ class _VehicleDetailsState extends State<VehicleDetails> {
     }
     return Icons.edit;
   }
-
-  // Future<void> getRecommendedProducts(String vehicleId) async {
-  //   recommendedProductList.clear();
-  //   dynamic vehicle = await VehicleAPIManager.getVehicle(vehicleId);
-  //   print('Recievd ($vehicleId): ');
-  //   print(vehicle);
-  //   if (vehicle != null && vehicle['suggestedProductDetails'] != null) {
-  //     List suggestedProducts = vehicle['suggestedProductDetails'];
-  //     for (int i = 0; i < suggestedProducts.length; i++) {
-  //       dynamic product =
-  //           await ProductAPIManager.getProduct(suggestedProducts[i]);
-  //       setState(() {
-  //         recommendedProductList.add(product['productName']);
-  //       });
-  //     }
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {

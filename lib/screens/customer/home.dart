@@ -26,6 +26,12 @@ class _HomeScreenState extends State<HomeScreen> {
   // void initState() {
   //   super.initState();
   // }
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   Widget getItem(idx) {
     switch (idx) {

@@ -29,6 +29,12 @@ class _ProductPageState extends State<ProductPage> {
   //   super.initState();
   //   args = ModalRoute.of(context)!.settings.arguments as String;
   // }
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -15,6 +15,7 @@ class VehiclesScreen extends StatefulWidget {
 class _VehiclesScreenState extends State<VehiclesScreen> {
   List<CustomerVehicle>? customerVehicleList;
   String? customerId;
+
   @override
   initState() {
     super.initState();
@@ -30,6 +31,13 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
         });
       });
     });
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
   }
 
   Widget vehicleListLoader() {

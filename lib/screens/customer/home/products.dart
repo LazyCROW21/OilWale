@@ -43,6 +43,13 @@ class _ProductListViewState extends State<ProductListView> {
   }
 
   @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [

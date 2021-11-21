@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:oilwale/components/formelements.dart';
 import 'package:oilwale/models/vehicle.dart';
 import 'package:oilwale/models/vehiclecompany.dart';
 import 'package:oilwale/service/vehicle_api.dart';
@@ -29,6 +28,13 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
         _company = result;
       });
     });
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
   }
 
   void changeModelList(String vehicleCompanyId) {

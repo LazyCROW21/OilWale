@@ -69,6 +69,13 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
     });
   }
 
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   void changeModelList(String vehicleCompanyId) {
     setState(() {
       loadingVMList = true;
@@ -160,7 +167,8 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: AppColorSwatche.primary),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                context, '/cust_home', (route) => false),
           ),
           title: Text(
             "Add vehicle",
@@ -390,6 +398,9 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                               color: AppColorSwatche.white,
                               size: 24,
                               lineWidth: 4,
+                            ),
+                            SizedBox(
+                              width: 8,
                             ),
                             Text(
                               "Adding..",

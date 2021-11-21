@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:oilwale/service/auth.dart';
 import 'package:oilwale/service/customer_api.dart';
 import 'package:oilwale/theme/themedata.dart';
 
@@ -97,6 +98,13 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
       return 'Invalid referral Code';
     }
     return null;
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
   }
 
   @override
@@ -356,10 +364,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       bool response =
                           await CustomerAPIManager.addCustomer(data);
                       if (response) {
+                        await AuthManager.login(_phone ?? '', _pwd ?? '', true);
                         Navigator.pushNamed(context, '/cust_addvehicle');
                       } else {
                         setState(() {
-                          formSubmit = true;
+                          formSubmit = false;
                         });
                         AlertDialog errorAlert = AlertDialog(
                           title: Text(
@@ -368,6 +377,16 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           ),
                           content: Text('Some error occured try later!',
                               style: textStyle('p1', AppColorSwatche.black)),
+                          actions: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.pop(context, false);
+                                },
+                                child: Text(
+                                  'OK',
+                                  style: textStyle('h5', AppColorSwatche.grey),
+                                )),
+                          ],
                         );
                         showDialog(
                             context: context,
@@ -395,6 +414,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                                   color: AppColorSwatche.white,
                                   size: 24,
                                   lineWidth: 4,
+                                ),
+                                SizedBox(
+                                  width: 8,
                                 ),
                                 Text(
                                   'Creating account..',

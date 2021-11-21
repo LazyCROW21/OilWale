@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:oilwale/theme/themedata.dart';
 import 'package:oilwale/service/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +15,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   Choice? _choice = Choice.Customer;
   String _phone = "", _pwd = "", _errorText = "";
+  bool onLogin = false;
 
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
@@ -145,12 +147,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ])),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 8.0),
-              child: Text(
-                _errorText,
-                style: textStyle('p1', Colors.red),
-              ),
+            SizedBox(
+              height: 16,
             ),
             ElevatedButton(
               onPressed: () async {
@@ -158,6 +156,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     !_formkey.currentState!.validate()) {
                   return;
                 }
+                setState(() {
+                  onLogin = true;
+                });
                 if (_choice == Choice.Customer) {
                   if (await AuthManager.login(_phone, _pwd, true)) {
                     Navigator.pushNamedAndRemoveUntil(context, '/cust_home',
@@ -165,19 +166,26 @@ class _LoginScreenState extends State<LoginScreen> {
                       return false;
                     });
                   } else {
-                    setState(() {
-                      _errorText = "Invalid credentials";
-                    });
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                      "Invalid credentials",
+                      style: textStyle('p1', AppColorSwatche.white),
+                    )));
                   }
                 } else if (_choice == Choice.Garage) {
                   if (await AuthManager.login(_phone, _pwd, false)) {
                     Navigator.pushReplacementNamed(context, '/garage_home');
                   } else {
-                    setState(() {
-                      _errorText = "Invalid credentials";
-                    });
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(
+                      "Invalid credentials",
+                      style: textStyle('p1', AppColorSwatche.white),
+                    )));
                   }
                 }
+                setState(() {
+                  onLogin = false;
+                });
               },
               style: ButtonStyle(
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -188,10 +196,29 @@ class _LoginScreenState extends State<LoginScreen> {
                       Size.fromWidth(MediaQuery.of(context).size.width))),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Login',
-                  style: textStyle('p1', Colors.white),
-                ),
+                child: onLogin
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SpinKitRing(
+                            color: AppColorSwatche.white,
+                            size: 24,
+                            lineWidth: 4,
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            "logging..",
+                            style: textStyle('p1', Colors.white),
+                          )
+                        ],
+                      )
+                    : Text(
+                        'Login',
+                        style: textStyle('p1', Colors.white),
+                      ),
               ),
             ),
             Divider(),

@@ -46,6 +46,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
   }
 
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   Widget showCustomerForm() {
     if (isEditing) {
       return EditCustomer(customer, setCustomer);
@@ -299,6 +306,13 @@ class _EditCustomerState extends State<EditCustomer> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
   }
 
   @override

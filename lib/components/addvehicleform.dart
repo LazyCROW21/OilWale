@@ -54,16 +54,16 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
         return;
       }
       newCustomerVehicle['customerId'] = customerId;
-    });
-    VehicleAPIManager.getAllVehicleCompanies().then((result) {
-      setState(() {
-        loadingVCList = false;
-        _company = result;
+      VehicleAPIManager.getAllVehicleCompanies().then((result) {
+        setState(() {
+          loadingVCList = false;
+          _company = result;
+        });
+        if (_company.length != 0) {
+          vehicleCompanyIdInput = _company[0].vehicleCompanyId;
+          changeModelList(_company[0].vehicleCompanyId);
+        }
       });
-      if (_company.length != 0) {
-        vehicleCompanyIdInput = _company[0].vehicleCompanyId;
-        changeModelList(_company[0].vehicleCompanyId);
-      }
     });
   }
 
@@ -305,7 +305,7 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                         decoration: InputDecoration(
                             prefixIcon: Icon(Icons.timeline,
                                 color: AppColorSwatche.primary),
-                            hintText: '102453',
+                            hintText: '7',
                             labelText: 'Daily KM travel',
                             labelStyle:
                                 TextStyle(color: AppColorSwatche.primary),
@@ -350,7 +350,7 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                   bool result = await CustomerAPIManager.addCustomerVehicle(
                       newCustomerVehicle);
                   if (result) {
-                    Navigator.pop(context);
+                    Navigator.pop(context, result);
                     Fluttertoast.showToast(
                         msg: "Vehicle Added",
                         toastLength: Toast.LENGTH_SHORT,

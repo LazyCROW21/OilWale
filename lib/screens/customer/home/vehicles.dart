@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:oilwale/components/vehiclecard.dart';
 import 'package:oilwale/models/customervehicle.dart';
 import 'package:oilwale/service/customer_api.dart';
@@ -13,16 +14,17 @@ class VehiclesScreen extends StatefulWidget {
 
 class _VehiclesScreenState extends State<VehiclesScreen> {
   List<CustomerVehicle>? customerVehicleList;
+  String? customerId;
   @override
   initState() {
     super.initState();
     SharedPreferences.getInstance().then((SharedPreferences preferences) {
-      String? customerId = preferences.getString('customerId');
+      customerId = preferences.getString('customerId');
       if (customerId == null) {
         Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
         return;
       }
-      CustomerAPIManager.getCustomerVehicles(customerId).then((result) {
+      CustomerAPIManager.getCustomerVehicles(customerId ?? '').then((result) {
         setState(() {
           customerVehicleList = result;
         });
@@ -63,7 +65,70 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
   }
 
   Widget vehicleItemBuilder(context, index) {
-    return VehicleCard(customerVehicle: customerVehicleList![index]);
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 2),
+      child: Dismissible(
+          onDismissed: (DismissDirection direction) async {
+            bool result = await CustomerAPIManager.deleteCustomerVehicle(
+                customerVehicleList![index].customerVehicleId);
+            if (!result) {
+              Fluttertoast.showToast(
+                  msg: "Error in deleting! try later",
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.grey,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
+              return;
+            }
+            customerVehicleList!.removeAt(index);
+          },
+          confirmDismiss: (DismissDirection direction) {
+            AlertDialog errorAlert = AlertDialog(
+              title: Text(
+                'Confirm delete?',
+                style: textStyle('h5', AppColorSwatche.primary),
+              ),
+              content: Text('Are you sure you want to delete this vehicle?',
+                  style: textStyle('p1', AppColorSwatche.black)),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context, false);
+                    },
+                    child: Text(
+                      'No',
+                      style: textStyle('h5', AppColorSwatche.grey),
+                    )),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context, true);
+                    },
+                    child: Text('Yes', style: textStyle('h5', Colors.red)))
+              ],
+            );
+            return showDialog(
+                context: context,
+                builder: (BuildContext buildContext) => errorAlert);
+          },
+          direction: DismissDirection.startToEnd,
+          background: Container(
+            decoration: BoxDecoration(color: Colors.red),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+                child: Icon(
+                  Icons.delete,
+                  color: AppColorSwatche.white,
+                ),
+              ),
+            ),
+          ),
+          key: ValueKey(customerVehicleList![index].customerVehicleId),
+          child: VehicleCard(customerVehicle: customerVehicleList![index])),
+    );
   }
 
   @override
@@ -85,8 +150,25 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
                         RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0),
                 ))),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/cust_addvehicle');
+                onPressed: () async {
+                  var result =
+                      await Navigator.pushNamed(context, '/cust_addvehicle');
+                  try {
+                    if (result as bool) {
+                      setState(() {
+                        customerVehicleList = null;
+                      });
+                      CustomerAPIManager.getCustomerVehicles(customerId ?? '')
+                          .then((result) {
+                        setState(() {
+                          customerVehicleList = result;
+                        });
+                      });
+                    }
+                  } catch (e, s) {
+                    print("Exception $e");
+                    print("StackTrace $s");
+                  }
                 },
                 child: Padding(
                     padding: const EdgeInsets.all(8.0),

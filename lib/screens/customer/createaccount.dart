@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:oilwale/service/customer_api.dart';
 import 'package:oilwale/theme/themedata.dart';
 
@@ -16,8 +17,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   String? _refcode;
   String? _pwd;
   String? _confpwd;
+  bool formSubmit = false;
 
   // constants
+  final TextStyle errorTS =
+      const TextStyle(fontStyle: FontStyle.italic, color: Colors.red);
   final double _textInputfontSize = 16.0;
   final TextStyle _customTStyle = TextStyle(color: AppColorSwatche.primary);
   final OutlineInputBorder _customOutlineBorder = OutlineInputBorder(
@@ -30,16 +34,16 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
   String? nameValidate(String? inp) {
     if (inp == null || inp == "") {
-      return "Required *";
-    } else if (inp.length != 10) {
-      return "Enter a valid 10 digit number";
+      return "Required";
+    } else if (inp.length > 32) {
+      return "Name should be under 32 characters";
     }
     return null;
   }
 
   String? addrValidate(String? inp) {
     if (inp == null || inp == "") {
-      return "Required *";
+      return "Required";
     } else if (inp.length > 120) {
       return "Address word limit cross (120 characters)";
     }
@@ -48,7 +52,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
   String? phoneValidate(String? inp) {
     if (inp == null || inp == "") {
-      return "Required *";
+      return "Required";
     } else if (inp.length != 10) {
       return "Enter a valid 10 digit number";
     }
@@ -61,7 +65,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
   String? pincodeValidate(String? inp) {
     if (inp == null || inp == "") {
-      return "Required *";
+      return "Required";
     } else if (inp.length != 6) {
       return "Enter a valid 6 digit pincode";
     }
@@ -74,7 +78,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
   String? pwdValidate(String? inp) {
     if (inp == null || inp == "") {
-      return "Required *";
+      return "Required";
     } else if (inp.length > 32 || inp.length < 8) {
       return "Enter a valid 8-32 length password";
     }
@@ -149,6 +153,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           enabledBorder: _customOutlineBorder,
                           hintStyle: _customTStyle,
                           errorBorder: _customOutlineBorder,
+                          errorStyle: errorTS,
                           focusedErrorBorder: _customOutlineBorder),
                     ),
                   ),
@@ -176,6 +181,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         border: _customOutlineBorder,
                         enabledBorder: _customOutlineBorder,
                         errorBorder: _customOutlineBorder,
+                        errorStyle: errorTS,
                         focusedErrorBorder: _customOutlineBorder,
                         hintStyle: _customTStyle,
                       ),
@@ -206,6 +212,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                           border: _customOutlineBorder,
                           enabledBorder: _customOutlineBorder,
                           errorBorder: _customOutlineBorder,
+                          errorStyle: errorTS,
                           focusedErrorBorder: _customOutlineBorder,
                           hintStyle: _customTStyle,
                         ),
@@ -236,6 +243,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         border: _customOutlineBorder,
                         enabledBorder: _customOutlineBorder,
                         errorBorder: _customOutlineBorder,
+                        errorStyle: errorTS,
                         focusedErrorBorder: _customOutlineBorder,
                         hintStyle: _customTStyle,
                       ),
@@ -261,6 +269,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         border: _customOutlineBorder,
                         enabledBorder: _customOutlineBorder,
                         errorBorder: _customOutlineBorder,
+                        errorStyle: errorTS,
                         focusedErrorBorder: _customOutlineBorder,
                         hintStyle: _customTStyle,
                       ),
@@ -270,11 +279,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: TextFormField(
+                      obscureText: true,
                       onChanged: (String? inp) {
                         this._pwd = inp;
                       },
                       validator: pwdValidate,
-                      inputFormatters: [LengthLimitingTextInputFormatter(8)],
+                      inputFormatters: [LengthLimitingTextInputFormatter(32)],
                       style: TextStyle(fontSize: _textInputfontSize),
                       decoration: InputDecoration(
                         prefixIcon:
@@ -286,6 +296,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         border: _customOutlineBorder,
                         enabledBorder: _customOutlineBorder,
                         errorBorder: _customOutlineBorder,
+                        errorStyle: errorTS,
                         focusedErrorBorder: _customOutlineBorder,
                         hintStyle: _customTStyle,
                       ),
@@ -295,11 +306,12 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: TextFormField(
+                      obscureText: true,
                       onChanged: (String? inp) {
                         this._confpwd = inp;
                       },
                       validator: pwdValidate,
-                      inputFormatters: [LengthLimitingTextInputFormatter(8)],
+                      inputFormatters: [LengthLimitingTextInputFormatter(32)],
                       style: TextStyle(fontSize: _textInputfontSize),
                       decoration: InputDecoration(
                         prefixIcon:
@@ -311,6 +323,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                         border: _customOutlineBorder,
                         enabledBorder: _customOutlineBorder,
                         errorBorder: _customOutlineBorder,
+                        errorStyle: errorTS,
                         focusedErrorBorder: _customOutlineBorder,
                         hintStyle: _customTStyle,
                       ),
@@ -318,8 +331,18 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
+                      if (formSubmit) {
+                        return;
+                      } else {
+                        setState(() {
+                          formSubmit = true;
+                        });
+                      }
                       if (_formkey.currentState != null &&
                           !_formkey.currentState!.validate()) {
+                        setState(() {
+                          formSubmit = false;
+                        });
                         return;
                       }
                       Map<String, dynamic> data = new Map();
@@ -335,6 +358,9 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       if (response) {
                         Navigator.pushNamed(context, '/cust_addvehicle');
                       } else {
+                        setState(() {
+                          formSubmit = true;
+                        });
                         AlertDialog errorAlert = AlertDialog(
                           title: Text(
                             'Error!',
@@ -360,10 +386,16 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                             Size.fromWidth(MediaQuery.of(context).size.width))),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        'Create Account',
-                        style: textStyle('p1', Colors.white),
-                      ),
+                      child: formSubmit
+                          ? SpinKitRing(
+                              color: AppColorSwatche.white,
+                              size: 24,
+                              lineWidth: 4,
+                            )
+                          : Text(
+                              'Create Account',
+                              style: textStyle('p1', Colors.white),
+                            ),
                     ),
                   )
                 ],

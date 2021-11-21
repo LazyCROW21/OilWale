@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:oilwale/models/customer.dart';
 import 'package:oilwale/theme/themedata.dart';
@@ -11,70 +10,64 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool isLoading = true;
   bool isEditing = false;
-  Customer? customer;
-  String customerId = '';
-  String customerName = '';
-  String customerPhoneNumber = '';
-  String customerAddress = '';
-  String customerPincode = '';
-  String garageReferralCode = '';
+  Customer customer = Customer(
+      active: true,
+      createdAt: '',
+      customerAddress: 'loading..',
+      customerId: 'loading..',
+      customerName: 'loading..',
+      customerPhoneNumber: 'loading..',
+      customerPincode: 'loading..',
+      updatedAt: '');
 
-  CustomerDetail loadingCustomer = CustomerDetail(
-      customer: Customer(
-          active: true,
-          customerId: 'loading..',
-          customerAddress: 'loading..',
-          customerName: 'loading..',
-          customerPhoneNumber: 'loading..',
-          garageReferralCode: 'loading..',
-          customerPincode: 'loading..',
-          createdAt: '',
-          updatedAt: ''));
+  CustomerDetail? customerDetail;
+
+  @override
+  void initState() {
+    customerDetail = CustomerDetail(customer);
+    super.initState();
+    getCustomerPrefs().then((value) {
+      setState(() {
+        customerDetail = CustomerDetail(customer);
+      });
+    });
+  }
 
   Widget showCustomerForm() {
-    if (isLoading) {
-      return loadingCustomer;
-    } else if (isEditing) {
-      return EditCustomer();
+    if (isEditing) {
+      return EditCustomer(customer, setCustomer);
     } else {
-      return CustomerDetail(
-          customer: Customer(
-              active: true,
-              customerId: customerId,
-              customerAddress: customerAddress,
-              customerName: customerName,
-              customerPhoneNumber: customerPhoneNumber,
-              garageReferralCode: garageReferralCode,
-              customerPincode: garageReferralCode,
-              createdAt: '',
-              updatedAt: ''));
+      return customerDetail ?? Container();
     }
   }
 
   Future<void> getCustomerPrefs() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    customerName = preferences.getString("customerName") ?? 'Not Found!';
-    customerPhoneNumber =
+    customer.customerName =
+        preferences.getString("customerName") ?? 'Not Found!';
+    customer.customerPhoneNumber =
         preferences.getString("customerPhoneNumber") ?? 'Not Found!';
-    customerAddress = preferences.getString("customerAddress") ?? 'Not Found!';
-    customerPincode = preferences.getString("customerPincode") ?? 'Not Found!';
-    garageReferralCode =
-        preferences.getString("garageReferralCode") ?? 'Not Found!';
+    customer.customerAddress =
+        preferences.getString("customerAddress") ?? 'Not Found!';
+    customer.customerPincode =
+        preferences.getString("customerPincode") ?? 'Not Found!';
+    customer.garageReferralCode =
+        preferences.getString("garageReferralCode") ?? '-';
+  }
+
+  void setCustomer(Customer editCustomer) {
+    this.customer.customerName = editCustomer.customerName;
+    this.customer.customerAddress = editCustomer.customerAddress;
+    this.customer.customerPhoneNumber = editCustomer.customerPhoneNumber;
+    this.customer.customerPincode = editCustomer.customerPincode;
   }
 
   @override
   Widget build(BuildContext context) {
-    getCustomerPrefs().then((value) {
-      setState(() {
-        isLoading = false;
-      });
-    });
     return SingleChildScrollView(
       child: Container(
           color: Colors.white,
-          // padding: EdgeInsets.all(16.0),
           child: Stack(
             children: [
               showCustomerForm(),
@@ -101,9 +94,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 }
 
 class CustomerDetail extends StatelessWidget {
-  late final Customer customer;
+  final Customer customer;
 
-  CustomerDetail({Key? key, required this.customer}) : super(key: key);
+  CustomerDetail(this.customer, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -238,17 +231,20 @@ class CustomerDetail extends StatelessWidget {
 }
 
 class EditCustomer extends StatefulWidget {
-  final Customer? customer;
-  EditCustomer({Key? key, this.customer}) : super(key: key);
+  final Customer customer;
+  final Function(Customer) emitCustomerDetails;
+  EditCustomer(this.customer, this.emitCustomerDetails, {Key? key})
+      : super(key: key);
 
   @override
-  _EditCustomerState createState() => _EditCustomerState(customer);
+  _EditCustomerState createState() =>
+      _EditCustomerState(customer, emitCustomerDetails);
 }
 
 class _EditCustomerState extends State<EditCustomer> {
-  Customer? customer;
-
-  _EditCustomerState(this.customer);
+  Customer customer;
+  Function(Customer) emitCustomerDetails;
+  _EditCustomerState(this.customer, this.emitCustomerDetails);
 
   @override
   void initState() {
@@ -291,8 +287,12 @@ class _EditCustomerState extends State<EditCustomer> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 TextFormField(
-                  initialValue: customer != null ? customer!.customerName : '',
-                  style: textStyle('p1', AppColorSwatche.primary),
+                  onChanged: (String inp) {
+                    customer.customerName = inp;
+                    emitCustomerDetails(customer);
+                  },
+                  initialValue: customer.customerName,
+                  style: textStyle('p1', AppColorSwatche.black),
                   decoration: const InputDecoration(
                       labelText: 'Name',
                       labelStyle: TextStyle(color: Colors.deepOrange),
@@ -304,9 +304,12 @@ class _EditCustomerState extends State<EditCustomer> {
                       )),
                 ),
                 TextFormField(
-                  initialValue:
-                      customer != null ? customer!.customerPhoneNumber : '',
-                  style: textStyle('p1', AppColorSwatche.primary),
+                  onChanged: (String inp) {
+                    customer.customerPhoneNumber = inp;
+                    emitCustomerDetails(customer);
+                  },
+                  initialValue: customer.customerPhoneNumber,
+                  style: textStyle('p1', AppColorSwatche.black),
                   decoration: const InputDecoration(
                       labelText: 'Phone',
                       labelStyle: TextStyle(color: Colors.deepOrange),
@@ -319,9 +322,12 @@ class _EditCustomerState extends State<EditCustomer> {
                       )),
                 ),
                 TextFormField(
-                  initialValue:
-                      customer != null ? customer!.customerAddress : '',
-                  style: textStyle('p1', AppColorSwatche.primary),
+                  onChanged: (String inp) {
+                    customer.customerAddress = inp;
+                    emitCustomerDetails(customer);
+                  },
+                  initialValue: customer.customerAddress,
+                  style: textStyle('p1', AppColorSwatche.black),
                   decoration: const InputDecoration(
                       labelText: 'Address',
                       labelStyle: TextStyle(color: Colors.deepOrange),
@@ -333,9 +339,12 @@ class _EditCustomerState extends State<EditCustomer> {
                       )),
                 ),
                 TextFormField(
-                  initialValue:
-                      customer != null ? customer!.customerPincode : '',
-                  style: textStyle('p1', AppColorSwatche.primary),
+                  onChanged: (String inp) {
+                    customer.customerPincode = inp;
+                    emitCustomerDetails(customer);
+                  },
+                  initialValue: customer.customerPincode,
+                  style: textStyle('p1', AppColorSwatche.black),
                   decoration: const InputDecoration(
                       labelText: 'Pincode',
                       labelStyle: TextStyle(color: Colors.deepOrange),

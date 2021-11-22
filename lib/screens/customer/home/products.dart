@@ -25,7 +25,7 @@ class ProductListView extends StatefulWidget {
 class _ProductListViewState extends State<ProductListView> {
   List<Product> _pList = [];
   SpinKitRing loadingRing = SpinKitRing(
-    color: AppColorSwatche.primary,
+    color: AppColorSwatche.white,
   );
   bool isSearching = true;
 

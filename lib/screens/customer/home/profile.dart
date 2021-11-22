@@ -124,34 +124,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-          color: Colors.white,
-          child: Stack(
-            children: [
-              showCustomerForm(),
-              Positioned(
-                  top: 0,
-                  right: 0,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          isEditing = !isEditing;
-                        });
-                        if (!isEditing) {
-                          saveCustomerEdit();
-                        }
-                      },
-                      style: ButtonStyle(
-                          shape: MaterialStateProperty.all<CircleBorder>(
-                              CircleBorder(
-                                  // borderRadius: BorderRadius.circular(18.0),
-                                  side: BorderSide(
-                                      color: AppColorSwatche.primary)))),
-                      child: Icon(isEditing ? Icons.save : Icons.edit)))
-            ],
-          )),
-    );
+    return Container(
+        // color: Colors.deepOrangeAccent,
+        child: Stack(
+      // fit: StackFit.expand,
+      children: [
+        showCustomerForm(),
+        Positioned(
+            top: 0,
+            right: 0,
+            child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    isEditing = !isEditing;
+                  });
+                  if (!isEditing) {
+                    saveCustomerEdit();
+                  }
+                },
+                style: ButtonStyle(
+                    shape: MaterialStateProperty.all<CircleBorder>(CircleBorder(
+                        // borderRadius: BorderRadius.circular(18.0),
+                        side: BorderSide(color: AppColorSwatche.primary)))),
+                child: Icon(isEditing ? Icons.save : Icons.edit)))
+      ],
+    ));
   }
 }
 
@@ -164,129 +161,146 @@ class CustomerDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       // padding: EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(16.0),
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    colors: <Color>[Colors.deepOrange.shade100, Colors.white],
-                    end: Alignment.bottomCenter)),
-            child: Align(
-              alignment: Alignment.center,
-              child: Container(
-                child: Icon(
-                  Icons.person,
-                  color: Colors.grey,
-                  size: 72,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      colors: <Color>[Colors.deepOrange.shade100, Colors.white],
+                      end: Alignment.bottomCenter)),
+              child: Align(
+                alignment: Alignment.center,
+                child: Container(
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.grey,
+                    size: 72,
+                  ),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: AppColorSwatche.primary),
+                      borderRadius: BorderRadius.circular(36.0)),
                 ),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: AppColorSwatche.primary),
-                    borderRadius: BorderRadius.circular(36.0)),
               ),
             ),
-          ),
-          Container(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  'Name',
-                  style: textStyle('p2', AppColorSwatche.primary),
-                ),
-                Text(
-                  customer.customerName,
-                  style: textStyle('p1', AppColorSwatche.black),
-                ),
-                Divider(),
-                SizedBox(height: 10),
-                Text(
-                  'Phone',
-                  style: textStyle('p2', AppColorSwatche.primary),
-                ),
-                Text(
-                  customer.customerPhoneNumber,
-                  style: textStyle('p1', AppColorSwatche.black),
-                ),
-                Divider(),
-                SizedBox(height: 10),
-                Text(
-                  'Address',
-                  style: textStyle('p2', AppColorSwatche.primary),
-                ),
-                Text(
-                  customer.customerAddress,
-                  style: textStyle('p1', AppColorSwatche.black),
-                ),
-                Divider(),
-                SizedBox(height: 10),
-                Text(
-                  'PINCODE',
-                  style: textStyle('p2', AppColorSwatche.primary),
-                ),
-                Text(
-                  customer.customerPincode,
-                  style: textStyle('p1', AppColorSwatche.black),
-                ),
-                Divider(),
-                SizedBox(height: 10),
-                Text(
-                  'Referral Code',
-                  style: textStyle('p2', AppColorSwatche.primary),
-                ),
-                Text(
-                  customer.garageReferralCode ?? '-',
-                  style: textStyle('p1', AppColorSwatche.black),
-                ),
-                Divider(),
-                SizedBox(height: 10),
-                Text(
-                  'Total number of time oil serviced',
-                  style: textStyle('p2', AppColorSwatche.primary),
-                ),
-                Text(
-                  '12',
-                  style: textStyle('p1', AppColorSwatche.black),
-                ),
-                Divider(),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                            shape: MaterialStateProperty.all<
-                                RoundedRectangleBorder>(RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0),
-                        ))),
-                        onPressed: () {
-                          SharedPreferences.getInstance()
-                              .then((SharedPreferences preferences) {
-                            preferences.clear();
-                          });
-                          Navigator.pushNamedAndRemoveUntil(context, '/login',
-                              (Route<dynamic> route) {
-                            return false;
-                          });
-                        },
-                        child: Text(
-                          "Log out",
-                          style: textStyle('p1', Colors.white),
+            Container(
+              padding: EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    'Name',
+                    style: textStyle('p2', Colors.deepOrange.shade50),
+                  ),
+                  Text(
+                    customer.customerName,
+                    style: textStyle('h5', AppColorSwatche.white),
+                  ),
+                  Divider(
+                    color: AppColorSwatche.white,
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Phone',
+                    style: textStyle('p2', Colors.deepOrange.shade50),
+                  ),
+                  Text(
+                    customer.customerPhoneNumber,
+                    style: textStyle('h5', AppColorSwatche.white),
+                  ),
+                  Divider(
+                    color: AppColorSwatche.white,
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Address',
+                    style: textStyle('p2', Colors.deepOrange.shade50),
+                  ),
+                  Text(
+                    customer.customerAddress,
+                    style: textStyle('h5', AppColorSwatche.white),
+                  ),
+                  Divider(
+                    color: AppColorSwatche.white,
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'PIN Code',
+                    style: textStyle('p2', Colors.deepOrange.shade50),
+                  ),
+                  Text(
+                    customer.customerPincode,
+                    style: textStyle('h5', AppColorSwatche.white),
+                  ),
+                  Divider(
+                    color: AppColorSwatche.white,
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Referral Code',
+                    style: textStyle('p2', Colors.deepOrange.shade50),
+                  ),
+                  Text(
+                    customer.garageReferralCode ?? '-',
+                    style: textStyle('h5', AppColorSwatche.white),
+                  ),
+                  Divider(
+                    color: AppColorSwatche.white,
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Total number of time oil serviced',
+                    style: textStyle('p2', Colors.deepOrange.shade50),
+                  ),
+                  Text(
+                    '12',
+                    style: textStyle('h5', AppColorSwatche.white),
+                  ),
+                  Divider(
+                    color: AppColorSwatche.white,
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  AppColorSwatche.white),
+                              shape: MaterialStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              ))),
+                          onPressed: () {
+                            SharedPreferences.getInstance()
+                                .then((SharedPreferences preferences) {
+                              preferences.clear();
+                            });
+                            Navigator.pushNamedAndRemoveUntil(context, '/login',
+                                (Route<dynamic> route) {
+                              return false;
+                            });
+                          },
+                          child: Text(
+                            "Log out",
+                            style: textStyle('p1', AppColorSwatche.primary),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                )
-              ],
+                    ],
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -361,15 +375,15 @@ class _EditCustomerState extends State<EditCustomer> {
                     emitCustomerDetails(customer);
                   },
                   initialValue: customer.customerName,
-                  style: textStyle('p1', AppColorSwatche.black),
+                  style: textStyle('p1', AppColorSwatche.white),
                   decoration: const InputDecoration(
                       labelText: 'Name',
-                      labelStyle: TextStyle(color: Colors.deepOrange),
+                      labelStyle: TextStyle(color: Colors.white),
                       enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.deepOrange),
+                        borderSide: BorderSide(color: Colors.white),
                       ),
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.deepOrange),
+                        borderSide: BorderSide(color: Colors.white),
                       )),
                 ),
                 TextFormField(
@@ -378,16 +392,16 @@ class _EditCustomerState extends State<EditCustomer> {
                     emitCustomerDetails(customer);
                   },
                   initialValue: customer.customerPhoneNumber,
-                  style: textStyle('p1', AppColorSwatche.black),
+                  style: textStyle('p1', AppColorSwatche.white),
                   decoration: const InputDecoration(
                       labelText: 'Phone',
-                      labelStyle: TextStyle(color: Colors.deepOrange),
-                      focusColor: Colors.deepOrange,
+                      labelStyle: TextStyle(color: Colors.white),
+                      focusColor: Colors.white,
                       enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.deepOrange),
+                        borderSide: BorderSide(color: Colors.white),
                       ),
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.deepOrange),
+                        borderSide: BorderSide(color: Colors.white),
                       )),
                 ),
                 TextFormField(
@@ -396,15 +410,15 @@ class _EditCustomerState extends State<EditCustomer> {
                     emitCustomerDetails(customer);
                   },
                   initialValue: customer.customerAddress,
-                  style: textStyle('p1', AppColorSwatche.black),
+                  style: textStyle('p1', AppColorSwatche.white),
                   decoration: const InputDecoration(
                       labelText: 'Address',
-                      labelStyle: TextStyle(color: Colors.deepOrange),
+                      labelStyle: TextStyle(color: Colors.white),
                       enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.deepOrange),
+                        borderSide: BorderSide(color: Colors.white),
                       ),
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.deepOrange),
+                        borderSide: BorderSide(color: Colors.white),
                       )),
                 ),
                 TextFormField(
@@ -413,18 +427,17 @@ class _EditCustomerState extends State<EditCustomer> {
                     emitCustomerDetails(customer);
                   },
                   initialValue: customer.customerPincode,
-                  style: textStyle('p1', AppColorSwatche.black),
+                  style: textStyle('p1', AppColorSwatche.white),
                   decoration: const InputDecoration(
                       labelText: 'Pincode',
-                      labelStyle: TextStyle(color: Colors.deepOrange),
+                      labelStyle: TextStyle(color: Colors.white),
                       enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.deepOrange),
+                        borderSide: BorderSide(color: Colors.white),
                       ),
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.deepOrange),
+                        borderSide: BorderSide(color: Colors.white),
                       )),
                 ),
-                // Divider(),
                 SizedBox(
                   height: 8.0,
                 ),
@@ -436,40 +449,47 @@ class _EditCustomerState extends State<EditCustomer> {
                         },
                         textCapitalization: TextCapitalization.characters,
                         initialValue: customer.garageReferralCode,
-                        style: textStyle('p1', AppColorSwatche.black),
+                        style: textStyle('p1', AppColorSwatche.white),
                         decoration: const InputDecoration(
                             labelText: 'Referral Code',
-                            labelStyle: TextStyle(color: Colors.deepOrange),
+                            labelStyle: TextStyle(color: Colors.white),
                             enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.deepOrange),
+                              borderSide: BorderSide(color: Colors.white),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.deepOrange),
+                              borderSide: BorderSide(color: Colors.white),
                             )),
                       )
-                    : Text(
-                        'Referral Code',
-                        style: textStyle('p2', AppColorSwatche.primary),
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Referral Code',
+                            style: textStyle('p2', Colors.deepOrange.shade50),
+                          ),
+                          Text(
+                            '${customer.garageReferralCode}',
+                            style: textStyle('h5', AppColorSwatche.white),
+                          ),
+                          Divider(
+                            color: AppColorSwatche.white,
+                          )
+                        ],
                       ),
-                customer.garageReferralCode != null
-                    ? Text(
-                        '${customer.garageReferralCode}',
-                        style: textStyle('p1', AppColorSwatche.black),
-                      )
-                    : Divider(),
-                // Divider(),
                 SizedBox(
                   height: 8.0,
                 ),
                 Text(
                   'Total number of time oil serviced',
-                  style: textStyle('p2', AppColorSwatche.primary),
+                  style: textStyle('p2', Colors.deepOrange.shade50),
                 ),
                 Text(
                   '12',
-                  style: textStyle('p1', AppColorSwatche.black),
+                  style: textStyle('h5', AppColorSwatche.white),
                 ),
-                Divider(),
+                Divider(
+                  color: AppColorSwatche.white,
+                ),
                 SizedBox(
                   height: 8.0,
                 ),

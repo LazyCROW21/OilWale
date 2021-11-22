@@ -1,3 +1,4 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:oilwale/screens/customer/home/vehicles.dart';
 import 'package:oilwale/screens/customer/home/profile.dart';
@@ -38,10 +39,12 @@ class _HomeScreenState extends State<HomeScreen> {
       case 0:
         return vehiclesScreen;
       case 1:
-        return garageScreen;
+        return Container();
       case 2:
         return productScreen;
       case 3:
+        return garageScreen;
+      case 4:
         return profileScreen;
       default:
         return Container();
@@ -60,10 +63,13 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Container(
         decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/img/bgsq.jpg'),
-                colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.2), BlendMode.dstATop))),
+          color: Colors.deepOrangeAccent,
+          // image: DecorationImage(
+          //     image: AssetImage('assets/img/bgsq.png'),
+          //     colorFilter: ColorFilter.mode(
+          //         Colors.deepOrangeAccent.withOpacity(0.4),
+          //         BlendMode.dstATop))
+        ),
         child: AnimatedSwitcher(
             reverseDuration: Duration.zero,
             duration: Duration(milliseconds: 500),
@@ -77,26 +83,16 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             }),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.directions_car),
-            label: 'My vehicles',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.garage_outlined),
-            label: 'Find Garage',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_bag),
-            label: 'Find Product',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.manage_accounts),
-            label: 'Profile',
-          ),
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Colors.deepOrangeAccent,
+        items: const <Widget>[
+          Icon(Icons.directions_car),
+          Icon(Icons.loyalty),
+          Icon(Icons.shopping_bag),
+          Icon(Icons.garage_outlined),
+          Icon(Icons.manage_accounts)
         ],
-        currentIndex: idx,
+        index: idx,
         onTap: tabSelect,
       ),
     );

@@ -47,13 +47,13 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SpinKitRing(color: AppColorSwatche.primary),
+              SpinKitRing(color: AppColorSwatche.white),
               SizedBox(
                 width: 8,
               ),
               Text(
                 'Loading',
-                style: textStyle('p1', AppColorSwatche.black),
+                style: textStyle('p1', AppColorSwatche.white),
               ),
             ],
           ),
@@ -122,11 +122,14 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
           },
           direction: DismissDirection.startToEnd,
           background: Container(
-            decoration: BoxDecoration(color: Colors.red),
+            decoration: BoxDecoration(color: AppColorSwatche.white),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+              child: Container(
+                margin: EdgeInsets.only(left: 16),
+                padding: EdgeInsets.all(8),
+                decoration:
+                    BoxDecoration(shape: BoxShape.circle, color: Colors.red),
                 child: Icon(
                   Icons.delete,
                   color: AppColorSwatche.white,
@@ -154,10 +157,12 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
                 style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(AppColorSwatche.white),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(18.0),
-                ))),
+                      borderRadius: BorderRadius.circular(18.0),
+                    ))),
                 onPressed: () async {
                   var result =
                       await Navigator.pushNamed(context, '/cust_addvehicle');
@@ -183,7 +188,7 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
                     child: Center(
                       child: Text(
                         "+ Add Vehicle",
-                        style: textStyle('p1', Colors.white),
+                        style: textStyle('p1', Colors.deepOrange),
                       ),
                     )),
               ),

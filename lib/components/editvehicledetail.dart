@@ -7,36 +7,36 @@ import 'package:oilwale/theme/themedata.dart';
 
 class EditVehicleDetailBlock extends StatefulWidget {
   final CustomerVehicle customerVehicle;
+  final Function(CustomerVehicle, bool) setUpdate;
 
-  EditVehicleDetailBlock(this.customerVehicle);
+  EditVehicleDetailBlock(this.customerVehicle, this.setUpdate);
 
   @override
   _EditVehicleDetailBlockState createState() =>
-      _EditVehicleDetailBlockState(customerVehicle);
+      _EditVehicleDetailBlockState(customerVehicle, setUpdate);
 }
 
 class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
   CustomerVehicle customerVehicle;
+  final Function(CustomerVehicle, bool) setUpdate;
   List<VehicleCompany> _company = [];
   List<Vehicle> _models = [];
+
   bool loadingVCList = true;
   bool loadingVMList = true;
+  bool error = false;
+
   String? vehicleCompanyIdInput;
   String? vehicleCompanyIdErrorText;
   String? vehicleIdInput;
   String? vehicleIdErrorText;
-  String? dailyKMTravelInput;
-  String? dailyKMTravelErrorText;
-  String? numberplateInput;
-  String? numberplateErrorText;
-  String? totalKMTravelledInput;
-  String? totalKMTravelledErrorText;
+
   Text loadingDDM = Text(
     'Loading Options..',
     style: textStyle('p1', AppColorSwatche.black),
   );
 
-  _EditVehicleDetailBlockState(this.customerVehicle);
+  _EditVehicleDetailBlockState(this.customerVehicle, this.setUpdate);
 
   // regex [A-Z]{2}[0-9]{1,2}[A-Z0-9]{1,2}[0-9]{4}
   RegExp numberPlateRegExp = new RegExp(
@@ -78,69 +78,6 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
         loadingVMList = false;
       });
     });
-  }
-
-  bool validateForm() {
-    bool error = false;
-    // check VehicleCompanyId
-    if (vehicleCompanyIdInput == null || vehicleCompanyIdInput == '') {
-      vehicleCompanyIdErrorText = '* Required';
-      error = true;
-    } else {
-      vehicleCompanyIdErrorText = null;
-    }
-
-    // check VehicleId
-    if (vehicleIdInput == null || vehicleIdInput == '') {
-      vehicleIdErrorText = '* Required';
-      error = true;
-    } else {
-      vehicleIdErrorText = null;
-    }
-
-    // check totalKMTravelledInput
-    if (totalKMTravelledInput == null || totalKMTravelledInput == '') {
-      totalKMTravelledErrorText = '* Required';
-      error = true;
-    } else if (int.tryParse(totalKMTravelledInput ?? '') == null) {
-      totalKMTravelledErrorText = '* Invalid number';
-      error = true;
-    } else {
-      totalKMTravelledErrorText = null;
-      int? travel = int.tryParse(totalKMTravelledInput ?? '');
-      if (travel! > 999999) {
-        totalKMTravelledErrorText = '* Unreal value (should be < 999999)';
-        error = true;
-      }
-    }
-
-    // check numberplateInput
-    if (numberplateInput == null || numberplateInput == '') {
-      numberplateErrorText = '* Required';
-      error = true;
-    } else if (!numberPlateRegExp.hasMatch(numberplateInput ?? '')) {
-      numberplateErrorText = '* Invalid format';
-      error = true;
-    } else {
-      numberplateErrorText = null;
-    }
-
-    // check dailyKMTravelInput
-    if (dailyKMTravelInput == null || dailyKMTravelInput == '') {
-      dailyKMTravelErrorText = '* Required';
-      error = true;
-    } else if (int.tryParse(dailyKMTravelInput ?? '') == null) {
-      dailyKMTravelErrorText = '* Invalid number';
-      error = true;
-    } else {
-      dailyKMTravelErrorText = null;
-      int? dtravel = int.tryParse(dailyKMTravelErrorText ?? '');
-      if (dtravel! > 700) {
-        dailyKMTravelErrorText = '* Unreal value (should be < 700)';
-        error = true;
-      }
-    }
-    return !error;
   }
 
   DropdownMenuItem<String> vehicleCompanyDDMB(VehicleCompany vehicleCompany) {
@@ -225,60 +162,69 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
           ),
           TextFormField(
             onChanged: (String inp) {
-              numberplateInput = inp;
+              customerVehicle.numberPlate = inp;
+              setUpdate(customerVehicle, error);
             },
             autovalidateMode: AutovalidateMode.always,
             validator: (String? inp) {
               // check numberplateInput
               if (inp == null || inp == '') {
+                error = true;
                 return '* Required';
               } else if (!numberPlateRegExp.hasMatch(inp)) {
+                error = true;
                 return '* Invalid format';
               }
+              error = false;
               return null;
             },
             initialValue: customerVehicle.numberPlate,
             keyboardType: TextInputType.text,
             textCapitalization: TextCapitalization.characters,
             decoration: InputDecoration(
-                prefixIcon:
-                    Icon(Icons.drive_eta, color: AppColorSwatche.primary),
-                hintText: 'AB-XX-CD-XXXX',
-                labelText: 'Enter vehicle reg. number',
-                labelStyle: TextStyle(color: AppColorSwatche.primary),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.deepOrange,
-                  ),
+              prefixIcon: Icon(Icons.drive_eta, color: AppColorSwatche.primary),
+              hintText: 'AB-XX-CD-XXXX',
+              labelText: 'Enter vehicle reg. number',
+              labelStyle: TextStyle(color: AppColorSwatche.primary),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.deepOrange,
                 ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.deepOrange,
-                  ),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.deepOrange,
                 ),
-                hintStyle: TextStyle(color: AppColorSwatche.primary),
-                errorText: numberplateErrorText),
+              ),
+              hintStyle: TextStyle(color: AppColorSwatche.primary),
+            ),
           ),
           SizedBox(
             height: 8.0,
           ),
           TextFormField(
             onChanged: (String inp) {
-              totalKMTravelledInput = inp;
+              int totalKM = int.tryParse(inp) ?? customerVehicle.currentKM;
+              customerVehicle.currentKM = totalKM;
+              setUpdate(customerVehicle, error);
             },
             autovalidateMode: AutovalidateMode.always,
             validator: (String? inp) {
               // check totalKMTravelledInput
               if (inp == null || inp == '') {
+                error = true;
                 return '* Required';
               } else if (int.tryParse(inp) == null) {
+                error = true;
                 return '* Invalid number';
               } else {
                 int? travel = int.tryParse(inp);
                 if (travel! > 999999) {
+                  error = true;
                   return '* Unreal value (should be < 999999)';
                 }
               }
+              error = false;
               return null;
             },
             initialValue: '${customerVehicle.currentKM}',
@@ -299,51 +245,55 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
                     color: Colors.deepOrange,
                   ),
                 ),
-                hintStyle: TextStyle(color: AppColorSwatche.primary),
-                errorText: totalKMTravelledErrorText),
+                hintStyle: TextStyle(color: AppColorSwatche.primary)),
           ),
           SizedBox(
             height: 8.0,
           ),
           TextFormField(
             onChanged: (String inp) {
-              dailyKMTravelInput = inp;
+              int kmpd = int.tryParse(inp) ?? customerVehicle.kmperday;
+              customerVehicle.kmperday = kmpd;
+              setUpdate(customerVehicle, error);
             },
             autovalidateMode: AutovalidateMode.always,
             validator: (String? inp) {
               // check dailyKMTravelInput
               if (inp == null || inp == '') {
+                error = true;
                 return '* Required';
               } else if (int.tryParse(inp) == null) {
+                error = true;
                 return '* Invalid number';
               } else {
                 int? dtravel = int.tryParse(inp);
                 if (dtravel! > 700) {
+                  error = true;
                   return '* Unreal value (should be < 700)';
                 }
               }
+              error = false;
               return null;
             },
             initialValue: '${customerVehicle.kmperday}',
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-                prefixIcon:
-                    Icon(Icons.timeline, color: AppColorSwatche.primary),
-                hintText: '7',
-                labelText: 'Daily KM travel',
-                labelStyle: TextStyle(color: AppColorSwatche.primary),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.deepOrange,
-                  ),
+              prefixIcon: Icon(Icons.timeline, color: AppColorSwatche.primary),
+              hintText: '7',
+              labelText: 'Daily KM travel',
+              labelStyle: TextStyle(color: AppColorSwatche.primary),
+              focusedBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.deepOrange,
                 ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.deepOrange,
-                  ),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.deepOrange,
                 ),
-                hintStyle: TextStyle(color: AppColorSwatche.primary),
-                errorText: dailyKMTravelErrorText),
+              ),
+              hintStyle: TextStyle(color: AppColorSwatche.primary),
+            ),
           )
         ],
       ),

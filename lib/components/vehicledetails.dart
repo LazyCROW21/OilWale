@@ -43,6 +43,15 @@ class _VehicleDetailsState extends State<VehicleDetails> {
     return Icons.edit;
   }
 
+  void updateVehicle(CustomerVehicle updVehicle, bool err) {
+    if (err) {
+      return;
+    }
+    customerVehicle.currentKM = updVehicle.currentKM;
+    customerVehicle.kmperday = updVehicle.kmperday;
+    customerVehicle.numberPlate = updVehicle.numberPlate;
+  }
+
   @override
   Widget build(BuildContext context) {
     customerVehicle =
@@ -57,17 +66,19 @@ class _VehicleDetailsState extends State<VehicleDetails> {
             numberPlate: customerVehicle.numberPlate,
             currentKM: customerVehicle.currentKM,
             kmperday: customerVehicle.kmperday));
-    _editVehicleDetailBlock = EditVehicleDetailBlock(customerVehicle);
+    _editVehicleDetailBlock =
+        EditVehicleDetailBlock(customerVehicle, updateVehicle);
     // getRecommendedProducts(customerVehicle.vehicleId);
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.deepOrangeAccent,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.deepOrange),
+            icon: Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
             "My vehicle",
-            style: TextStyle(color: AppColorSwatche.primary),
+            style: TextStyle(color: AppColorSwatche.white),
           ),
         ),
         body: SingleChildScrollView(

@@ -34,7 +34,7 @@ class VehicleCard extends StatelessWidget {
                   style: textStyle('h5', Colors.black),
                 ),
                 Text(
-                  customerVehicle.numberPlate ?? "Not found",
+                  customerVehicle.numberPlate,
                   style: textStyle('p1', Colors.black),
                 ),
                 SizedBox(

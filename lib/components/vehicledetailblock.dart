@@ -41,7 +41,7 @@ class VehicleDetailBlock extends StatelessWidget {
             style: textStyle('p2', AppColorSwatche.primary),
           ),
           Text(
-            customerVehicle.numberPlate ?? "Not Available",
+            customerVehicle.numberPlate,
             style: textStyle('p1', AppColorSwatche.black),
           ),
           SizedBox(

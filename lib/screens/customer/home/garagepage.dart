@@ -36,13 +36,14 @@ class _GaragePageState extends State<GaragePage> {
     garage = ModalRoute.of(context)!.settings.arguments as Garage;
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.deepOrangeAccent,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.deepOrange),
+            icon: Icon(Icons.arrow_back, color: AppColorSwatche.white),
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
-            garage != null ? garage!.garageName : 'Not Found',
-            style: textStyle('h4', AppColorSwatche.primary),
+            'Garage',
+            style: textStyle('h4', AppColorSwatche.white),
           ),
         ),
         body: SingleChildScrollView(

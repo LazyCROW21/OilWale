@@ -41,13 +41,14 @@ class _ProductPageState extends State<ProductPage> {
     product = ModalRoute.of(context)!.settings.arguments as Product;
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.deepOrangeAccent,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.deepOrange),
+            icon: Icon(Icons.arrow_back, color: AppColorSwatche.white),
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text(
             'Product',
-            style: textStyle('h4', AppColorSwatche.primary),
+            style: textStyle('h4', AppColorSwatche.white),
           ),
         ),
         body: SingleChildScrollView(

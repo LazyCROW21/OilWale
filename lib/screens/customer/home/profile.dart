@@ -434,6 +434,7 @@ class _EditCustomerState extends State<EditCustomer> {
                           customer.garageReferralCode = inp;
                           emitCustomerDetails(customer);
                         },
+                        textCapitalization: TextCapitalization.characters,
                         initialValue: customer.garageReferralCode,
                         style: textStyle('p1', AppColorSwatche.black),
                         decoration: const InputDecoration(

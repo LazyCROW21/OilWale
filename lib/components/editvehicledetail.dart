@@ -107,6 +107,11 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
       error = true;
     } else {
       totalKMTravelledErrorText = null;
+      int? travel = int.tryParse(totalKMTravelledInput ?? '');
+      if (travel! > 999999) {
+        totalKMTravelledErrorText = '* Unreal value (should be < 999999)';
+        error = true;
+      }
     }
 
     // check numberplateInput
@@ -124,11 +129,16 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
     if (dailyKMTravelInput == null || dailyKMTravelInput == '') {
       dailyKMTravelErrorText = '* Required';
       error = true;
-    } else if (int.tryParse(totalKMTravelledInput ?? '') == null) {
+    } else if (int.tryParse(dailyKMTravelInput ?? '') == null) {
       dailyKMTravelErrorText = '* Invalid number';
       error = true;
     } else {
       dailyKMTravelErrorText = null;
+      int? dtravel = int.tryParse(dailyKMTravelErrorText ?? '');
+      if (dtravel! > 700) {
+        dailyKMTravelErrorText = '* Unreal value (should be < 700)';
+        error = true;
+      }
     }
     return !error;
   }
@@ -217,8 +227,19 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
             onChanged: (String inp) {
               numberplateInput = inp;
             },
+            autovalidateMode: AutovalidateMode.always,
+            validator: (String? inp) {
+              // check numberplateInput
+              if (inp == null || inp == '') {
+                return '* Required';
+              } else if (!numberPlateRegExp.hasMatch(inp)) {
+                return '* Invalid format';
+              }
+              return null;
+            },
             initialValue: customerVehicle.numberPlate,
             keyboardType: TextInputType.text,
+            textCapitalization: TextCapitalization.characters,
             decoration: InputDecoration(
                 prefixIcon:
                     Icon(Icons.drive_eta, color: AppColorSwatche.primary),
@@ -244,6 +265,21 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
           TextFormField(
             onChanged: (String inp) {
               totalKMTravelledInput = inp;
+            },
+            autovalidateMode: AutovalidateMode.always,
+            validator: (String? inp) {
+              // check totalKMTravelledInput
+              if (inp == null || inp == '') {
+                return '* Required';
+              } else if (int.tryParse(inp) == null) {
+                return '* Invalid number';
+              } else {
+                int? travel = int.tryParse(inp);
+                if (travel! > 999999) {
+                  return '* Unreal value (should be < 999999)';
+                }
+              }
+              return null;
             },
             initialValue: '${customerVehicle.currentKM}',
             keyboardType: TextInputType.number,
@@ -272,6 +308,21 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
           TextFormField(
             onChanged: (String inp) {
               dailyKMTravelInput = inp;
+            },
+            autovalidateMode: AutovalidateMode.always,
+            validator: (String? inp) {
+              // check dailyKMTravelInput
+              if (inp == null || inp == '') {
+                return '* Required';
+              } else if (int.tryParse(inp) == null) {
+                return '* Invalid number';
+              } else {
+                int? dtravel = int.tryParse(inp);
+                if (dtravel! > 700) {
+                  return '* Unreal value (should be < 700)';
+                }
+              }
+              return null;
             },
             initialValue: '${customerVehicle.kmperday}',
             keyboardType: TextInputType.number,

@@ -36,7 +36,7 @@ void main() {
             selectedItemColor: Colors.deepOrange),
         appBarTheme: AppBarTheme(backgroundColor: Colors.white)),
     initialRoute: '/login',
-    home: GarageScaffold(),
+    home: LoginScreen(),
     routes: {
       // '/': (context) => SplashScreen(),
       '/login': (context) => LoginScreen(),

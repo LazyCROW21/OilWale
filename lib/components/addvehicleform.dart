@@ -134,6 +134,11 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
       error = true;
     } else {
       totalKMTravelledErrorText = null;
+      int? travel = int.tryParse(totalKMTravelledInput ?? '');
+      if (travel! > 999999) {
+        totalKMTravelledErrorText = '* Unreal value (should be < 999999)';
+        error = true;
+      }
     }
 
     // check numberplateInput
@@ -151,11 +156,16 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
     if (dailyKMTravelInput == null || dailyKMTravelInput == '') {
       dailyKMTravelErrorText = '* Required';
       error = true;
-    } else if (int.tryParse(totalKMTravelledInput ?? '') == null) {
+    } else if (int.tryParse(dailyKMTravelErrorText ?? '') == null) {
       dailyKMTravelErrorText = '* Invalid number';
       error = true;
     } else {
       dailyKMTravelErrorText = null;
+      int? dtravel = int.tryParse(dailyKMTravelErrorText ?? '');
+      if (dtravel! > 700) {
+        totalKMTravelledErrorText = '* Unreal value (should be < 700)';
+        error = true;
+      }
     }
     return !error;
   }
@@ -245,13 +255,14 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                                   .map((e) => vehicleModelDDMB(e))
                                   .toList()),
                     ),
+                    // Number Plate Input
                     Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: TextFormField(
                           onChanged: (String inp) {
                             numberplateInput = inp;
                           },
-                          // validator: null,
+                          textCapitalization: TextCapitalization.characters,
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
                               prefixIcon: Icon(Icons.drive_eta,

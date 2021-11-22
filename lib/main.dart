@@ -18,23 +18,6 @@ void main() {
       systemNavigationBarColor: AppColorSwatche.white,
       statusBarColor: AppColorSwatche.white));
   runApp(MaterialApp(
-    theme: ThemeData(
-        accentColor: AppColorSwatche.primary,
-        accentColorBrightness: Brightness.light,
-        iconTheme: IconThemeData(color: AppColorSwatche.primary),
-        floatingActionButtonTheme:
-            FloatingActionButtonThemeData(backgroundColor: Colors.deepOrange),
-        radioTheme: RadioThemeData(
-            fillColor: MaterialStateProperty.all(Colors.deepOrange)),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.deepOrange))),
-        backgroundColor: Colors.white,
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
-            backgroundColor: Colors.white,
-            unselectedItemColor: Colors.deepOrange[200],
-            selectedItemColor: Colors.deepOrange),
-        appBarTheme: AppBarTheme(backgroundColor: Colors.white)),
     initialRoute: '/login',
     home: LoginScreen(),
     routes: {

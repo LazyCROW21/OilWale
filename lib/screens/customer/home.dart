@@ -55,21 +55,20 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: AppColorSwatche.white,
         centerTitle: true,
         title: Text(
           "Oilwale",
-          style: TextStyle(color: AppColorSwatche.primary),
+          style: TextStyle(color: AppColorSwatche.primaryAccent),
         ),
       ),
       body: Container(
         decoration: BoxDecoration(
-          color: Colors.deepOrangeAccent,
-          // image: DecorationImage(
-          //     image: AssetImage('assets/img/bgsq.png'),
-          //     colorFilter: ColorFilter.mode(
-          //         Colors.deepOrangeAccent.withOpacity(0.4),
-          //         BlendMode.dstATop))
-        ),
+            // color: Colors.deepOrangeAccent,
+            image: DecorationImage(
+                image: AssetImage('assets/img/bgsq.png'),
+                colorFilter: ColorFilter.mode(
+                    Colors.white.withOpacity(0.21), BlendMode.dstATop))),
         child: AnimatedSwitcher(
             reverseDuration: Duration.zero,
             duration: Duration(milliseconds: 500),
@@ -84,13 +83,30 @@ class _HomeScreenState extends State<HomeScreen> {
             }),
       ),
       bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.deepOrangeAccent,
+        height: 60,
+        color: Colors.deepOrangeAccent,
+        backgroundColor: Colors.white,
         items: const <Widget>[
-          Icon(Icons.directions_car),
-          Icon(Icons.loyalty),
-          Icon(Icons.shopping_bag),
-          Icon(Icons.garage_outlined),
-          Icon(Icons.manage_accounts)
+          Icon(
+            Icons.directions_car,
+            color: Colors.white,
+          ),
+          Icon(
+            Icons.loyalty,
+            color: Colors.white,
+          ),
+          Icon(
+            Icons.shopping_bag,
+            color: Colors.white,
+          ),
+          Icon(
+            Icons.garage_outlined,
+            color: Colors.white,
+          ),
+          Icon(
+            Icons.manage_accounts,
+            color: Colors.white,
+          )
         ],
         index: idx,
         onTap: tabSelect,

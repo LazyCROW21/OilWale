@@ -25,7 +25,7 @@ class GarageListView extends StatefulWidget {
 class _GarageListViewState extends State<GarageListView> {
   List<Garage> _gList = [];
   SpinKitRing loadingRing = SpinKitRing(
-    color: AppColorSwatche.white,
+    color: AppColorSwatche.primary,
   );
   bool isSearching = true;
 

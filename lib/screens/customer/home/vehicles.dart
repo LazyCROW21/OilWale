@@ -44,19 +44,7 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
     if (customerVehicleList == null) {
       return Container(
         child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SpinKitRing(color: AppColorSwatche.white),
-              SizedBox(
-                width: 8,
-              ),
-              Text(
-                'Loading',
-                style: textStyle('p1', AppColorSwatche.white),
-              ),
-            ],
-          ),
+          child: SpinKitRing(color: AppColorSwatche.primary),
         ),
       );
     } else if (customerVehicleList!.length == 0) {
@@ -158,7 +146,7 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
               child: ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all(AppColorSwatche.white),
+                        MaterialStateProperty.all(AppColorSwatche.primary),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
@@ -188,7 +176,7 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
                     child: Center(
                       child: Text(
                         "+ Add Vehicle",
-                        style: textStyle('p1', Colors.deepOrange),
+                        style: textStyle('p1', AppColorSwatche.white),
                       ),
                     )),
               ),

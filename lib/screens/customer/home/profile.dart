@@ -143,10 +143,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   }
                 },
                 style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(AppColorSwatche.primary),
                     shape: MaterialStateProperty.all<CircleBorder>(CircleBorder(
                         // borderRadius: BorderRadius.circular(18.0),
                         side: BorderSide(color: AppColorSwatche.primary)))),
-                child: Icon(isEditing ? Icons.save : Icons.edit)))
+                child: Icon(
+                  isEditing ? Icons.save : Icons.edit,
+                  color: AppColorSwatche.white,
+                )))
       ],
     ));
   }
@@ -156,6 +161,9 @@ class CustomerDetail extends StatelessWidget {
   final Customer customer;
 
   CustomerDetail(this.customer, {Key? key}) : super(key: key);
+
+  Color borderColor = AppColorSwatche.primary;
+  Color textColor = AppColorSwatche.black;
 
   @override
   Widget build(BuildContext context) {
@@ -196,74 +204,74 @@ class CustomerDetail extends StatelessWidget {
                 children: [
                   Text(
                     'Name',
-                    style: textStyle('p2', Colors.deepOrange.shade50),
+                    style: textStyle('p2', borderColor),
                   ),
                   Text(
                     customer.customerName,
-                    style: textStyle('h5', AppColorSwatche.white),
+                    style: textStyle('h5', textColor),
                   ),
                   Divider(
-                    color: AppColorSwatche.white,
+                    color: AppColorSwatche.primary,
                   ),
                   SizedBox(height: 10),
                   Text(
                     'Phone',
-                    style: textStyle('p2', Colors.deepOrange.shade50),
+                    style: textStyle('p2', borderColor),
                   ),
                   Text(
                     customer.customerPhoneNumber,
-                    style: textStyle('h5', AppColorSwatche.white),
+                    style: textStyle('h5', textColor),
                   ),
                   Divider(
-                    color: AppColorSwatche.white,
+                    color: AppColorSwatche.primary,
                   ),
                   SizedBox(height: 10),
                   Text(
                     'Address',
-                    style: textStyle('p2', Colors.deepOrange.shade50),
+                    style: textStyle('p2', borderColor),
                   ),
                   Text(
                     customer.customerAddress,
-                    style: textStyle('h5', AppColorSwatche.white),
+                    style: textStyle('h5', textColor),
                   ),
                   Divider(
-                    color: AppColorSwatche.white,
+                    color: AppColorSwatche.primary,
                   ),
                   SizedBox(height: 10),
                   Text(
                     'PIN Code',
-                    style: textStyle('p2', Colors.deepOrange.shade50),
+                    style: textStyle('p2', borderColor),
                   ),
                   Text(
                     customer.customerPincode,
-                    style: textStyle('h5', AppColorSwatche.white),
+                    style: textStyle('h5', textColor),
                   ),
                   Divider(
-                    color: AppColorSwatche.white,
+                    color: AppColorSwatche.primary,
                   ),
                   SizedBox(height: 10),
                   Text(
                     'Referral Code',
-                    style: textStyle('p2', Colors.deepOrange.shade50),
+                    style: textStyle('p2', borderColor),
                   ),
                   Text(
                     customer.garageReferralCode ?? '-',
-                    style: textStyle('h5', AppColorSwatche.white),
+                    style: textStyle('h5', textColor),
                   ),
                   Divider(
-                    color: AppColorSwatche.white,
+                    color: AppColorSwatche.primary,
                   ),
                   SizedBox(height: 10),
                   Text(
                     'Total number of time oil serviced',
-                    style: textStyle('p2', Colors.deepOrange.shade50),
+                    style: textStyle('p2', borderColor),
                   ),
                   Text(
                     '12',
-                    style: textStyle('h5', AppColorSwatche.white),
+                    style: textStyle('h5', textColor),
                   ),
                   Divider(
-                    color: AppColorSwatche.white,
+                    color: AppColorSwatche.primary,
                   ),
                   SizedBox(height: 10),
                   Row(
@@ -272,7 +280,7 @@ class CustomerDetail extends StatelessWidget {
                         child: ElevatedButton(
                           style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
-                                  AppColorSwatche.white),
+                                  AppColorSwatche.primary),
                               shape: MaterialStateProperty.all<
                                       RoundedRectangleBorder>(
                                   RoundedRectangleBorder(
@@ -290,7 +298,7 @@ class CustomerDetail extends StatelessWidget {
                           },
                           child: Text(
                             "Log out",
-                            style: textStyle('p1', AppColorSwatche.primary),
+                            style: textStyle('p1', AppColorSwatche.white),
                           ),
                         ),
                       ),
@@ -375,15 +383,15 @@ class _EditCustomerState extends State<EditCustomer> {
                     emitCustomerDetails(customer);
                   },
                   initialValue: customer.customerName,
-                  style: textStyle('p1', AppColorSwatche.white),
+                  style: textStyle('p1', AppColorSwatche.black),
                   decoration: const InputDecoration(
                       labelText: 'Name',
-                      labelStyle: TextStyle(color: Colors.white),
+                      labelStyle: TextStyle(color: Colors.deepOrange),
                       enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.deepOrange),
                       ),
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.deepOrange),
                       )),
                 ),
                 TextFormField(
@@ -392,16 +400,16 @@ class _EditCustomerState extends State<EditCustomer> {
                     emitCustomerDetails(customer);
                   },
                   initialValue: customer.customerPhoneNumber,
-                  style: textStyle('p1', AppColorSwatche.white),
+                  style: textStyle('p1', AppColorSwatche.black),
                   decoration: const InputDecoration(
                       labelText: 'Phone',
-                      labelStyle: TextStyle(color: Colors.white),
+                      labelStyle: TextStyle(color: Colors.deepOrange),
                       focusColor: Colors.white,
                       enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.deepOrange),
                       ),
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.deepOrange),
                       )),
                 ),
                 TextFormField(
@@ -410,15 +418,15 @@ class _EditCustomerState extends State<EditCustomer> {
                     emitCustomerDetails(customer);
                   },
                   initialValue: customer.customerAddress,
-                  style: textStyle('p1', AppColorSwatche.white),
+                  style: textStyle('p1', AppColorSwatche.black),
                   decoration: const InputDecoration(
                       labelText: 'Address',
-                      labelStyle: TextStyle(color: Colors.white),
+                      labelStyle: TextStyle(color: Colors.deepOrange),
                       enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.deepOrange),
                       ),
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.deepOrange),
                       )),
                 ),
                 TextFormField(
@@ -427,15 +435,15 @@ class _EditCustomerState extends State<EditCustomer> {
                     emitCustomerDetails(customer);
                   },
                   initialValue: customer.customerPincode,
-                  style: textStyle('p1', AppColorSwatche.white),
+                  style: textStyle('p1', AppColorSwatche.black),
                   decoration: const InputDecoration(
                       labelText: 'Pincode',
-                      labelStyle: TextStyle(color: Colors.white),
+                      labelStyle: TextStyle(color: Colors.deepOrange),
                       enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.deepOrange),
                       ),
                       focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.deepOrange),
                       )),
                 ),
                 SizedBox(
@@ -449,15 +457,15 @@ class _EditCustomerState extends State<EditCustomer> {
                         },
                         textCapitalization: TextCapitalization.characters,
                         initialValue: customer.garageReferralCode,
-                        style: textStyle('p1', AppColorSwatche.white),
+                        style: textStyle('p1', AppColorSwatche.black),
                         decoration: const InputDecoration(
                             labelText: 'Referral Code',
-                            labelStyle: TextStyle(color: Colors.white),
+                            labelStyle: TextStyle(color: Colors.deepOrange),
                             enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
+                              borderSide: BorderSide(color: Colors.deepOrange),
                             ),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
+                              borderSide: BorderSide(color: Colors.deepOrange),
                             )),
                       )
                     : Column(
@@ -465,11 +473,11 @@ class _EditCustomerState extends State<EditCustomer> {
                         children: [
                           Text(
                             'Referral Code',
-                            style: textStyle('p2', Colors.deepOrange.shade50),
+                            style: textStyle('p2', Colors.deepOrange),
                           ),
                           Text(
                             '${customer.garageReferralCode}',
-                            style: textStyle('h5', AppColorSwatche.white),
+                            style: textStyle('h5', AppColorSwatche.black),
                           ),
                           Divider(
                             color: AppColorSwatche.white,
@@ -481,14 +489,14 @@ class _EditCustomerState extends State<EditCustomer> {
                 ),
                 Text(
                   'Total number of time oil serviced',
-                  style: textStyle('p2', Colors.deepOrange.shade50),
+                  style: textStyle('p2', Colors.deepOrange),
                 ),
                 Text(
                   '12',
-                  style: textStyle('h5', AppColorSwatche.white),
+                  style: textStyle('h5', AppColorSwatche.black),
                 ),
                 Divider(
-                  color: AppColorSwatche.white,
+                  color: AppColorSwatche.primary,
                 ),
                 SizedBox(
                   height: 8.0,

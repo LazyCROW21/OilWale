@@ -1,22 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:oilwale/models/customervehicle.dart';
 import 'package:oilwale/models/vehicle.dart';
 import 'package:oilwale/models/vehiclecompany.dart';
 import 'package:oilwale/service/vehicle_api.dart';
 import 'package:oilwale/theme/themedata.dart';
 
 class EditVehicleDetailBlock extends StatefulWidget {
+  final CustomerVehicle customerVehicle;
+
+  EditVehicleDetailBlock(this.customerVehicle);
+
   @override
-  _EditVehicleDetailBlockState createState() => _EditVehicleDetailBlockState();
+  _EditVehicleDetailBlockState createState() =>
+      _EditVehicleDetailBlockState(customerVehicle);
 }
 
 class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
+  CustomerVehicle customerVehicle;
   List<VehicleCompany> _company = [];
   List<Vehicle> _models = [];
   bool loadingVCList = true;
   bool loadingVMList = true;
+  String? vehicleCompanyIdInput;
+  String? vehicleCompanyIdErrorText;
+  String? vehicleIdInput;
+  String? vehicleIdErrorText;
+  String? dailyKMTravelInput;
+  String? dailyKMTravelErrorText;
+  String? numberplateInput;
+  String? numberplateErrorText;
+  String? totalKMTravelledInput;
+  String? totalKMTravelledErrorText;
   Text loadingDDM = Text(
     'Loading Options..',
     style: textStyle('p1', AppColorSwatche.black),
+  );
+
+  _EditVehicleDetailBlockState(this.customerVehicle);
+
+  // regex [A-Z]{2}[0-9]{1,2}[A-Z0-9]{1,2}[0-9]{4}
+  RegExp numberPlateRegExp = new RegExp(
+    r"^[A-Z]{2}[0-9]{1,2}[A-Z0-9]{1,2}[0-9]{4}$",
+    caseSensitive: true,
+    multiLine: false,
   );
 
   @override
@@ -26,6 +52,11 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
       setState(() {
         loadingVCList = false;
         _company = result;
+        vehicleCompanyIdInput = customerVehicle.vehicleCompanyId;
+      });
+      changeModelList(vehicleCompanyIdInput ?? '');
+      setState(() {
+        vehicleIdInput = customerVehicle.vehicleId;
       });
     });
   }
@@ -47,6 +78,59 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
         loadingVMList = false;
       });
     });
+  }
+
+  bool validateForm() {
+    bool error = false;
+    // check VehicleCompanyId
+    if (vehicleCompanyIdInput == null || vehicleCompanyIdInput == '') {
+      vehicleCompanyIdErrorText = '* Required';
+      error = true;
+    } else {
+      vehicleCompanyIdErrorText = null;
+    }
+
+    // check VehicleId
+    if (vehicleIdInput == null || vehicleIdInput == '') {
+      vehicleIdErrorText = '* Required';
+      error = true;
+    } else {
+      vehicleIdErrorText = null;
+    }
+
+    // check totalKMTravelledInput
+    if (totalKMTravelledInput == null || totalKMTravelledInput == '') {
+      totalKMTravelledErrorText = '* Required';
+      error = true;
+    } else if (int.tryParse(totalKMTravelledInput ?? '') == null) {
+      totalKMTravelledErrorText = '* Invalid number';
+      error = true;
+    } else {
+      totalKMTravelledErrorText = null;
+    }
+
+    // check numberplateInput
+    if (numberplateInput == null || numberplateInput == '') {
+      numberplateErrorText = '* Required';
+      error = true;
+    } else if (!numberPlateRegExp.hasMatch(numberplateInput ?? '')) {
+      numberplateErrorText = '* Invalid format';
+      error = true;
+    } else {
+      numberplateErrorText = null;
+    }
+
+    // check dailyKMTravelInput
+    if (dailyKMTravelInput == null || dailyKMTravelInput == '') {
+      dailyKMTravelErrorText = '* Required';
+      error = true;
+    } else if (int.tryParse(totalKMTravelledInput ?? '') == null) {
+      dailyKMTravelErrorText = '* Invalid number';
+      error = true;
+    } else {
+      dailyKMTravelErrorText = null;
+    }
+    return !error;
   }
 
   DropdownMenuItem<String> vehicleCompanyDDMB(VehicleCompany vehicleCompany) {
@@ -93,10 +177,11 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
                     onChanged: (String? vehicleCompanyId) {
                       print('Selected: ' + (vehicleCompanyId ?? ''));
                       changeModelList(vehicleCompanyId ?? '');
+                      setState(() {
+                        vehicleCompanyIdInput = vehicleCompanyId;
+                      });
                     },
-                    value: _company.length != 0
-                        ? _company[0].vehicleCompanyId
-                        : null,
+                    value: vehicleCompanyIdInput,
                     items: _company.map((e) => vehicleCompanyDDMB(e)).toList()),
           ),
           Container(
@@ -121,84 +206,93 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
                     ),
                     onChanged: (String? vehicleId) {
                       print('Selected: ' + (vehicleId ?? ''));
+                      setState(() {
+                        vehicleIdInput = vehicleId;
+                      });
                     },
-                    value: _models.length != 0 ? _models[0].vehicleId : null,
+                    value: vehicleIdInput,
                     items: _models.map((e) => vehicleModelDDMB(e)).toList()),
           ),
           TextFormField(
-            obscureText: true,
             onChanged: (String inp) {
-              // _pwd = inp;
+              numberplateInput = inp;
             },
-            // validator: pwdValidate,
+            initialValue: customerVehicle.numberPlate,
+            keyboardType: TextInputType.text,
             decoration: InputDecoration(
-                prefixIcon: Icon(
-                  Icons.drive_eta,
-                  color: Colors.deepOrange,
-                ),
-                hintText: "AB01CD2345",
-                labelText: 'Enter vehicle reg. numer',
-                labelStyle: TextStyle(color: Colors.deepOrange),
+                prefixIcon:
+                    Icon(Icons.drive_eta, color: AppColorSwatche.primary),
+                hintText: 'AB-XX-CD-XXXX',
+                labelText: 'Enter vehicle reg. number',
+                labelStyle: TextStyle(color: AppColorSwatche.primary),
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.deepOrange,
                   ),
                 ),
                 enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: AppColorSwatche.primary)),
-                hintStyle: TextStyle(color: AppColorSwatche.primary)),
+                  borderSide: BorderSide(
+                    color: Colors.deepOrange,
+                  ),
+                ),
+                hintStyle: TextStyle(color: AppColorSwatche.primary),
+                errorText: numberplateErrorText),
           ),
           SizedBox(
             height: 8.0,
           ),
           TextFormField(
-            obscureText: true,
             onChanged: (String inp) {
-              // _pwd = inp;
+              totalKMTravelledInput = inp;
             },
-            // validator: pwdValidate,
+            initialValue: '${customerVehicle.currentKM}',
+            keyboardType: TextInputType.number,
             decoration: InputDecoration(
-                prefixIcon: Icon(
-                  Icons.linear_scale,
-                  color: Colors.deepOrange,
-                ),
-                hintText: "102453",
-                labelText: 'Enter KM travelled',
-                labelStyle: TextStyle(color: Colors.deepOrange),
+                prefixIcon:
+                    Icon(Icons.linear_scale, color: AppColorSwatche.primary),
+                hintText: '102453',
+                labelText: 'Total KM travelled',
+                labelStyle: TextStyle(color: AppColorSwatche.primary),
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.deepOrange,
                   ),
                 ),
                 enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: AppColorSwatche.primary)),
-                hintStyle: TextStyle(color: AppColorSwatche.primary)),
+                  borderSide: BorderSide(
+                    color: Colors.deepOrange,
+                  ),
+                ),
+                hintStyle: TextStyle(color: AppColorSwatche.primary),
+                errorText: totalKMTravelledErrorText),
           ),
           SizedBox(
             height: 8.0,
           ),
           TextFormField(
-            obscureText: true,
             onChanged: (String inp) {
-              // _pwd = inp;
+              dailyKMTravelInput = inp;
             },
-            // validator: pwdValidate,
+            initialValue: '${customerVehicle.kmperday}',
+            keyboardType: TextInputType.number,
             decoration: InputDecoration(
-                prefixIcon: Icon(
-                  Icons.drive_eta,
-                  color: Colors.deepOrange,
-                ),
-                hintText: "102453",
+                prefixIcon:
+                    Icon(Icons.timeline, color: AppColorSwatche.primary),
+                hintText: '7',
                 labelText: 'Daily KM travel',
-                labelStyle: TextStyle(color: Colors.deepOrange),
+                labelStyle: TextStyle(color: AppColorSwatche.primary),
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(
                     color: Colors.deepOrange,
                   ),
                 ),
                 enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: AppColorSwatche.primary)),
-                hintStyle: TextStyle(color: AppColorSwatche.primary)),
+                  borderSide: BorderSide(
+                    color: Colors.deepOrange,
+                  ),
+                ),
+                hintStyle: TextStyle(color: AppColorSwatche.primary),
+                errorText: dailyKMTravelErrorText),
           )
         ],
       ),

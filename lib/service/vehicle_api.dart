@@ -39,7 +39,7 @@ class VehicleAPIManager {
       if (response.statusCode == 200) {
         var jsonString = response.body;
         dynamic jsonMap = jsonDecode(jsonString);
-        print(jsonMap);
+        print(jsonMap['suggestedProductDetails']);
         return jsonMap;
       } else {
         return null;

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:oilwale/components/editvehicledetail.dart';
+import 'package:oilwale/components/product_tile.dart';
 import 'package:oilwale/components/vehicledetailblock.dart';
 import 'package:oilwale/models/customervehicle.dart';
+import 'package:oilwale/models/product.dart';
 import 'package:oilwale/theme/themedata.dart';
 
 class VehicleDetails extends StatefulWidget {
@@ -13,13 +15,13 @@ class _VehicleDetailsState extends State<VehicleDetails> {
   late CustomerVehicle customerVehicle;
   late VehicleDetailBlock _vehicleDetailBlock;
   late EditVehicleDetailBlock _editVehicleDetailBlock;
-  List<String> recommendedProductList = [];
   bool isEditing = false;
 
   // @override
   // void initState() {
   //   super.initState();
   // }
+
   @override
   void setState(VoidCallback fn) {
     if (mounted) {
@@ -50,11 +52,12 @@ class _VehicleDetailsState extends State<VehicleDetails> {
             brand: customerVehicle.brand,
             customerVehicleId: customerVehicle.customerVehicleId,
             vehicleId: customerVehicle.vehicleId,
+            vehicleCompanyId: customerVehicle.vehicleCompanyId,
             model: customerVehicle.model,
             numberPlate: customerVehicle.numberPlate,
             currentKM: customerVehicle.currentKM,
             kmperday: customerVehicle.kmperday));
-    _editVehicleDetailBlock = EditVehicleDetailBlock();
+    _editVehicleDetailBlock = EditVehicleDetailBlock(customerVehicle);
     // getRecommendedProducts(customerVehicle.vehicleId);
     return Scaffold(
         appBar: AppBar(
@@ -141,21 +144,28 @@ class _VehicleDetailsState extends State<VehicleDetails> {
                 Text("Recommended Products",
                     style: textStyle('h4', AppColorSwatche.black)),
                 Container(
-                  height: 512.0,
+                  // height: 512,
                   child: ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
                       itemCount: customerVehicle.suggestedProducts == null
                           ? 0
                           : customerVehicle.suggestedProducts!.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return ListTile(
-                            leading: Icon(Icons.circle),
-                            trailing: Icon(
-                              Icons.info,
-                              color: Colors.blue,
-                            ),
-                            title: Text(
-                                "${customerVehicle.suggestedProducts![index]}",
-                                style: textStyle('p1', AppColorSwatche.black)));
+                        return ProductTile(
+                          product: Product.fromJSON(
+                              customerVehicle.suggestedProducts![index]),
+                        );
+                        // return ListTile(
+                        //     leading: Icon(Icons.circle),
+                        //     trailing: Icon(
+                        //       Icons.info,
+                        //       color: Colors.blue,
+                        //     ),
+
+                        //     title: Text(
+                        //         "${customerVehicle.suggestedProducts![index]['productName']}",
+                        //         style: textStyle('p1', AppColorSwatche.black)));
                       }),
                 ),
               ],

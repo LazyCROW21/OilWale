@@ -80,6 +80,7 @@ class CustomerAPIManager {
         "customerName": customer.customerName,
         "customerPhoneNumber": customer.customerPhoneNumber,
         "customerPincode": customer.customerPincode,
+        "garageReferralCode": customer.garageReferralCode,
       };
       String dataString = jsonEncode(data);
       var client = http.Client();
@@ -122,7 +123,8 @@ class CustomerAPIManager {
               await VehicleAPIManager.getVehicle(element['vehicleId']);
           element['model'] = vehicleDetails['vehicleModel'];
           element['brand'] = vehicleDetails['vehicleCompany']['vehicleCompany'];
-          element['suggestedProducts'] = vehicleDetails['suggestedProduct'];
+          element['suggestedProducts'] =
+              vehicleDetails['suggestedProductDetails'];
           print(vehicleDetails['suggestedProduct']);
           customerVehicles.add(CustomerVehicle.fromJSON(element));
           print(element);

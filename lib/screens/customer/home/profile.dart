@@ -71,8 +71,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         preferences.getString("customerAddress") ?? 'Not Found!';
     customer.customerPincode =
         preferences.getString("customerPincode") ?? 'Not Found!';
-    customer.garageReferralCode =
-        preferences.getString("garageReferralCode") ?? '-';
+    customer.garageReferralCode = preferences.getString("garageReferralCode");
   }
 
   void saveCustomerEdit() async {
@@ -92,6 +91,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           "customerPhoneNumber", customer.customerPhoneNumber);
       preferences.setString("customerAddress", customer.customerAddress);
       preferences.setString("customerPincode", customer.customerPincode);
+      if (customer.garageReferralCode != null) {
+        preferences.setString(
+            "garageReferralCode", customer.garageReferralCode ?? '');
+      }
     } else {
       Fluttertoast.showToast(
           msg: "Error in updating! try later",
@@ -106,6 +109,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         customer.customerAddress = undoCustomer!.customerAddress;
         customer.customerPhoneNumber = undoCustomer!.customerPhoneNumber;
         customer.customerPincode = undoCustomer!.customerPincode;
+        customer.garageReferralCode = undoCustomer!.garageReferralCode;
       });
     }
   }
@@ -115,6 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     this.customer.customerAddress = editCustomer.customerAddress;
     this.customer.customerPhoneNumber = editCustomer.customerPhoneNumber;
     this.customer.customerPincode = editCustomer.customerPincode;
+    this.customer.garageReferralCode = editCustomer.garageReferralCode;
   }
 
   @override
@@ -232,21 +237,21 @@ class CustomerDetail extends StatelessWidget {
                 Divider(),
                 SizedBox(height: 10),
                 Text(
-                  'Total number of time oil serviced',
-                  style: textStyle('p2', AppColorSwatche.primary),
-                ),
-                Text(
-                  '12',
-                  style: textStyle('p1', AppColorSwatche.black),
-                ),
-                Divider(),
-                SizedBox(height: 10),
-                Text(
                   'Referral Code',
                   style: textStyle('p2', AppColorSwatche.primary),
                 ),
                 Text(
                   customer.garageReferralCode ?? '-',
+                  style: textStyle('p1', AppColorSwatche.black),
+                ),
+                Divider(),
+                SizedBox(height: 10),
+                Text(
+                  'Total number of time oil serviced',
+                  style: textStyle('p2', AppColorSwatche.primary),
+                ),
+                Text(
+                  '12',
                   style: textStyle('p1', AppColorSwatche.black),
                 ),
                 Divider(),
@@ -423,6 +428,38 @@ class _EditCustomerState extends State<EditCustomer> {
                 SizedBox(
                   height: 8.0,
                 ),
+                customer.garageReferralCode == null
+                    ? TextFormField(
+                        onChanged: (String inp) {
+                          customer.garageReferralCode = inp;
+                          emitCustomerDetails(customer);
+                        },
+                        initialValue: customer.garageReferralCode,
+                        style: textStyle('p1', AppColorSwatche.black),
+                        decoration: const InputDecoration(
+                            labelText: 'Referral Code',
+                            labelStyle: TextStyle(color: Colors.deepOrange),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.deepOrange),
+                            ),
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.deepOrange),
+                            )),
+                      )
+                    : Text(
+                        'Referral Code',
+                        style: textStyle('p2', AppColorSwatche.primary),
+                      ),
+                customer.garageReferralCode != null
+                    ? Text(
+                        '${customer.garageReferralCode}',
+                        style: textStyle('p1', AppColorSwatche.black),
+                      )
+                    : Divider(),
+                // Divider(),
+                SizedBox(
+                  height: 8.0,
+                ),
                 Text(
                   'Total number of time oil serviced',
                   style: textStyle('p2', AppColorSwatche.primary),
@@ -434,14 +471,6 @@ class _EditCustomerState extends State<EditCustomer> {
                 Divider(),
                 SizedBox(
                   height: 8.0,
-                ),
-                Text(
-                  'Referral Code',
-                  style: textStyle('p2', AppColorSwatche.primary),
-                ),
-                Text(
-                  'G45H2111',
-                  style: textStyle('p1', AppColorSwatche.black),
                 ),
               ],
             ),

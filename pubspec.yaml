@@ -71,9 +71,9 @@ flutter:
     - assets/img/bg.jpg
     - assets/img/bgsq.png
     - assets/img/bgsq.jpg
-    - assets/img/orange_wave_bg_btn.jpg
     - assets/img/mplubricantslogo.png
     - assets/img/oil_barrel.gif
+    # - assets/img/orange_wave_bg_btn.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

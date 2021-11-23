@@ -31,7 +31,7 @@ class OffersWidget extends StatelessWidget {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children :[
-                      Text(offers.offerName,
+                      Text(offers.schemeName,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),

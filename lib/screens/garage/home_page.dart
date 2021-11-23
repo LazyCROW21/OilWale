@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oilwale/models/Offers.dart';
+import 'package:oilwale/service/offers_api.dart';
 import 'package:oilwale/widgets/OffersWidget.dart';
 import 'package:oilwale/models/OffersCatalog.dart';
 
@@ -18,16 +20,25 @@ class _HomePageState extends State<HomePage> {
   int credPoints = 0;
   get offers => null;
   late Function gotoOffer;
+  List<Offers> _offList = [];
 
-  _HomePageState(Function jabadaba) {
-    this.gotoOffer = jabadaba;
-  }
   @override
   void initState() {
     super.initState();
-    custNumber = 500;
-    refferalCode = "ADF657";
-    credPoints = 786;
+    OffersAPIManager.getAllActiveScheme().then((resp) {
+      setState(() {
+        _offList = resp;
+        custNumber = 500;
+        refferalCode = "ADF657";
+        credPoints = 786;
+      });
+    }).onError((error, stackTrace) {
+      print(error);
+    });
+  }
+
+  _HomePageState(Function jabadaba) {
+    this.gotoOffer = jabadaba;
   }
 
 
@@ -190,10 +201,10 @@ class _HomePageState extends State<HomePage> {
         child: Expanded(
           child: ListView.builder(
               shrinkWrap: true,
-              itemCount: CatalogModel.offers.length,
+              itemCount: _offList.length,
               itemBuilder: (context, index) {
                 return OffersWidget(
-                  offers: CatalogModel.offers[index],
+                  offers: _offList[index],
                 );
               }),
         ),

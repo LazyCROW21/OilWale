@@ -1,18 +1,18 @@
 class Offers{
   late bool isActive;
-  late String offerId;
-  late String offerName;
+  late String schemeId;
+  late String schemeName;
   late String description;
   late String createdAt;
   late String endsAt;
   late String percentage;
   late String minqty;
-  late String productId;
+  late List productId = [];
 
   Offers(
       {required this.isActive,
-        required this.offerId,
-        required this.offerName,
+        required this.schemeId,
+        required this.schemeName,
         required this.description,
         required this.createdAt,
         required this.endsAt,
@@ -23,8 +23,8 @@ class Offers{
 
   Offers.fromJSON(Map<String, dynamic> json) {
     this.isActive = json['isActive'];
-    this.offerId = json['offerId'];
-    this.offerName = json['offerName'];
+    this.schemeId = json['schemeId'];
+    this.schemeName = json['offerName'];
     this.description = json['description'];
     this.percentage = json['percentage'];
     this.createdAt = json['createdAt'];

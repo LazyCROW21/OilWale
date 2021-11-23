@@ -32,7 +32,7 @@ class OfferDetails extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  offers.offerName,
+                  offers.schemeName,
                   style:
                       TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
                 ),

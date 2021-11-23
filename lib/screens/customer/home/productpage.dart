@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:oilwale/models/product.dart';
+import 'package:oilwale/models/vehicle.dart';
+import 'package:oilwale/service/vehicle_api.dart';
 import 'package:oilwale/theme/themedata.dart';
 
 class ProductPage extends StatefulWidget {
@@ -24,11 +27,15 @@ class _ProductPageState extends State<ProductPage> {
     'https://picsum.photos/200'
   ];
 
-  // @override
+  List<Vehicle> recommendedVehicles = [];
+  bool isLoadingVList = true;
+
+  @override
   // void initState() {
   //   super.initState();
-  //   args = ModalRoute.of(context)!.settings.arguments as String;
+  //   VehicleAPIManager.getRecommendedVehiclesByProductId();
   // }
+
   @override
   void setState(VoidCallback fn) {
     if (mounted) {
@@ -39,6 +46,13 @@ class _ProductPageState extends State<ProductPage> {
   @override
   Widget build(BuildContext context) {
     product = ModalRoute.of(context)!.settings.arguments as Product;
+    VehicleAPIManager.getRecommendedVehiclesByProductId(product!.id)
+        .then((result) {
+      setState(() {
+        isLoadingVList = false;
+        recommendedVehicles = result;
+      });
+    });
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.deepOrangeAccent,
@@ -48,7 +62,10 @@ class _ProductPageState extends State<ProductPage> {
           ),
           title: Text(
             'Product',
-            style: textStyle('h4', AppColorSwatche.white),
+            style: TextStyle(
+                color: AppColorSwatche.white,
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold),
           ),
         ),
         body: SingleChildScrollView(
@@ -88,6 +105,7 @@ class _ProductPageState extends State<ProductPage> {
                           .toList(),
                     ),
                   )),
+                  // Product Name
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
@@ -99,88 +117,139 @@ class _ProductPageState extends State<ProductPage> {
                   Divider(
                     color: Colors.deepOrange,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Description:',
-                      style: textStyle('h5', AppColorSwatche.black),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      product == null ? 'Not found' : product!.specification,
-                      style: textStyle('p1', Colors.grey),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'Details:',
-                      style: textStyle('h5', AppColorSwatche.black),
-                    ),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Table(
-                        children: [
-                          TableRow(children: [
-                            Container(
-                              padding: p1,
-                              child: Text('Grade',
-                                  style:
-                                      textStyle('p1', AppColorSwatche.primary)),
-                            ),
-                            Container(
-                              padding: p1,
-                              child: Text(
-                                product == null ? 'Not found' : product!.grade,
-                                style: textStyle('p1', AppColorSwatche.black),
-                              ),
-                            )
-                          ]),
-                          TableRow(children: [
-                            Container(
-                              padding: p1,
-                              child: Text('Package Size',
-                                  style:
-                                      textStyle('p1', AppColorSwatche.primary)),
-                            ),
-                            Container(
-                              padding: p1,
-                              child: Text(
-                                product == null
-                                    ? 'Not found'
-                                    : product!.packingSize,
-                                style: textStyle('p1', AppColorSwatche.black),
-                              ),
-                            )
-                          ])
-                        ],
-                      )),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      "Recommended Models:",
-                      style: textStyle('h5', AppColorSwatche.black),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  Card(
+                    elevation: 8.0,
+                    margin: EdgeInsets.symmetric(vertical: 4.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "> Model1 Brand1",
-                          style: textStyle('p1', AppColorSwatche.black),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Description:',
+                            style: textStyle('h5', AppColorSwatche.black),
+                          ),
                         ),
-                        Text(
-                          "> Model2 Brand2",
-                          style: textStyle('p1', AppColorSwatche.black),
+                        Divider(
+                          color: AppColorSwatche.primary,
                         ),
-                        Text(
-                          "> Model3 Brand3",
-                          style: textStyle('p1', AppColorSwatche.black),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            product == null
+                                ? 'Not found'
+                                : product!.specification,
+                            style: textStyle('p1', Colors.grey),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Card(
+                    elevation: 8.0,
+                    margin: EdgeInsets.symmetric(vertical: 4.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Details:',
+                            style: textStyle('h5', AppColorSwatche.black),
+                          ),
+                        ),
+                        Divider(
+                          color: AppColorSwatche.primary,
+                        ),
+                        Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Table(
+                              children: [
+                                TableRow(children: [
+                                  Container(
+                                    padding: p1,
+                                    child: Text('Grade',
+                                        style: textStyle(
+                                            'p1', AppColorSwatche.primary)),
+                                  ),
+                                  Container(
+                                    padding: p1,
+                                    child: Text(
+                                      product == null
+                                          ? 'Not found'
+                                          : product!.grade,
+                                      style: textStyle(
+                                          'p1', AppColorSwatche.black),
+                                    ),
+                                  )
+                                ]),
+                                TableRow(children: [
+                                  Container(
+                                    padding: p1,
+                                    child: Text('Package Size',
+                                        style: textStyle(
+                                            'p1', AppColorSwatche.primary)),
+                                  ),
+                                  Container(
+                                    padding: p1,
+                                    child: Text(
+                                      product == null
+                                          ? 'Not found'
+                                          : product!.packingSize,
+                                      style: textStyle(
+                                          'p1', AppColorSwatche.black),
+                                    ),
+                                  )
+                                ])
+                              ],
+                            )),
+                      ],
+                    ),
+                  ),
+                  Card(
+                    elevation: 8.0,
+                    margin: EdgeInsets.symmetric(vertical: 4.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            "Recommended Models:",
+                            style: textStyle('h5', AppColorSwatche.black),
+                          ),
+                        ),
+                        Divider(
+                          color: AppColorSwatche.primary,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: isLoadingVList
+                              ? SpinKitRing(color: AppColorSwatche.primary)
+                              : ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: recommendedVehicles.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Container(
+                                      child: Row(
+                                        children: [
+                                          Icon(Icons.arrow_right_rounded),
+                                          SizedBox(
+                                            width: 4,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                                "${recommendedVehicles[index].vehicleCompany} - ${recommendedVehicles[index].vehicleModel}",
+                                                overflow: TextOverflow.ellipsis,
+                                                style: textStyle('p1',
+                                                    AppColorSwatche.black)),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  }),
                         ),
                       ],
                     ),

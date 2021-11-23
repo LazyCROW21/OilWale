@@ -59,7 +59,10 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         title: Text(
           "Oilwale",
-          style: TextStyle(color: AppColorSwatche.primaryAccent),
+          style: TextStyle(
+              color: AppColorSwatche.primaryAccent,
+              letterSpacing: 2,
+              fontWeight: FontWeight.bold),
         ),
       ),
       body: Container(

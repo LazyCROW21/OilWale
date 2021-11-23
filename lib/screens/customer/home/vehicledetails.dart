@@ -100,7 +100,10 @@ class _VehicleDetailsState extends State<VehicleDetails> {
           ),
           title: Text(
             "My vehicle",
-            style: TextStyle(color: AppColorSwatche.white),
+            style: TextStyle(
+                color: AppColorSwatche.white,
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold),
           ),
         ),
         body: SingleChildScrollView(

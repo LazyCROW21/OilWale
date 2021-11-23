@@ -43,7 +43,10 @@ class _GaragePageState extends State<GaragePage> {
           ),
           title: Text(
             'Garage',
-            style: textStyle('h4', AppColorSwatche.white),
+            style: TextStyle(
+                color: AppColorSwatche.white,
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold),
           ),
         ),
         body: SingleChildScrollView(
@@ -94,68 +97,96 @@ class _GaragePageState extends State<GaragePage> {
                   Divider(
                     color: AppColorSwatche.primary,
                   ),
-                  Row(
-                    children: [
-                      Icon(Icons.location_pin),
-                      Text(
-                        'Location',
-                        style: textStyle('h5', AppColorSwatche.black),
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      garage != null ? garage!.address : 'Not Found',
-                      style: textStyle('p1', AppColorSwatche.grey),
+                  Card(
+                    elevation: 8.0,
+                    margin: EdgeInsets.symmetric(vertical: 4.0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.location_pin),
+                              Text(
+                                'Location',
+                                style: textStyle('h5', AppColorSwatche.black),
+                              )
+                            ],
+                          ),
+                          Divider(
+                            color: AppColorSwatche.primary,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              garage != null ? garage!.address : 'Not Found',
+                              style: textStyle('p1', AppColorSwatche.grey),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              garage != null
+                                  ? "PIN Code: ${garage!.pincode}"
+                                  : 'PIN Code: Not Found',
+                              style: textStyle('p1', AppColorSwatche.grey),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      garage != null
-                          ? "Pincode: ${garage!.pincode}"
-                          : 'Pincode: Not Found',
-                      style: textStyle('p1', AppColorSwatche.grey),
-                    ),
-                  ),
-                  Divider(
-                    color: AppColorSwatche.primary,
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.contact_page),
-                      Text(
-                        "Contact Details",
-                        style: textStyle('h5', AppColorSwatche.black),
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      garage != null
-                          ? "Owner: ${garage!.ownerName}"
-                          : 'Owner: Not Found',
-                      style: textStyle('p1', AppColorSwatche.grey),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      garage != null
-                          ? "Phone: ${garage!.phoneNumber}"
-                          : 'Phone: Not Found',
-                      style: textStyle('p1', AppColorSwatche.grey),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      garage != null
-                          ? "Alt. Phone: ${garage!.alternateNumber}"
-                          : 'Alt. Phone: Not Found',
-                      style: textStyle('p1', AppColorSwatche.grey),
+                  // Contact Details
+                  Card(
+                    elevation: 8.0,
+                    margin: EdgeInsets.symmetric(vertical: 4.0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.contact_page),
+                              Text(
+                                "Contact Details",
+                                style: textStyle('h5', AppColorSwatche.black),
+                              )
+                            ],
+                          ),
+                          Divider(
+                            color: AppColorSwatche.primary,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              garage != null
+                                  ? "Owner: ${garage!.ownerName}"
+                                  : 'Owner: Not Found',
+                              style: textStyle('p1', AppColorSwatche.grey),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              garage != null
+                                  ? "Phone: ${garage!.phoneNumber}"
+                                  : 'Phone: Not Found',
+                              style: textStyle('p1', AppColorSwatche.grey),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              garage != null
+                                  ? "Alt. Phone: ${garage!.alternateNumber}"
+                                  : 'Alt. Phone: Not Found',
+                              style: textStyle('p1', AppColorSwatche.grey),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ]),

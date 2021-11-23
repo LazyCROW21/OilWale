@@ -76,4 +76,29 @@ class VehicleAPIManager {
     }
     return false;
   }
+
+  // return list of vehicle that are recommended for the specified product
+  static Future<List<Vehicle>> getRecommendedVehiclesByProductId(
+      String productId) async {
+    List<Vehicle> vehicles = [];
+    try {
+      var client = http.Client();
+      String urlStr = base_url + "/vehicle/product/" + productId;
+      var url = Uri.parse(urlStr);
+      var response = await client.get(url);
+      if (response.statusCode == 200) {
+        var jsonString = response.body;
+        List jsonMap = jsonDecode(jsonString);
+        jsonMap.forEach((element) {
+          vehicles.add(Vehicle.fromJSON(element));
+          print(element);
+        });
+      }
+      return vehicles;
+    } catch (e, s) {
+      print("Exception $e");
+      print("StackTrace $s");
+    }
+    return vehicles;
+  }
 }

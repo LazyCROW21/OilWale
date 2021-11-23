@@ -123,6 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 36,
                     child: RadioListTile<Choice>(
+                      activeColor: AppColorSwatche.primary,
                       title: const Text('Login as Customer'),
                       value: Choice.Customer,
                       groupValue: _choice,
@@ -136,6 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(
                     height: 36,
                     child: RadioListTile<Choice>(
+                      activeColor: AppColorSwatche.primary,
                       title: const Text('Login as Garage Dealer'),
                       value: Choice.Garage,
                       groupValue: _choice,
@@ -188,6 +190,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 });
               },
               style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(AppColorSwatche.primary),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
@@ -227,6 +231,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 Navigator.pushNamed(context, '/cust_createAccount');
               },
               style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(AppColorSwatche.primary),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),

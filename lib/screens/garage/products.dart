@@ -54,6 +54,7 @@ class _ProductViewState extends State<ProductView> {
       padding: const EdgeInsets.all(16.0),
       child: Column(children: [
         Container(
+          height: 55.0,
           child: TextFormField(
             onChanged: (String input) {
               print("User entered: " + input);

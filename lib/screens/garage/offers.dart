@@ -25,14 +25,12 @@ class OffersPageState extends State<OffersPage> {
   SpinKitRing loadingRing = SpinKitRing(
     color: AppColorSwatche.primary,
   );
-  bool isSearching = true;
 
   @override
   void initState() {
     super.initState();
     OffersAPIManager.getAllActiveScheme().then((resp) {
       setState(() {
-        isSearching = false;
         _offList = resp;
       });
     }).onError((error, stackTrace) {
@@ -43,8 +41,7 @@ class OffersPageState extends State<OffersPage> {
     return showoffer ? OfferDetails() :
 
          SingleChildScrollView(
-           child: isSearching
-               ? loadingRing :
+           child:
            ListView.builder(
                shrinkWrap: true,
                itemCount: _offList.length,

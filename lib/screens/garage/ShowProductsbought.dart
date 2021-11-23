@@ -41,82 +41,10 @@ class ShowProductbought extends StatelessWidget {
                 SizedBox(
                   height: 10.0,
                 ),
-                // Expanded(child: ListView.builder(itemBuilder: (context, index) {
-                //                   ItemWidget(product: product);
-                // }
-                // ))
-                // Column(
-                //   children: [
-                //     InkWell(
-                //         onTap: () { Navigator.pushNamed(context, '');},
-                //         child: Card(
-                //           elevation: 2.0,
-                //           child: Container(
-                //               child: Row(
-                //             children: [
-                //               Container(
-                //                 margin:
-                //                     EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-                //                 width: 40.0,
-                //                 height: 60.0,
-                //                 decoration: BoxDecoration(
-                //                     image: DecorationImage(
-                //                         image: NetworkImage(
-                //                             "https://picsum.photos/200"),
-                //                         fit: BoxFit.cover)),
-                //               ),
-                //               Padding(
-                //                 padding: const EdgeInsets.only(left: 6.0),
-                //                 child: Column(
-                //                     crossAxisAlignment:
-                //                         CrossAxisAlignment.start,
-                //                     children: [
-                //                       Text("Product No 40",
-                //                           style: TextStyle(
-                //                               fontWeight: FontWeight.bold)),
-                //                       Text(
-                //                         "Discount : 50% ",
-                //                       )
-                //                     ]),
-                //               ),
-                //             ],
-                //           )),
-                //         )),
-                //     InkWell(
-                //       onTap: () {},
-                //       child: Card(
-                //         elevation: 2.0,
-                //         child: Container(
-                //             child: Row(
-                //           children: [
-                //             Container(
-                //               margin:
-                //                   EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-                //               width: 40.0,
-                //               height: 60.0,
-                //               decoration: BoxDecoration(
-                //                   image: DecorationImage(
-                //                       image: NetworkImage(
-                //                           "https://picsum.photos/200"),
-                //                       fit: BoxFit.cover)),
-                //             ),
-                //             Padding(
-                //               padding: const EdgeInsets.only(left: 6.0),
-                //               child: Column(
-                //                   crossAxisAlignment: CrossAxisAlignment.start,
-                //                   children: [
-                //                     Text("Product No 41s",
-                //                         style: TextStyle(
-                //                             fontWeight: FontWeight.bold)),
-                //                     Text("Discount : 50%")
-                //                   ]),
-                //             ),
-                //           ],
-                //         )),
-                //       ),
-                //     )
-                //   ],
-                // ),
+                 // Expanded(child: ListView.builder(itemBuilder: (context, index) {
+                 //                   ItemWidget(product: product);
+                 // }
+                 // ))
                 SizedBox(
                   height: 10.0,
                 ),

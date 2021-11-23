@@ -18,6 +18,7 @@ class _HomePageState extends State<HomePage> {
   int custNumber = 0;
   String refferalCode = "";
   int credPoints = 0;
+
   get offers => null;
   late Function gotoOffer;
   List<Offers> _offList = [];
@@ -41,12 +42,11 @@ class _HomePageState extends State<HomePage> {
     this.gotoOffer = jabadaba;
   }
 
-
   bool showoffers = false;
 
   @override
   Widget build(BuildContext context) {
-    return Column( children: [
+    return Column(children: [
       Stack(
         children: [
           Container(
@@ -61,9 +61,8 @@ class _HomePageState extends State<HomePage> {
                   boxShadow: [
                     BoxShadow(blurRadius: 2.0, color: Colors.grey),
                   ]),
-              child: Column(
-                children: [
-                 Row(
+              child: Column(children: [
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -91,13 +90,6 @@ class _HomePageState extends State<HomePage> {
                         )
                       ],
                     ),
-
-                    // Container(
-                    //   margin: EdgeInsets.fromLTRB(30.0, 0.0, 10.0, 0.0),
-                    //   width: 1,
-                    //   height: 50.0,
-                    //   color: Colors.deepOrange,
-                    // ),
                     Stack(
                       children: [
                         Container(
@@ -126,42 +118,44 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(18.0,0.0,18.0,8.0),
-                    child: Divider(height: 1,color: Colors.deepOrange, thickness: 1.0,),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(18.0, 0.0, 18.0, 8.0),
+                  child: Divider(
+                    height: 1,
+                    color: Colors.deepOrange,
+                    thickness: 1.0,
                   ),
-                  Stack(
-                    children: [
-                      Container(
-                        child: Center(
-                          child: Text(
-                            "Referral Code",
-                            style: TextStyle(
-                                color: Colors.deepOrange,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14.0),
-                          ),
+                ),
+                Stack(
+                  children: [
+                    Container(
+                      child: Center(
+                        child: Text(
+                          "Referral Code",
+                          style: TextStyle(
+                              color: Colors.deepOrange,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14.0),
                         ),
                       ),
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 20.0),
-                        child: Center(
-                          child: Text(
-                            "$refferalCode",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0),
-                          ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.symmetric(vertical: 20.0),
+                      child: Center(
+                        child: Text(
+                          "$refferalCode",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0),
                         ),
-                      )
-                    ],
-                  ),
-            ]
-              ))
+                      ),
+                    )
+                  ],
+                ),
+              ]))
         ],
       ),
-
       SizedBox(
         height: 30.0,
       ),
@@ -194,20 +188,16 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      SizedBox(
-        height: 10.0,
-      ),
       Container(
-        child: Expanded(
-          child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: _offList.length,
-              itemBuilder: (context, index) {
-                return OffersWidget(
-                  offers: _offList[index],
-                );
-              }),
-        ),
+        color: Colors.grey[200],
+        child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: _offList.length,
+            itemBuilder: (context, index) {
+              return OffersWidget(
+                offers: _offList[index],
+              );
+            }),
       ),
     ]);
   }

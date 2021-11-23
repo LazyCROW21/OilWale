@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:oilwale/models/productcatalog.dart';
 import 'package:oilwale/widgets/CartWidget.dart';
-import 'package:oilwale/widgets/ItemWidget.dart';
+
+import 'globals.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -36,8 +37,7 @@ class _CartPageState extends State<CartPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Text("Items Purchased :   16" ),
-
+                    Text("Items Purchased :  $cartnum"),
                   ],
                 ),
               ),

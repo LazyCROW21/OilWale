@@ -31,20 +31,22 @@ class OffersWidget extends StatelessWidget {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children :[
-                      Text(offers.schemeName,
+                      Text(offers.schemeName.toUpperCase(),
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
+                          fontSize: 14.0
                         ),
                       ),
                       SizedBox(height: 5.0,),
-                      Text(offers.description,
+                      Text("offers.description halleleua",
                         style: TextStyle(
-                            fontSize: 10.0
+                            fontSize: 12.0,
+                          color: Colors.deepOrange
                         ),),
                       SizedBox(height: 5.0,),
-                      Text("Last Date  :"+offers.endsAt,
+                      Text("Last Date  :"+offers.endsAt.substring(0,10),
                       style: TextStyle(
-                        fontSize: 10.0,color: Colors.grey
+                        fontSize: 11.0,color: Colors.grey[800]
                       ),)
                     ]
                 ),

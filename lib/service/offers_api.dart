@@ -17,7 +17,7 @@ class OffersAPIManager {
         var jsonString = response.body;
         List jsonMap = jsonDecode(jsonString);
         jsonMap.forEach((element) {
-          offers.add(Offers.fromJSON(element));
+          offers.add(Offers.fromJSON(element['scheme']));
           print(element);
         });
       }

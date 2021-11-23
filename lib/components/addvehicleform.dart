@@ -156,14 +156,14 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
     if (dailyKMTravelInput == null || dailyKMTravelInput == '') {
       dailyKMTravelErrorText = '* Required';
       error = true;
-    } else if (int.tryParse(dailyKMTravelErrorText ?? '') == null) {
+    } else if (int.tryParse(dailyKMTravelInput ?? '') == null) {
       dailyKMTravelErrorText = '* Invalid number';
       error = true;
     } else {
       dailyKMTravelErrorText = null;
-      int? dtravel = int.tryParse(dailyKMTravelErrorText ?? '');
+      int? dtravel = int.tryParse(dailyKMTravelInput ?? '');
       if (dtravel! > 700) {
-        totalKMTravelledErrorText = '* Unreal value (should be < 700)';
+        dailyKMTravelErrorText = '* Unreal value (should be < 700)';
         error = true;
       }
     }

@@ -63,6 +63,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> getCustomerPrefs() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    customer.customerId = preferences.getString("customerId") ?? 'Not found';
     customer.customerName =
         preferences.getString("customerName") ?? 'Not Found!';
     customer.customerPhoneNumber =
@@ -129,7 +130,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Stack(
       // fit: StackFit.expand,
       children: [
-        showCustomerForm(),
+        SingleChildScrollView(child: showCustomerForm()),
         Positioned(
             top: 0,
             right: 0,

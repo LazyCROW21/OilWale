@@ -14,7 +14,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   Choice? _choice = Choice.Customer;
-  String _phone = "", _pwd = "", _errorText = "";
+  String _phone = "", _pwd = "";
   bool onLogin = false;
 
   GlobalKey<FormState> _formkey = GlobalKey<FormState>();

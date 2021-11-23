@@ -60,11 +60,11 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
         setState(() {
           loadingVCList = false;
           _company = result;
+          if (_company.length != 0) {
+            vehicleCompanyIdInput = _company[0].vehicleCompanyId;
+            changeModelList(_company[0].vehicleCompanyId);
+          }
         });
-        if (_company.length != 0) {
-          vehicleCompanyIdInput = _company[0].vehicleCompanyId;
-          changeModelList(_company[0].vehicleCompanyId);
-        }
       });
     });
   }
@@ -83,8 +83,8 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
     VehicleAPIManager.getVehiclesByCompanyId(vehicleCompanyId).then((_result) {
       setState(() {
         _models = _result;
-        if (_result.length != 0) {
-          vehicleIdInput = _result[0].vehicleId;
+        if (_models.length != 0) {
+          vehicleIdInput = _models[0].vehicleId;
         }
         loadingVMList = false;
       });
@@ -175,14 +175,18 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
+          backgroundColor: AppColorSwatche.primary,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: AppColorSwatche.primary),
+            icon: Icon(Icons.arrow_back, color: AppColorSwatche.white),
             onPressed: () => Navigator.pushNamedAndRemoveUntil(
                 context, '/cust_home', (route) => false),
           ),
           title: Text(
             "Add vehicle",
-            style: textStyle('h4', AppColorSwatche.primary),
+            style: TextStyle(
+                color: AppColorSwatche.white,
+                letterSpacing: 2,
+                fontWeight: FontWeight.bold),
           ),
         ),
         body: Column(children: [
@@ -425,6 +429,8 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                         ),
                 ),
                 style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(AppColorSwatche.primary),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),

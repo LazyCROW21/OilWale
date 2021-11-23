@@ -17,8 +17,10 @@ class Vehicle {
     this.vehicleId = json['vehicleId'];
     this.vehicleModel = json['vehicleModel'];
     this.vehicleCompanyId =
-        json['vehicleCompanyId'] ?? json['vehicleCompany']['vehicleCompanyId'];
-    this.vehicleCompany = json['vehicleCompany']['vehicleCompany'];
+        json['vehicleCompanyId'] ?? json['vehicleCompany']!['vehicleCompanyId'];
+    this.vehicleCompany = (json['vehicleCompany'] != null
+        ? json['vehicleCompany']['vehicleCompany']
+        : '');
     // this.suggestedProduct = json['suggestedProduct'];
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oilwale/models/productcatalog.dart';
 import 'package:oilwale/widgets/CartWidget.dart';
-import 'package:oilwale/widgets/ItemWidget.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({Key? key}) : super(key: key);
@@ -19,7 +18,6 @@ class _CartPageState extends State<CartPage> {
           leading: BackButton(
             color: Colors.deepOrange,
           ),
-
           title: Text(
             "Oil Wale",
             style: TextStyle(color: Colors.deepOrange),
@@ -28,16 +26,14 @@ class _CartPageState extends State<CartPage> {
           elevation: 0.0,
           backgroundColor: Colors.white,
         ),
-        body:
-        Column(
+        body: Column(
           children: [
             Container(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Text("Items Purchased :   16" ),
-
+                    Text("Items Purchased :   16"),
                   ],
                 ),
               ),
@@ -54,10 +50,6 @@ class _CartPageState extends State<CartPage> {
               ),
             ),
           ],
-        )
-    );
-
-
-
+        ));
   }
 }

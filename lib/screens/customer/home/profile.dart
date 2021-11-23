@@ -162,8 +162,8 @@ class CustomerDetail extends StatelessWidget {
 
   CustomerDetail(this.customer, {Key? key}) : super(key: key);
 
-  Color borderColor = AppColorSwatche.primary;
-  Color textColor = AppColorSwatche.black;
+  final Color borderColor = AppColorSwatche.primary;
+  final Color textColor = AppColorSwatche.black;
 
   @override
   Widget build(BuildContext context) {

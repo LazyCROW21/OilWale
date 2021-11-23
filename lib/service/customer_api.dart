@@ -165,6 +165,43 @@ class CustomerAPIManager {
     return false;
   }
 
+  // return on successfully editing customervehicle, else false
+  static Future<bool> updateCustomerVehicle(
+      CustomerVehicle customerVehicle) async {
+    try {
+      Map<String, dynamic> data = {
+        "active": true,
+        "currentKM": customerVehicle.currentKM,
+        "customerId": customerVehicle.customerId,
+        "customerVehicleId": customerVehicle.customerVehicleId,
+        "dailyKMTravel": customerVehicle.kmperday,
+        "dailyKMTravelled": customerVehicle.kmperday,
+        "numberPlate": customerVehicle.numberPlate,
+        "vehicleCompanyId": customerVehicle.vehicleCompanyId,
+        "vehicleId": customerVehicle.vehicleId
+      };
+      String dataString = jsonEncode(data);
+      var client = http.Client();
+      String urlStr = base_url + "/customervehicle";
+      var url = Uri.parse(urlStr);
+      print(dataString);
+      var response = await client.put(url,
+          body: dataString, headers: {'Content-Type': 'application/json'});
+      if (response.statusCode == 200) {
+        var jsonString = response.body;
+        Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+        print(jsonMap);
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e, s) {
+      print("Exception $e");
+      print("StackTrace $s");
+    }
+    return false;
+  }
+
   // returns true/false upon trying to delete customervehicle under the specified customer
   static Future<bool> deleteCustomerVehicle(String customerVehicleId) async {
     try {

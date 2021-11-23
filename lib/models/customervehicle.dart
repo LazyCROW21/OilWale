@@ -1,5 +1,6 @@
 class CustomerVehicle {
   late String customerVehicleId;
+  late String customerId;
   late String vehicleId;
   late String vehicleCompanyId;
   late String model;
@@ -11,6 +12,7 @@ class CustomerVehicle {
 
   CustomerVehicle(
       {required this.customerVehicleId,
+      required this.customerId,
       required this.model,
       required this.brand,
       required this.vehicleId,
@@ -22,6 +24,7 @@ class CustomerVehicle {
 
   CustomerVehicle.fromJSON(Map<String, dynamic> json) {
     this.customerVehicleId = json['customerVehicleId'] ?? '';
+    this.customerId = json['customerId'] ?? '';
     this.vehicleId = json['vehicleId'] ?? '';
     this.vehicleCompanyId = json['vehicleCompanyId'] ?? '';
     this.model = json['model'] ?? '';

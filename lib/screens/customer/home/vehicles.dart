@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:oilwale/components/vehiclecard.dart';
 import 'package:oilwale/models/customervehicle.dart';
+import 'package:oilwale/screens/customer/home/vehicledetails.dart';
 import 'package:oilwale/service/customer_api.dart';
 import 'package:oilwale/theme/themedata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -110,23 +111,42 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
           },
           direction: DismissDirection.startToEnd,
           background: Container(
-            decoration: BoxDecoration(color: AppColorSwatche.white),
+            decoration: BoxDecoration(color: Colors.red),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Container(
                 margin: EdgeInsets.only(left: 16),
                 padding: EdgeInsets.all(8),
                 decoration:
-                    BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+                    BoxDecoration(shape: BoxShape.circle, color: Colors.white),
                 child: Icon(
                   Icons.delete,
-                  color: AppColorSwatche.white,
+                  color: Colors.red,
                 ),
               ),
             ),
           ),
           key: ValueKey(customerVehicleList![index].customerVehicleId),
-          child: VehicleCard(customerVehicle: customerVehicleList![index])),
+          child: MaterialButton(
+              padding: EdgeInsets.zero,
+              onPressed: () async {
+                CustomerVehicle result = await Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) {
+                  return VehicleDetails(customerVehicleList![index]);
+                }));
+                setState(() {
+                  customerVehicleList![index].vehicleId = result.vehicleId;
+                  customerVehicleList![index].model = result.model;
+                  customerVehicleList![index].brand = result.brand;
+                  customerVehicleList![index].vehicleCompanyId =
+                      result.vehicleCompanyId;
+                  customerVehicleList![index].currentKM = result.currentKM;
+                  customerVehicleList![index].kmperday = result.kmperday;
+                  customerVehicleList![index].numberPlate = result.numberPlate;
+                });
+              },
+              child:
+                  VehicleCard(customerVehicle: customerVehicleList![index]))),
     );
   }
 

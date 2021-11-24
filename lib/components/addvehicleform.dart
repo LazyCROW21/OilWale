@@ -377,7 +377,7 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                   newCustomerVehicle['currentKM'] =
                       int.parse(totalKMTravelledInput ?? '0');
                   newCustomerVehicle['numberPlate'] = numberplateInput;
-                  newCustomerVehicle['dailyKMTravelled'] =
+                  newCustomerVehicle['dailyKMTravel'] =
                       int.parse(dailyKMTravelInput ?? '0');
                   bool result = await CustomerAPIManager.addCustomerVehicle(
                       newCustomerVehicle);

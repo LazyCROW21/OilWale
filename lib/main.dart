@@ -24,7 +24,7 @@ void main() {
       // '/': (context) => SplashScreen(),
       '/login': (context) => LoginScreen(),
       '/cust_home': (context) => HomeScreen(),
-      '/cust_vehicle': (context) => VehicleDetails(),
+      // '/cust_vehicle': (context, data) => VehicleDetails(),
       '/cust_product': (context) => ProductPage(),
       '/cust_garage': (context) => GaragePage(),
       '/cust_createAccount': (context) => CreateAccountScreen(),

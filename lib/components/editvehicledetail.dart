@@ -52,16 +52,15 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
   @override
   void initState() {
     super.initState();
+    vehicleCompanyIdInput = customerVehicle.vehicleCompanyId;
+    vehicleIdInput = customerVehicle.vehicleId;
+    print(vehicleIdInput);
     VehicleAPIManager.getAllVehicleCompanies().then((result) {
       setState(() {
         loadingVCList = false;
         _company = result;
-        vehicleCompanyIdInput = customerVehicle.vehicleCompanyId;
       });
       changeModelList(vehicleCompanyIdInput ?? '');
-      setState(() {
-        vehicleIdInput = customerVehicle.vehicleId;
-      });
     });
   }
 
@@ -140,15 +139,51 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
                       ),
                       onChanged: (String? vehicleCompanyId) {
                         print('Selected: ' + (vehicleCompanyId ?? ''));
-                        changeModelList(vehicleCompanyId ?? '');
                         setState(() {
+                          if (vehicleCompanyId == null) {
+                            vehicleCompanyIdErrorText = '* Required';
+                            errorVCIdinput = true;
+                          } else {
+                            vehicleCompanyIdErrorText = null;
+                            errorVCIdinput = false;
+                          }
                           vehicleCompanyIdInput = vehicleCompanyId;
                         });
+                        customerVehicle.vehicleCompanyId =
+                            vehicleCompanyId ?? '';
+                        for (int i = 0; i < _company.length; i++) {
+                          if (_company[i].vehicleCompanyId ==
+                              vehicleCompanyId) {
+                            customerVehicle.brand = _company[i].vehicleCompany;
+                            break;
+                          }
+                        }
+                        customerVehicle.vehicleId = '';
+                        vehicleIdInput = null;
+                        errorVIdinput = true;
+                        setState(() {
+                          vehicleIdErrorText = '* Required';
+                        });
+                        changeModelList(customerVehicle.vehicleCompanyId);
                       },
                       value: vehicleCompanyIdInput,
                       items:
                           _company.map((e) => vehicleCompanyDDMB(e)).toList()),
             ),
+            // VehicleCompanyId / Company Error Text
+            vehicleCompanyIdErrorText == null
+                ? SizedBox(
+                    height: 8,
+                  )
+                : Padding(
+                    padding: EdgeInsets.fromLTRB(4, 4, 4, 8),
+                    child: Text(
+                      vehicleCompanyIdErrorText ?? '',
+                      style: TextStyle(
+                          color: Colors.red, fontStyle: FontStyle.italic),
+                    ),
+                  ),
+            // Vehicle Model input
             Container(
               padding: const EdgeInsets.all(8.0),
               margin: const EdgeInsets.only(bottom: 8.0),
@@ -171,13 +206,40 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
                       ),
                       onChanged: (String? vehicleId) {
                         print('Selected: ' + (vehicleId ?? ''));
+                        customerVehicle.vehicleId = vehicleId ?? '';
+                        for (int i = 0; i < _models.length; i++) {
+                          if (_models[i].vehicleId == vehicleId) {
+                            customerVehicle.model = _models[i].vehicleModel;
+                            break;
+                          }
+                        }
                         setState(() {
+                          if (vehicleId == null) {
+                            vehicleIdErrorText = '* Required';
+                            errorVIdinput = true;
+                          } else {
+                            vehicleIdErrorText = null;
+                            errorVIdinput = false;
+                          }
                           vehicleIdInput = vehicleId;
                         });
                       },
                       value: vehicleIdInput,
                       items: _models.map((e) => vehicleModelDDMB(e)).toList()),
             ),
+            // VehicleId / Model Error Text
+            vehicleIdErrorText == null
+                ? SizedBox(
+                    height: 8,
+                  )
+                : Padding(
+                    padding: EdgeInsets.fromLTRB(4, 4, 4, 8),
+                    child: Text(
+                      vehicleIdErrorText ?? '',
+                      style: TextStyle(
+                          color: Colors.red, fontStyle: FontStyle.italic),
+                    ),
+                  ),
             // Number Plate Input
             TextFormField(
               onChanged: (String inp) {
@@ -327,7 +389,11 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
                   shape: MaterialStateProperty.all<CircleBorder>(CircleBorder(
                       side: BorderSide(color: AppColorSwatche.primary)))),
               onPressed: () {
-                if (errorNPinput || errorTKMinput || errorDKMinput) {
+                if (errorNPinput ||
+                    errorTKMinput ||
+                    errorDKMinput ||
+                    errorVCIdinput ||
+                    errorVIdinput) {
                   return;
                 }
                 parentCallBack(customerVehicle);

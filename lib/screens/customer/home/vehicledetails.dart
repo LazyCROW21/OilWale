@@ -1,16 +1,16 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:oilwale/components/editvehicledetail.dart';
 import 'package:oilwale/components/product_tile.dart';
-import 'package:oilwale/components/vehicledetailblock.dart';
 import 'package:oilwale/models/customervehicle.dart';
 import 'package:oilwale/models/product.dart';
 import 'package:oilwale/service/customer_api.dart';
 import 'package:oilwale/theme/themedata.dart';
 
 class VehicleDetails extends StatefulWidget {
+  final CustomerVehicle customerVehicle;
+  VehicleDetails(this.customerVehicle);
   @override
   _VehicleDetailsState createState() => _VehicleDetailsState();
 }
@@ -18,14 +18,13 @@ class VehicleDetails extends StatefulWidget {
 class _VehicleDetailsState extends State<VehicleDetails> {
   late CustomerVehicle customerVehicle;
   late CustomerVehicle backUpCustomerVehicle;
-  late VehicleDetailBlock _vehicleDetailBlock;
-  late EditVehicleDetailBlock _editVehicleDetailBlock;
   bool isEditing = false;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    customerVehicle = widget.customerVehicle;
+    super.initState();
+  }
 
   @override
   void setState(VoidCallback fn) {
@@ -34,15 +33,24 @@ class _VehicleDetailsState extends State<VehicleDetails> {
     }
   }
 
+  CustomerVehicle getCustomerVehicle() {
+    return this.customerVehicle;
+  }
+
   void updateVehicle(CustomerVehicle updVehicle) {
+    customerVehicle.vehicleId = updVehicle.vehicleId;
+    customerVehicle.model = updVehicle.model;
+    customerVehicle.brand = updVehicle.brand;
+    customerVehicle.vehicleCompanyId = updVehicle.vehicleCompanyId;
     customerVehicle.currentKM = updVehicle.currentKM;
     customerVehicle.kmperday = updVehicle.kmperday;
     customerVehicle.numberPlate = updVehicle.numberPlate;
+    setState(() {
+      isEditing = false;
+    });
     CustomerAPIManager.updateCustomerVehicle(customerVehicle).then((result) {
-      setState(() {
-        isEditing = false;
-      });
       if (result) {
+        setState(() {});
         Fluttertoast.showToast(
             msg: "Details updated!",
             toastLength: Toast.LENGTH_SHORT,
@@ -83,20 +91,108 @@ class _VehicleDetailsState extends State<VehicleDetails> {
     });
   }
 
+  Widget vehicleDetailBlock() {
+    return Container(
+      child: Stack(children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                "Vehicle Details",
+                style: textStyle('h4', AppColorSwatche.black),
+              ),
+            ),
+            Divider(
+              color: AppColorSwatche.primary,
+            ),
+            Text(
+              "Brand",
+              style: textStyle('p2', AppColorSwatche.primary),
+            ),
+            Text(
+              customerVehicle.brand,
+              style: textStyle('p1', AppColorSwatche.black),
+            ),
+            SizedBox(
+              height: 16.0,
+            ),
+            Text(
+              "Model",
+              style: textStyle('p2', AppColorSwatche.primary),
+            ),
+            Text(
+              customerVehicle.model,
+              style: textStyle('p1', AppColorSwatche.black),
+            ),
+            SizedBox(
+              height: 16.0,
+            ),
+            Text(
+              "Number Plate",
+              style: textStyle('p2', AppColorSwatche.primary),
+            ),
+            Text(
+              customerVehicle.numberPlate,
+              style: textStyle('p1', AppColorSwatche.black),
+            ),
+            SizedBox(
+              height: 16.0,
+            ),
+            Text(
+              "KM per day",
+              style: textStyle('p2', AppColorSwatche.primary),
+            ),
+            Text(
+              customerVehicle.kmperday.toString(),
+              style: textStyle('p1', AppColorSwatche.black),
+            ),
+            SizedBox(
+              height: 16.0,
+            ),
+            Text(
+              "Total Travelled Distance",
+              style: textStyle('p2', AppColorSwatche.primary),
+            ),
+            Text(
+              customerVehicle.currentKM.toString(),
+              style: textStyle('p1', AppColorSwatche.black),
+            ),
+          ],
+        ),
+        Positioned(
+          top: 0,
+          right: 0,
+          child: ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(AppColorSwatche.primary),
+                  shape: MaterialStateProperty.all<CircleBorder>(CircleBorder(
+                      side: BorderSide(color: AppColorSwatche.primary)))),
+              onPressed: () {
+                setState(() {
+                  isEditing = true;
+                });
+              },
+              child: Icon(
+                Icons.edit,
+                color: AppColorSwatche.white,
+              )),
+        ),
+      ]),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    customerVehicle =
-        ModalRoute.of(context)!.settings.arguments as CustomerVehicle;
-    _vehicleDetailBlock = VehicleDetailBlock(customerVehicle, changeToEditForm);
-    _editVehicleDetailBlock =
-        EditVehicleDetailBlock(customerVehicle, updateVehicle);
-    // getRecommendedProducts(customerVehicle.vehicleId);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.deepOrangeAccent,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.of(context).pop(),
+            onPressed: () => Navigator.of(context).pop(customerVehicle),
           ),
           title: Text(
             "My vehicle",
@@ -116,13 +212,12 @@ class _VehicleDetailsState extends State<VehicleDetails> {
                 margin: EdgeInsets.all(8.0),
                 child: Container(
                   padding: EdgeInsets.all(8.0),
-                  // decoration: BoxDecoration(
-                  //     border: Border.all(color: Colors.deepOrange),
-                  //     borderRadius: BorderRadius.circular(8.0)),
-                  child:
-                      isEditing ? _editVehicleDetailBlock : _vehicleDetailBlock,
+                  child: isEditing
+                      ? EditVehicleDetailBlock(customerVehicle, updateVehicle)
+                      : vehicleDetailBlock(),
                 ),
               ),
+              // Next Service
               Card(
                 elevation: 8.0,
                 margin: EdgeInsets.all(8.0),
@@ -142,6 +237,7 @@ class _VehicleDetailsState extends State<VehicleDetails> {
                   ),
                 ),
               ),
+              // Last Service
               Card(
                 elevation: 8.0,
                 margin: EdgeInsets.all(8.0),
@@ -167,6 +263,7 @@ class _VehicleDetailsState extends State<VehicleDetails> {
                   ),
                 ),
               ),
+              // Recommended Vehicle
               Card(
                 elevation: 8.0,
                 margin: EdgeInsets.all(8.0),
@@ -194,16 +291,6 @@ class _VehicleDetailsState extends State<VehicleDetails> {
                         product: Product.fromJSON(
                             customerVehicle.suggestedProducts![index]),
                       );
-                      // return ListTile(
-                      //     leading: Icon(Icons.circle),
-                      //     trailing: Icon(
-                      //       Icons.info,
-                      //       color: Colors.blue,
-                      //     ),
-
-                      //     title: Text(
-                      //         "${customerVehicle.suggestedProducts![index]['productName']}",
-                      //         style: textStyle('p1', AppColorSwatche.black)));
                     }),
               ),
             ],

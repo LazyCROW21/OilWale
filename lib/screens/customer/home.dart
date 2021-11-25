@@ -1,8 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:oilwale/screens/customer/home/offers.dart';
 import 'package:oilwale/screens/customer/home/vehicles.dart';
 import 'package:oilwale/screens/customer/home/profile.dart';
-import 'package:oilwale/screens/customer/home/garage.dart';
+import 'package:oilwale/screens/customer/home/garages.dart';
 import 'package:oilwale/screens/customer/home/products.dart';
 import 'package:oilwale/theme/themedata.dart';
 
@@ -23,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   GarageScreen garageScreen = GarageScreen();
   ProductScreen productScreen = ProductScreen();
   ProfileScreen profileScreen = ProfileScreen();
+  OffersScreen offersScreen = OffersScreen();
   // @override
   // void initState() {
   //   super.initState();
@@ -39,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
       case 0:
         return vehiclesScreen;
       case 1:
-        return Container();
+        return offersScreen;
       case 2:
         return productScreen;
       case 3:

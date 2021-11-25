@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:oilwale/screens/garage/offerdetails.dart';
-import 'package:oilwale/models/Offers.dart';
-import 'package:oilwale/service/offers_api.dart';
+import 'package:oilwale/models/offers.dart';
+import 'package:oilwale/service/offer_api.dart';
 import 'package:oilwale/theme/themedata.dart';
 import 'package:oilwale/widgets/OffersWidget.dart';
 
@@ -15,8 +15,8 @@ class OffersPage extends StatefulWidget {
 
 class OffersPageState extends State<OffersPage> {
   bool showoffer = false;
-  late Offers offers;
-  List<Offers> _offList = [];
+  late Offer offers;
+  List<Offer> _offList = [];
   SpinKitRing loadingRing = SpinKitRing(
     color: AppColorSwatche.primary,
   );

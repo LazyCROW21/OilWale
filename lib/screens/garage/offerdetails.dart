@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oilwale/models/Offers.dart';
+import 'package:oilwale/models/offers.dart';
 // import '/PAGES/offers.dart';
 
 class OfferDetails extends StatelessWidget {
@@ -8,7 +8,7 @@ class OfferDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Offers offers = ModalRoute.of(context)!.settings.arguments as Offers;
+    final Offer offers = ModalRoute.of(context)!.settings.arguments as Offer;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -49,27 +49,26 @@ class OfferDetails extends StatelessWidget {
                   height: 20.0,
                 ),
                 Container(
-                    child: Text(
-                  "10 rupiye ki pepsi , mera description secsi wagfw aFwf wsfiawref iafwref ",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.grey[700]),
-                    ),
+                  child: Text(
+                    "10 rupiye ki pepsi , mera description secsi wagfw aFwf wsfiawref iafwref ",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.grey[700]),
+                  ),
                 ),
                 SizedBox(
                   height: 10.0,
                 ),
-
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 10.0),
                   child: Row(
                     children: [
                       Expanded(
                           child: Text(
-                            "Last Date:",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.deepOrangeAccent),
-                          )),
+                        "Last Date:",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.deepOrangeAccent),
+                      )),
                       Expanded(
                         flex: 2,
                         child: Text(offers.endsAt.substring(0, 10)),

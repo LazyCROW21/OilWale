@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:oilwale/models/Offers.dart';
-import 'package:oilwale/service/offers_api.dart';
+import 'package:oilwale/models/offers.dart';
+import 'package:oilwale/service/offer_api.dart';
 import 'package:oilwale/widgets/OffersWidget.dart';
 import 'package:oilwale/screens/garage/globals.dart';
 
@@ -14,13 +14,14 @@ class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState(this.gotoOffer);
 }
+
 class _HomePageState extends State<HomePage> {
   int custNumber = 0;
   String refferalCode = "";
   int credPoints = 0;
-  late Offers offers ;
+  late Offer offers;
   late Function gotoOffer;
-  List<Offers> _offList = [];
+  List<Offer> _offList = [];
 
   @override
   void initState() {
@@ -28,11 +29,12 @@ class _HomePageState extends State<HomePage> {
     OffersAPIManager.getAllActiveScheme().then((resp) {
       setState(() {
         _offList = resp;
-        for(int i =0; i<_offList.length;i++) {
+        for (int i = 0; i < _offList.length; i++) {
           offers = _offList[i];
-          var dateofCreation = offers.startedAt ;
-          DateTime tempDate = new DateFormat("yyyy-MM-dd").parse(dateofCreation);
-          if(tempDate.isAfter(dateofOffers)){
+          var dateofCreation = offers.startedAt;
+          DateTime tempDate =
+              new DateFormat("yyyy-MM-dd").parse(dateofCreation);
+          if (tempDate.isAfter(dateofOffers)) {
             _offList.removeAt(i);
           }
         }
@@ -196,14 +198,14 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       Expanded(
-          child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: _offList.length,
-              itemBuilder: (context, index) {
-                return OffersWidget(
-                  offers: _offList[index],
-                );
-              }),
+        child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: _offList.length,
+            itemBuilder: (context, index) {
+              return OffersWidget(
+                offers: _offList[index],
+              );
+            }),
       ),
     ]);
   }

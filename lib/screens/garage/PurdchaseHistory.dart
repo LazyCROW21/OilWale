@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oilwale/models/Offers.dart';
-import 'package:oilwale/models/OffersCatalog.dart';
-import 'package:oilwale/widgets/PurchasedProductWidget.dart';
+import 'package:oilwale/models/offers.dart';
 
 class PurchaseHistory extends StatefulWidget {
   const PurchaseHistory({Key? key}) : super(key: key);
@@ -11,7 +9,7 @@ class PurchaseHistory extends StatefulWidget {
 }
 
 class _PurchaseHistoryState extends State<PurchaseHistory> {
-  late Offers offers;
+  late Offer offers;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,14 +24,14 @@ class _PurchaseHistoryState extends State<PurchaseHistory> {
           ),
         ),
         body: Container(
-          child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: CatalogModel.offers.length,
-              itemBuilder: (context, index) {
-                return PurchasedProductWidget(
-                  offers: CatalogModel.offers[index],
-                );
-              }),
-        ));
+            // child: ListView.builder(
+            //     shrinkWrap: true,
+            //     itemCount: CatalogModel.offers.length,
+            //     itemBuilder: (context, index) {
+            //       return PurchasedProductWidget(
+            //         offers: CatalogModel.offers[index],
+            //       );
+            //     }),
+            ));
   }
 }

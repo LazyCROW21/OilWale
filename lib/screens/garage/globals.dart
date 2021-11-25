@@ -1,5 +1,3 @@
-import 'package:intl/intl.dart';
-
-int cartnum= 0;
+int cartnum = 0;
 var dateofcreation = DateTime.now();
 var dateofOffers = dateofcreation.subtract(Duration(days: 15));

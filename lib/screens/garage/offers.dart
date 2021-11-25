@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:oilwale/models/OffersCatalog.dart';
 import 'package:oilwale/screens/garage/offerdetails.dart';
 import 'package:oilwale/models/Offers.dart';
 import 'package:oilwale/service/offers_api.dart';

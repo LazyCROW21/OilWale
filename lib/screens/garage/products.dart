@@ -1,11 +1,6 @@
-// import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:oilwale/components/product_tile.dart';
 import 'package:oilwale/models/product.dart';
-
-// import 'package:flutter/services.dart';
-import 'package:oilwale/models/productcatalog.dart';
 import 'package:oilwale/service/product_api.dart';
 import 'package:oilwale/theme/themedata.dart';
 import 'package:oilwale/widgets/ItemWidget.dart';
@@ -51,7 +46,7 @@ class _ProductViewState extends State<ProductView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16,16,16,10),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 10),
       child: Column(children: [
         Container(
           height: 55.0,

@@ -13,7 +13,6 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  @override
   List<Product> _pList = [];
 
   void initState() {

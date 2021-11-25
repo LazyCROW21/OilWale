@@ -90,6 +90,7 @@ class GarageAPIManager {
           preferences.setInt('totalScore', jsonMap['totalScore']);
           preferences.setInt('totalCustomer', jsonMap['totalCustomer']);
         } on Exception catch (exception) {
+          print(exception);
           print(
               "There is some issue on the server . Please try after some time ");
         }

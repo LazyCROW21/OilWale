@@ -4,7 +4,6 @@ import 'package:oilwale/screens/garage/products.dart';
 import 'package:oilwale/screens/garage/home_page.dart';
 import 'package:oilwale/screens/garage/profile.dart';
 import '../garage/globals.dart';
-import 'package:intl/intl.dart';
 
 class GarageScaffold extends StatefulWidget {
   const GarageScaffold({Key? key}) : super(key: key);

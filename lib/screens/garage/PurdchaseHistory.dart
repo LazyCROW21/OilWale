@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oilwale/models/Offers.dart';
 import 'package:oilwale/models/OffersCatalog.dart';
-import 'package:oilwale/widgets/OffersWidget.dart';
 import 'package:oilwale/widgets/PurchasedProductWidget.dart';
 
 class PurchaseHistory extends StatefulWidget {
@@ -27,15 +26,14 @@ class _PurchaseHistoryState extends State<PurchaseHistory> {
           ),
         ),
         body: Container(
-            child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: CatalogModel.offers.length,
-                itemBuilder: (context, index) {
-                  return PurchasedProductWidget(
-                    offers: CatalogModel.offers[index],
-                  );
-                }),
-        )
-    );
+          child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: CatalogModel.offers.length,
+              itemBuilder: (context, index) {
+                return PurchasedProductWidget(
+                  offers: CatalogModel.offers[index],
+                );
+              }),
+        ));
   }
 }

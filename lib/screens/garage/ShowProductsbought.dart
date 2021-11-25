@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:oilwale/models/Offers.dart';
-import 'package:oilwale/models/OffersCatalog.dart';
-import 'package:oilwale/models/product.dart';
-import 'package:oilwale/models/productcatalog.dart';
-import 'package:oilwale/widgets/ItemWidget.dart';
 
 class ShowProductbought extends StatelessWidget {
   ShowProductbought({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final Offers offers = ModalRoute
-        .of(context)!
-        .settings
-        .arguments as Offers;
+    // final Offers offers = ModalRoute.of(context)!.settings.arguments as Offers;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -41,10 +33,10 @@ class ShowProductbought extends StatelessWidget {
                 SizedBox(
                   height: 10.0,
                 ),
-                 // Expanded(child: ListView.builder(itemBuilder: (context, index) {
-                 //                   ItemWidget(product: product);
-                 // }
-                 // ))
+                // Expanded(child: ListView.builder(itemBuilder: (context, index) {
+                //                   ItemWidget(product: product);
+                // }
+                // ))
                 SizedBox(
                   height: 10.0,
                 ),

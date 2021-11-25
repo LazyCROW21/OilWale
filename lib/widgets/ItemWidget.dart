@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:oilwale/models/product.dart';
 import 'package:oilwale/screens/garage/globals.dart';
+import '../screens/garage/Providers/CartProvider.dart';
 
 class ItemWidget extends StatefulWidget {
   final Product product;
-
+  // final Function(bool) addtoCartNum;
   ItemWidget({Key? key, required this.product}) : super(key: key);
 
   @override
@@ -14,9 +15,7 @@ class ItemWidget extends StatefulWidget {
 class _ItemWidgetState extends State<ItemWidget> {
   var count = " Add to Cart ";
   Color added = Colors.deepOrange[200]!.withOpacity(.1);
-
   Color cartaddedtext = Colors.deepOrange;
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -85,19 +84,19 @@ class _ItemWidgetState extends State<ItemWidget> {
                             child: TextButton(
                                 onPressed: () {
                                   setState(() {
-                                    if (count == "Added to Cart") {
-                                      added =
-                                          Colors.deepOrange[200]!.withOpacity(.3);
+                                    if (widget.product.inCart) {
+                                      added = Colors.deepOrange[200]!.withOpacity(.3);
                                       count = "Add to Cart";
                                       cartaddedtext = Colors.deepOrange;
-                                      cartnum--;
+                                      widget.product.inCart = false;
+                                      // context.read<CartProvider>().decrement();
                                       if(cartProduct.contains(widget.product))
                                       cartProduct.remove(widget.product);
                                     } else {
                                       count = "Added to Cart";
                                       added = Colors.green;
+                                      widget.product.inCart = true;
                                       cartaddedtext = Colors.white;
-                                      cartnum++;
                                       if(cartProduct.contains(widget.product) != true )
                                       cartProduct.add(widget.product);
                                     }

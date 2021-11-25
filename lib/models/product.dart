@@ -5,6 +5,7 @@ class Product {
   late final String specification;
   late final String packingSize;
   late final String? image;
+  bool inCart = false;
 
   Product(
       {required this.id,

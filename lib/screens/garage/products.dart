@@ -6,7 +6,7 @@ import 'package:oilwale/theme/themedata.dart';
 import 'package:oilwale/widgets/ItemWidget.dart';
 
 class ProductsPage extends StatelessWidget {
-  const ProductsPage({Key? key}) : super(key: key);
+  const ProductsPage({Key? key,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

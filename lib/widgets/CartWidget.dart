@@ -11,7 +11,6 @@ class CartWidget extends StatefulWidget {
 }
 
 class _CartWidgetState extends State<CartWidget> {
-  // var _message = "Add to cart";
   var count = 1;
   bool visibilitytag = true;
 
@@ -133,7 +132,7 @@ class _CartWidgetState extends State<CartWidget> {
               child: IconButton(
                 icon: Icon(Icons.cancel_outlined),
                 color: Colors.black,
-                onPressed: () { _changed();},
+                onPressed: () { _changed(); },
               )),
         ])) : Container();
   }

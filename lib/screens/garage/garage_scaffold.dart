@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oilwale/screens/garage/Providers/CartProvider.dart';
 import 'package:oilwale/screens/garage/offers.dart';
 import 'package:oilwale/screens/garage/products.dart';
 import 'package:oilwale/screens/garage/home_page.dart';
@@ -18,6 +19,17 @@ class _GarageScaffoldState extends State<GarageScaffold> {
   void gotoOffers() {
     setState(() {
       _currentindex = 1;
+    });
+  }
+
+  void CartNumber(bool cartNumber) {
+    setState(() {
+      if(cartNumber) {
+        cartnum++;
+      }
+      else{
+        cartnum--;
+      }
     });
   }
 

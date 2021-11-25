@@ -18,7 +18,8 @@ void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       systemNavigationBarColor: AppColorSwatche.white,
       statusBarColor: AppColorSwatche.white));
-  runApp(MaterialApp(
+  runApp(
+      MaterialApp(
     initialRoute: '/login',
     home: LoginScreen(),
     routes: {

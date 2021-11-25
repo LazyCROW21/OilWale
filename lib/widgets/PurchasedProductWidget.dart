@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:oilwale/models/Offers.dart';
+import 'package:oilwale/models/offers.dart';
 
 class PurchasedProductWidget extends StatelessWidget {
   PurchasedProductWidget({Key? key, required this.offers}) : super(key: key);

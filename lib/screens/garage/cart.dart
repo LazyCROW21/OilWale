@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:oilwale/models/product.dart';
-import 'package:oilwale/service/product_api.dart';
 import 'package:oilwale/widgets/CartWidget.dart';
 
 import 'globals.dart';
@@ -13,18 +12,7 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  List<Product> _pList = [];
-
-  void initState() {
-    super.initState();
-    ProductAPIManager.getAllProducts().then((resp) {
-      setState(() {
-        _pList = resp;
-      });
-    }).onError((error, stackTrace) {
-      print(error);
-    });
-  }
+  List<Product> _pList = cartProduct;
 
   Widget build(BuildContext context) {
     return Scaffold(

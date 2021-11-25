@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oilwale/models/Offers.dart';
-import 'package:oilwale/models/OffersCatalog.dart';
+import 'package:oilwale/models/offers.dart';
+import 'package:oilwale/models/offersCatalog.dart';
 import 'package:oilwale/widgets/PurchasedProductWidget.dart';
 
 class PurchaseHistory extends StatefulWidget {

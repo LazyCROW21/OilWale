@@ -1,4 +1,4 @@
-import 'Offers.dart';
+import 'offers.dart';
 
 class CatalogModel {
   static final List<Offers> offers = [

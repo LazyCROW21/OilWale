@@ -14,7 +14,7 @@ class GarageScaffold extends StatefulWidget {
 
 class _GarageScaffoldState extends State<GarageScaffold> {
   int _currentindex = 0;
-
+  int numberOfProducts = cartProduct.length;
   void gotoOffers() {
     setState(() {
       _currentindex = 1;
@@ -65,7 +65,7 @@ class _GarageScaffoldState extends State<GarageScaffold> {
                         color: Colors.deepOrange,
                         borderRadius: BorderRadius.circular(6)),
                     child: Text(
-                      "$cartnum",
+                      "$numberOfProducts",
                       style: TextStyle(color: Colors.white),
                       textAlign: TextAlign.center,
                     ))),
@@ -133,7 +133,7 @@ class _GarageScaffoldState extends State<GarageScaffold> {
               ]
             : [],
         title: Text(
-          "Oil Wale",
+          "OilWale",
           style: TextStyle(color: Colors.deepOrange),
         ),
         centerTitle: true,

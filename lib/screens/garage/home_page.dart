@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
-import 'package:oilwale/models/Offers.dart';
+import 'package:oilwale/models/offers.dart';
 import 'package:oilwale/service/offers_api.dart';
 import 'package:oilwale/theme/themedata.dart';
 import 'package:oilwale/widgets/OffersWidget.dart';

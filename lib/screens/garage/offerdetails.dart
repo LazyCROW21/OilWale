@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:oilwale/models/Offers.dart';
+import 'package:oilwale/models/offers.dart';
 // import '/PAGES/offers.dart';
 
 class OfferDetails extends StatelessWidget {
@@ -58,7 +58,6 @@ class OfferDetails extends StatelessWidget {
                 SizedBox(
                   height: 10.0,
                 ),
-
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 10.0),
                   child: Row(
@@ -80,91 +79,82 @@ class OfferDetails extends StatelessWidget {
                 SizedBox(
                   height: 30.0,
                 ),
-                Column(
-                  children: [
-                    Card(
-                      shadowColor:
-                          Colors.deepOrangeAccent[400]!.withOpacity(0.8),
-                      elevation: 3.0,
-                      child: Container(
-                          child: Row(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-                            width: 40.0,
-                            height: 60.0,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        "https://picsum.photos/200"),
-                                    fit: BoxFit.cover)),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 6.0),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Product No 40",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  Text(
-                                    "Discount : 50% ",
-                                  )
-                                ]),
-                          ),
-                        ],
-                      )),
-                    ),
-                    Card(
-                      shadowColor:
-                          Colors.deepOrangeAccent[400]!.withOpacity(0.8),
-                      elevation: 3.0,
-                      child: Container(
-                          child: Row(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-                            width: 40.0,
-                            height: 60.0,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                        "https://picsum.photos/200"),
-                                    fit: BoxFit.cover)),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 6.0),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Product No 41s",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                  Text("Discount : 50%")
-                                ]),
-                          ),
-                        ],
-                      )),
-                    )
-                  ],
-                ),
+
+
+                // Column(
+                //   children: [
+                //     Card(
+                //       shadowColor:
+                //           Colors.deepOrangeAccent[400]!.withOpacity(0.8),
+                //       elevation: 3.0,
+                //       child: Container(
+                //           child: Row(
+                //         children: [
+                //           Container(
+                //             margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                //             width: 40.0,
+                //             height: 60.0,
+                //             decoration: BoxDecoration(
+                //                 image: DecorationImage(
+                //                     image: NetworkImage(
+                //                         "https://picsum.photos/200"),
+                //                     fit: BoxFit.cover)),
+                //           ),
+                //           Padding(
+                //             padding: const EdgeInsets.only(left: 6.0),
+                //             child: Column(
+                //                 crossAxisAlignment: CrossAxisAlignment.start,
+                //                 children: [
+                //                   Text("Product No 40",
+                //                       style: TextStyle(
+                //                           fontWeight: FontWeight.bold)),
+                //                   Text(
+                //                     "Discount : 50% ",
+                //                   )
+                //                 ]),
+                //           ),
+                //         ],
+                //       )),
+                //     ),
+                //     Card(
+                //       shadowColor:
+                //           Colors.deepOrangeAccent[400]!.withOpacity(0.8),
+                //       elevation: 3.0,
+                //       child: Container(
+                //           child: Row(
+                //         children: [
+                //           Container(
+                //             margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+                //             width: 40.0,
+                //             height: 60.0,
+                //             decoration: BoxDecoration(
+                //                 image: DecorationImage(
+                //                     image: NetworkImage(
+                //                         "https://picsum.photos/200"),
+                //                     fit: BoxFit.cover)),
+                //           ),
+                //           Padding(
+                //             padding: const EdgeInsets.only(left: 6.0),
+                //             child: Column(
+                //                 crossAxisAlignment: CrossAxisAlignment.start,
+                //                 children: [
+                //                   Text("Product No 41s",
+                //                       style: TextStyle(
+                //                           fontWeight: FontWeight.bold)),
+                //                   Text("Discount : 50%")
+                //                 ]),
+                //           ),
+                //         ],
+                //       )),
+                //     )
+                //   ],
+                // ),
                 SizedBox(
                   height: 10.0,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    // TextButton(
-                    //     onPressed: () {
-                    //       Navigator.pop(context, '/garage_offers');
-                    //     },
-                    //     style: TextButton.styleFrom(
-                    //       backgroundColor: Colors.red[100]!.withOpacity(0.5),
-                    //     ),
-                    //     // child: Text(
-                    //     //   "Decline",
-                    //     //   style: TextStyle(color: Colors.red),
-                    //     // )),
                     TextButton(
                         onPressed: () {
                           Navigator.pop(context, '/garage_offers');

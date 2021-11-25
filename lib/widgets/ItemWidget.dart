@@ -13,7 +13,6 @@ class ItemWidget extends StatefulWidget {
 
 class _ItemWidgetState extends State<ItemWidget> {
   var count = " Add to Cart ";
-
   Color added = Colors.deepOrange[200]!.withOpacity(.1);
 
   Color cartaddedtext = Colors.deepOrange;
@@ -92,11 +91,15 @@ class _ItemWidgetState extends State<ItemWidget> {
                                       count = "Add to Cart";
                                       cartaddedtext = Colors.deepOrange;
                                       cartnum--;
+                                      if(cartProduct.contains(widget.product))
+                                      cartProduct.remove(widget.product);
                                     } else {
                                       count = "Added to Cart";
                                       added = Colors.green;
                                       cartaddedtext = Colors.white;
                                       cartnum++;
+                                      if(cartProduct.contains(widget.product) != true )
+                                      cartProduct.add(widget.product);
                                     }
                                   });
                                 },

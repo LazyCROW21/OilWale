@@ -9,15 +9,16 @@ class Garage {
   late final String ownerName;
   late final String phoneNumber;
   late final String pincode;
+  late final String? panCard;
   late final String referralCode;
   late final int totalScore;
   late final int totaCustomer;
-
 
   Garage({
     required this.garageId,
     required this.address,
     this.alternateNumber,
+    this.panCard,
     required this.area,
     required this.garageName,
     this.gstNumber,
@@ -32,6 +33,7 @@ class Garage {
 
   Garage.fromJSON(Map<String, dynamic> json) {
     this.garageId = json['garageId'];
+    this.panCard =json['panCard'];
     this.address = json['address'];
     this.alternateNumber = json['alternateNumber'];
     this.area = json['area'];

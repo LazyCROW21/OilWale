@@ -14,18 +14,18 @@ class OffersPage extends StatefulWidget {
 }
 
 class OffersPageState extends State<OffersPage> {
-  bool showoffer = false;
   late Offers offers;
   List<Offers> _offList = [];
   SpinKitRing loadingRing = SpinKitRing(
     color: AppColorSwatche.primary,
   );
-
+  bool isLoading = true;
   @override
   void initState() {
     super.initState();
     OffersAPIManager.getAllActiveScheme().then((resp) {
       setState(() {
+        isLoading = false;
         _offList = resp;
       });
     }).onError((error, stackTrace) {
@@ -34,8 +34,8 @@ class OffersPageState extends State<OffersPage> {
   }
 
   Widget build(BuildContext context) {
-    return showoffer
-        ? OfferDetails()
+    return isLoading
+        ? loadingRing
         : SingleChildScrollView(
             child: ListView.builder(
                 shrinkWrap: true,

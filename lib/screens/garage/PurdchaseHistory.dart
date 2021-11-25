@@ -16,6 +16,7 @@ class _PurchaseHistoryState extends State<PurchaseHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.white,
           centerTitle: true,
           title: Text(
             "Oilwale",

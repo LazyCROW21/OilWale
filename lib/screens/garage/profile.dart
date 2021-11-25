@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:oilwale/models/garage.dart';
+import 'package:oilwale/service/garage_api.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -8,12 +9,20 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-   Garage? garage;
-   String garageName = ' ';
-
-
-
-
+  Garage garage = Garage(
+      totalScore: 0,
+      ownerName: 'Chunnilaal',
+      address: 'Chunilaaal ka ghar , munnilaal k ghar k saamne ,laalnagar , laalbaad, laaldesh',
+      area: 'Laalnagar',
+      totaCustomer: 0,
+      garageName: 'Chunnilaal ka garage',
+      phoneNumber: '1234567892',
+      garageId: '',
+      referralCode: 'ASDFG986',
+      pincode: '382330',
+      panCard: 'AGXP7892F',
+      gstNumber: 'ASDFGHj120988123'
+  );
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -39,19 +48,42 @@ class _ProfileState extends State<Profile> {
             ),
             Center(
               child: Column(
-
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text(
-                    "User ID:",
-                      style:
-                      TextStyle(color: Colors.grey[700], fontSize: 13.0),
-                  ),
-                  SizedBox(height: 10.0),
-                  Text(
-                    "1234567",
-                    style: TextStyle(
-                        fontSize: 18.0, fontWeight: FontWeight.w500),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          Text(
+                            "PanCard",
+                            style: TextStyle(color: Colors.orangeAccent[700], fontSize: 13.0),
+                          ),
+                          SizedBox(height: 10.0),
+                          Text(
+                            garage.panCard ??
+                            "-",
+                            style:
+                            TextStyle(fontSize: 17.0, fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                       Column(
+                        children: [
+                          Text(
+                            "GST Number",
+                            style: TextStyle(color: Colors.orangeAccent[700], fontSize: 13.0),
+                          ),
+                          SizedBox(height: 10.0),
+                          Text(
+                            garage.gstNumber ??
+                            "-",
+                            style:
+                            TextStyle(fontSize: 17.0, fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      ),
+                    ],
                   )
                 ],
               ),
@@ -70,78 +102,86 @@ class _ProfileState extends State<Profile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(" Garage Name",
-                      style:
-                          TextStyle(color: Colors.orangeAccent[700], fontSize: 10.0)),
+                      style: TextStyle(
+                          color: Colors.orangeAccent[700], fontSize: 10.0)),
                   Text(
-                    "Sonu Ka garage",
-                    style: TextStyle(
-                        fontSize: 18.0, fontWeight: FontWeight.w500),
+                    garage.garageName ??
+                    "-",
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
                     height: 10.0,
                   ),
                   Text(" Owner's Name",
-                      style:
-                          TextStyle(color: Colors.orangeAccent[700], fontSize: 10.0)),
+                      style: TextStyle(
+                          color: Colors.orangeAccent[700], fontSize: 10.0)),
                   Text(
-                    "Sonu Paisewala ",
-                    style: TextStyle(
-                        fontSize: 18.0, fontWeight: FontWeight.w500),
+                    garage.ownerName??
+                    "-",
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
                     height: 10.0,
                   ),
                   Text(" Numnber",
-                      style:
-                          TextStyle(color: Colors.orangeAccent[700], fontSize: 10.0)),
+                      style: TextStyle(
+                          color: Colors.orangeAccent[700], fontSize: 10.0)),
                   Text(
+                    garage.phoneNumber ??
                     " 8781115157 ",
-                    style: TextStyle(
-                        fontSize: 18.0, fontWeight: FontWeight.w500),
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
                     height: 10.0,
                   ),
                   Text("Alternate Numnber",
-                      style:
-                          TextStyle(color: Colors.orangeAccent[700], fontSize: 10.0)),
+                      style: TextStyle(
+                          color: Colors.orangeAccent[700], fontSize: 10.0)),
                   Text(
-                    " 8781115157 ",
-                    style: TextStyle(
-                        fontSize: 18.0, fontWeight: FontWeight.w500),
+                    garage.alternateNumber ??
+                    " -- ",
+                    textAlign: TextAlign.center,
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
                     height: 10.0,
                   ),
                   Text(" Address",
-                      style:
-                          TextStyle(color: Colors.orangeAccent[700], fontSize: 10.0)),
+                      style: TextStyle(
+                          color: Colors.orangeAccent[700], fontSize: 10.0)),
                   Text(
-                    "21, Neelkamal Society Opp. Takshshila Society Galaxy Naroda Ahmedabad",
-                    style: TextStyle(
-                        fontSize: 18.0, fontWeight: FontWeight.w500),
+                    garage.address ??
+                    "-",
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
                     height: 10.0,
                   ),
                   Text("Area ",
-                      style:
-                          TextStyle(color: Colors.orangeAccent[700], fontSize: 10.0)),
+                      style: TextStyle(
+                          color: Colors.orangeAccent[700], fontSize: 10.0)),
                   Text(
-                    "Naroda ",
-                    style: TextStyle(
-                        fontSize: 18.0, fontWeight: FontWeight.w500),
+                    garage.area ??
+                    "-",
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
                     height: 10.0,
                   ),
                   Text(" PinCode",
-                      style:
-                          TextStyle(color: Colors.orangeAccent[700], fontSize: 10.0)),
+                      style: TextStyle(
+                          color: Colors.orangeAccent[700], fontSize: 10.0)),
                   Text(
-                    "382330 ",
-                    style: TextStyle(
-                        fontSize: 18.0, fontWeight: FontWeight.w500),
+                    garage.pincode ??
+                    "-",
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
                     height: 10.0,

@@ -7,8 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 const String base_url = "https://oilwale.herokuapp.com/api";
 
 class AuthManager {
-  // return customer object on success or false on error
-  static Future<dynamic> login(String phone, String pwd, bool customer) async {
+  // return bool on successful login or false on error
+  static Future<bool> login(String phone, String pwd, bool customer) async {
     try {
       String urlStr = base_url + "/authenticate";
       if (customer) {
@@ -31,6 +31,7 @@ class AuthManager {
               await CustomerAPIManager.getCustomerDetail(jsonMap['id']);
           SharedPreferences preferences = await SharedPreferences.getInstance();
           preferences.setString('token', jsonMap['token']);
+          preferences.setString('role', jsonMap['customer']);
           print(customerdetail);
           return true;
         } else {
@@ -39,6 +40,44 @@ class AuthManager {
       } else {
         return true;
       }
+    } catch (e, s) {
+      print("Exception $e");
+      print("StackTrace $s");
+    }
+    return false;
+  }
+
+  // return bool on successful logout or false on error
+  static Future<bool> logout(String phone, String pwd, bool customer) async {
+    try {
+      // String urlStr = base_url + "/authenticate";
+      // if (customer) {
+      // Map<String, String> loginData = {
+      //   'id': phone,
+      //   'password': pwd,
+      //   'role': 'customer'
+      // };
+      // String dataString = jsonEncode(loginData);
+      // var client = http.Client();
+      // var url = Uri.parse(urlStr);
+      // print(dataString);
+      // var response = await client.post(url,
+      //     body: dataString, headers: {'Content-Type': 'application/json'});
+      // if (response.statusCode == 200) {
+      //   var jsonString = response.body;
+      //   Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+      //   print(jsonMap);
+      //   Customer customerdetail =
+      //       await CustomerAPIManager.getCustomerDetail(jsonMap['id']);
+
+      // } else {
+
+      // }
+      // } else {
+      // return true;
+      // }
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      preferences.clear();
     } catch (e, s) {
       print("Exception $e");
       print("StackTrace $s");

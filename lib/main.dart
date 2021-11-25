@@ -4,7 +4,6 @@ import 'package:oilwale/screens/customer/createaccount.dart';
 import 'package:oilwale/screens/customer/home.dart';
 import 'package:oilwale/screens/customer/home/garagepage.dart';
 import 'package:oilwale/screens/customer/home/productpage.dart';
-import 'package:oilwale/screens/customer/home/vehicledetails.dart';
 import 'package:oilwale/components/addvehicleform.dart';
 import 'package:oilwale/screens/garage/cart.dart';
 import 'package:oilwale/screens/garage/garage_scaffold.dart';
@@ -24,7 +23,7 @@ void main() {
       // '/': (context) => SplashScreen(),
       '/login': (context) => LoginScreen(),
       '/cust_home': (context) => HomeScreen(),
-      // '/cust_vehicle': (context, data) => VehicleDetails(),
+      // '/cust_vehicle': (context) => VehicleDetails(),
       '/cust_product': (context) => ProductPage(),
       '/cust_garage': (context) => GaragePage(),
       '/cust_createAccount': (context) => CreateAccountScreen(),

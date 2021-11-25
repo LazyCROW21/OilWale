@@ -4,6 +4,7 @@ import 'package:oilwale/screens/garage/products.dart';
 import 'package:oilwale/screens/garage/home_page.dart';
 import 'package:oilwale/screens/garage/profile.dart';
 import '../garage/globals.dart';
+import 'package:intl/intl.dart';
 
 class GarageScaffold extends StatefulWidget {
   const GarageScaffold({Key? key}) : super(key: key);
@@ -77,59 +78,6 @@ class _GarageScaffoldState extends State<GarageScaffold> {
       ),
       null
     ];
-    // final popupmenubutton = [
-    //   null,
-    //   null,
-    //   null,
-    //   PopupMenuButton(
-    //       offset: const Offset(0.0, 50.0),
-    //       icon: Icon(
-    //         Icons.more_vert,
-    //         color: Colors.deepOrange,
-    //       ),
-    //       color: Colors.grey[300],
-    //       itemBuilder: (context) => [
-    //             PopupMenuItem(
-    //                 child: Row(
-    //               children: [
-    //                 Icon(
-    //                   Icons.history_rounded,
-    //                   color: Colors.deepOrange,
-    //                 ),
-    //                 const SizedBox(
-    //                   width: 7,
-    //                 ),
-    //                 Text("Purchase History"),
-    //               ],
-    //             )),
-    //             PopupMenuItem(
-    //                 child: Row(
-    //               children: [
-    //                 Icon(
-    //                   Icons.settings,
-    //                   color: Colors.deepOrange,
-    //                 ),
-    //                 const SizedBox(
-    //                   width: 7,
-    //                 ),
-    //                 Text("Settings"),
-    //               ],
-    //             )),
-    //             PopupMenuItem(
-    //                 child: Row(
-    //               children: [
-    //                 Icon(
-    //                   Icons.logout,
-    //                   color: Colors.deepOrange,
-    //                 ),
-    //                 const SizedBox(
-    //                   width: 7,
-    //                 ),
-    //                 Text("Logout")
-    //               ],
-    //             ))
-    //           ])
-    // ];
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
@@ -137,6 +85,16 @@ class _GarageScaffoldState extends State<GarageScaffold> {
         actions: _currentindex == 3
             ? [
                 PopupMenuButton(
+                    onSelected: (result) {
+                      if (result == 0) {
+                        Navigator.pushNamed(context, '/garage_history');
+                      } else if (result == 1) {
+                        Navigator.pushNamed(context, '/garage_home');
+                      } else if (result == 2) {
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, '/login', ModalRoute.withName('/login'));
+                      }
+                    },
                     offset: const Offset(0.0, 50.0),
                     icon: Icon(
                       Icons.more_vert,
@@ -145,44 +103,33 @@ class _GarageScaffoldState extends State<GarageScaffold> {
                     color: Colors.grey[300],
                     itemBuilder: (context) => [
                           PopupMenuItem(
+                              value: 0,
                               child: Row(
-                            children: [
-                              Icon(
-                                Icons.history_rounded,
-                                color: Colors.deepOrange,
-                              ),
-                              const SizedBox(
-                                width: 7,
-                              ),
-                              Text("Purchase History"),
-                            ],
-                          )),
+                                children: [
+                                  Icon(
+                                    Icons.history_rounded,
+                                    color: Colors.deepOrange,
+                                  ),
+                                  const SizedBox(
+                                    width: 7,
+                                  ),
+                                  Text("Purchase History"),
+                                ],
+                              )),
                           PopupMenuItem(
+                              value: 2,
                               child: Row(
-                            children: [
-                              Icon(
-                                Icons.settings,
-                                color: Colors.deepOrange,
-                              ),
-                              const SizedBox(
-                                width: 7,
-                              ),
-                              Text("Settings"),
-                            ],
-                          )),
-                          PopupMenuItem(
-                              child: Row(
-                            children: [
-                              Icon(
-                                Icons.logout,
-                                color: Colors.deepOrange,
-                              ),
-                              const SizedBox(
-                                width: 7,
-                              ),
-                              Text("Logout")
-                            ],
-                          ))
+                                children: [
+                                  Icon(
+                                    Icons.logout,
+                                    color: Colors.deepOrange,
+                                  ),
+                                  const SizedBox(
+                                    width: 7,
+                                  ),
+                                  Text("Logout")
+                                ],
+                              ))
                         ])
               ]
             : [],
@@ -214,4 +161,7 @@ class _GarageScaffoldState extends State<GarageScaffold> {
       ),
     );
   }
+
+  @override
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }

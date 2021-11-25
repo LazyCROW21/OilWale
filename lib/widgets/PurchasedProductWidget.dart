@@ -5,16 +5,17 @@ import 'package:oilwale/models/Offers.dart';
 import 'package:oilwale/models/product.dart';
 
 class PurchasedProductWidget extends StatelessWidget {
-  PurchasedProductWidget({Key? key,required this.offers}) : super(key: key);
+  PurchasedProductWidget({Key? key, required this.offers}) : super(key: key);
   final Offers offers;
   late var message = "placed";
-  late Color msgcolor = Colors.yellowAccent[400]!;
+  late Color msgcolor = Colors.grey[900]!.withOpacity(1);
+  Color bckgrndmsgcolor = Colors.yellowAccent;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, '/purchased_product',arguments: offers);
+        Navigator.pushNamed(context, '/purchased_product', arguments: offers);
       },
       child: Container(
           child: Card(
@@ -29,9 +30,16 @@ class PurchasedProductWidget extends StatelessWidget {
                   style: TextStyle(fontSize: 12.0),
                 )),
             Positioned(
-              top: 35.0,
-              right: 25.0,
-              child: TextButton(onPressed: () {}, child: Text(message)),
+              top: 15.0,
+              right: 10.0,
+              child: TextButton(
+                onPressed: () {},
+                child: Text(
+                  message,
+                  style: TextStyle(color: msgcolor),
+                ),
+                style: TextButton.styleFrom(backgroundColor: bckgrndmsgcolor),
+              ),
             ),
             Container(
               height: 50.0,

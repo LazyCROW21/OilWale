@@ -3,8 +3,8 @@ import 'package:oilwale/screens/garage/offers.dart';
 import 'package:oilwale/screens/garage/products.dart';
 import 'package:oilwale/screens/garage/home_page.dart';
 import 'package:oilwale/screens/garage/profile.dart';
-import 'package:oilwale/screens/login.dart';
 import '../garage/globals.dart';
+import 'package:intl/intl.dart';
 
 class GarageScaffold extends StatefulWidget {
   const GarageScaffold({Key? key}) : super(key: key);
@@ -12,7 +12,6 @@ class GarageScaffold extends StatefulWidget {
   @override
   _GarageScaffoldState createState() => _GarageScaffoldState();
 }
-
 class _GarageScaffoldState extends State<GarageScaffold> {
   int _currentindex = 0;
 
@@ -94,7 +93,7 @@ class _GarageScaffoldState extends State<GarageScaffold> {
                 Navigator.pushNamed(context, '/garage_home');
               }
               else if(result == 2) {
-                Navigator.pushReplacementNamed(context,'/login');
+                Navigator.pushNamedAndRemoveUntil(context,'/login',ModalRoute.withName('/login'));
               }
             },
             offset: const Offset(0.0, 50.0),
@@ -117,20 +116,6 @@ class _GarageScaffoldState extends State<GarageScaffold> {
                         width: 7,
                       ),
                       Text("Purchase History"),
-                    ],
-                  )),
-              PopupMenuItem(
-                value: 1,
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.settings,
-                        color: Colors.deepOrange,
-                      ),
-                      const SizedBox(
-                        width: 7,
-                      ),
-                      Text("Settings"),
                     ],
                   )),
               PopupMenuItem(
@@ -178,4 +163,7 @@ class _GarageScaffoldState extends State<GarageScaffold> {
       ),
     );
   }
+
+  @override
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }

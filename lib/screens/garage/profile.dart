@@ -1,4 +1,6 @@
+import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:oilwale/models/garage.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -6,6 +8,12 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+   Garage? garage;
+   String garageName = ' ';
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

@@ -3,7 +3,7 @@ class Offers{
   late String schemeId;
   late String schemeName;
   late String description;
-  late String createdAt;
+  late String startedAt;
   late String endsAt;
   late String targetGroup;
   // late String percentage;
@@ -16,7 +16,7 @@ class Offers{
         required this.schemeId,
         required this.schemeName,
         required this.description,
-        required this.createdAt,
+        required this.startedAt,
         required this.endsAt,
         // required this.minqty,
         // required this.percentage,
@@ -30,7 +30,7 @@ class Offers{
     this.schemeName = json['schemeName'];
     this.description = json['description'];
     // this.percentage = json['percentage'];
-    this.createdAt = json['createdAt']?? " ";
+    this.startedAt = json['startedAt']?? " ";
     this.endsAt = json['endedAt'];
     // this.minqty = json['minqty'];
     this.productIdList = json['productList'];

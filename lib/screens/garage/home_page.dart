@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:oilwale/models/Offers.dart';
 import 'package:oilwale/service/offers_api.dart';
 import 'package:oilwale/widgets/OffersWidget.dart';
-import 'package:oilwale/models/OffersCatalog.dart';
+import 'package:oilwale/screens/garage/globals.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.gotoOffer}) : super(key: key);
@@ -13,13 +14,11 @@ class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState(this.gotoOffer);
 }
-
 class _HomePageState extends State<HomePage> {
   int custNumber = 0;
   String refferalCode = "";
   int credPoints = 0;
-
-  get offers => null;
+  late Offers offers ;
   late Function gotoOffer;
   List<Offers> _offList = [];
 
@@ -29,6 +28,14 @@ class _HomePageState extends State<HomePage> {
     OffersAPIManager.getAllActiveScheme().then((resp) {
       setState(() {
         _offList = resp;
+        for(int i =0; i<_offList.length;i++) {
+          offers = _offList[i];
+          var dateofCreation = offers.startedAt ;
+          DateTime tempDate = new DateFormat("yyyy-MM-dd").parse(dateofCreation);
+          if(tempDate.isAfter(dateofOffers)){
+            _offList.removeAt(i);
+          }
+        }
         custNumber = 500;
         refferalCode = "ADF657";
         credPoints = 786;
@@ -188,16 +195,15 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      Container(
-        color: Colors.grey[200],
-        child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: _offList.length,
-            itemBuilder: (context, index) {
-              return OffersWidget(
-                offers: _offList[index],
-              );
-            }),
+      Expanded(
+          child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: _offList.length,
+              itemBuilder: (context, index) {
+                return OffersWidget(
+                  offers: _offList[index],
+                );
+              }),
       ),
     ]);
   }

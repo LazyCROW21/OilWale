@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:oilwale/components/product_tile.dart';
+import 'package:oilwale/models/product.dart';
 import 'package:oilwale/models/productcatalog.dart';
+import 'package:oilwale/service/product_api.dart';
 import 'package:oilwale/widgets/CartWidget.dart';
 
 import 'globals.dart';
@@ -13,6 +16,18 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   @override
+  List<Product> _pList= [];
+
+  void initState() {
+    super.initState();
+    ProductAPIManager.getAllProducts().then((resp) {
+      setState(() {
+        _pList = resp;
+      });
+    }).onError((error, stackTrace) {
+      print(error);
+    });
+  }
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[200],
@@ -20,7 +35,6 @@ class _CartPageState extends State<CartPage> {
           leading: BackButton(
             color: Colors.deepOrange,
           ),
-
           title: Text(
             "Oil Wale",
             style: TextStyle(color: Colors.deepOrange),
@@ -45,10 +59,10 @@ class _CartPageState extends State<CartPage> {
             Container(
               child: Expanded(
                 child: ListView.builder(
-                    itemCount: CatalogModel.products.length,
+                    itemCount: _pList.length,
                     itemBuilder: (context, index) {
                       return CartWidget(
-                        item: CatalogModel.products[index],
+                        item : _pList[index],
                       );
                     }),
               ),

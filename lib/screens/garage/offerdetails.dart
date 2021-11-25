@@ -45,51 +45,25 @@ class OfferDetails extends StatelessWidget {
                       fontSize: 20.0,
                       color: Colors.deepOrangeAccent),
                 ),
-                // Padding(
-                //   padding: const EdgeInsets.symmetric(
-                //     horizontal: 40.0,
-                //   ),
-                //   child: Divider(
-                //     color: Colors.black,
-                //     thickness: 1.0,
-                //     height: 10.0,
-                //   ),
-                // ),
                 SizedBox(
                   height: 20.0,
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Center(
-                      child: Expanded(
                     child: Text(
-                      "10 rupiye ki pepsi , mera description secsi ",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.grey[700]),
+                  "10 rupiye ki pepsi , mera description secsi wagfw aFwf wsfiawref iafwref ",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.grey[700]),
                     ),
-                  )),
                 ),
                 SizedBox(
                   height: 10.0,
                 ),
-                // Container(
-                //   padding: EdgeInsets.symmetric(horizontal: 10.0),
-                //   child: Row(
-                //     children: [Expanded(flex: 1, child: Text("Discount:",style: TextStyle(fontWeight: FontWeight.bold, color: Colors.deepOrangeAccent),)),
-                //       Expanded(flex: 2,child: Text("50% "),)
-                //     ],
-                //   ),
-                // ),
-                // SizedBox(
-                //   height: 10.0,
-                // ),
 
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 10.0),
                   child: Row(
                     children: [
                       Expanded(
-                          flex: 1,
                           child: Text(
                             "Last Date:",
                             style: TextStyle(
@@ -180,17 +154,17 @@ class OfferDetails extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    TextButton(
-                        onPressed: () {
-                          Navigator.pop(context, '/garage_offers');
-                        },
-                        style: TextButton.styleFrom(
-                          backgroundColor: Colors.red[100]!.withOpacity(0.5),
-                        ),
-                        child: Text(
-                          "Decline",
-                          style: TextStyle(color: Colors.red),
-                        )),
+                    // TextButton(
+                    //     onPressed: () {
+                    //       Navigator.pop(context, '/garage_offers');
+                    //     },
+                    //     style: TextButton.styleFrom(
+                    //       backgroundColor: Colors.red[100]!.withOpacity(0.5),
+                    //     ),
+                    //     // child: Text(
+                    //     //   "Decline",
+                    //     //   style: TextStyle(color: Colors.red),
+                    //     // )),
                     TextButton(
                         onPressed: () {
                           Navigator.pop(context, '/garage_offers');

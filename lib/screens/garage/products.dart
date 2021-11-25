@@ -51,7 +51,7 @@ class _ProductViewState extends State<ProductView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.fromLTRB(16,16,16,10),
       child: Column(children: [
         Container(
           height: 55.0,

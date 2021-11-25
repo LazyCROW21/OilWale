@@ -31,7 +31,7 @@ class AuthManager {
               await CustomerAPIManager.getCustomerDetail(jsonMap['id']);
           SharedPreferences preferences = await SharedPreferences.getInstance();
           preferences.setString('token', jsonMap['token']);
-          preferences.setString('role', jsonMap['customer']);
+          preferences.setString('role', 'customer');
           print(customerdetail);
           return true;
         } else {

@@ -5,14 +5,14 @@ import 'package:oilwale/screens/customer/home.dart';
 import 'package:oilwale/screens/customer/home/garagepage.dart';
 import 'package:oilwale/screens/customer/home/productpage.dart';
 import 'package:oilwale/components/addvehicleform.dart';
-import 'package:oilwale/screens/garage/PurdchaseHistory.dart';
-import 'package:oilwale/screens/garage/ShowProductsbought.dart';
 import 'package:oilwale/screens/garage/cart.dart';
 import 'package:oilwale/screens/garage/garage_scaffold.dart';
 import 'package:oilwale/screens/garage/offerdetails.dart';
 import 'package:oilwale/screens/garage/offers.dart';
 import 'package:oilwale/screens/login.dart';
 import 'package:oilwale/theme/themedata.dart';
+import 'package:oilwale/screens/garage/PurdchaseHistory.dart';
+import 'package:oilwale/screens/garage/ShowProductsbought.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -22,7 +22,6 @@ void main() {
     initialRoute: '/login',
     home: LoginScreen(),
     routes: {
-      // '/': (context) => SplashScreen(),
       '/login': (context) => LoginScreen(),
       '/cust_home': (context) => HomeScreen(),
       // '/cust_vehicle': (context) => VehicleDetails(),
@@ -35,7 +34,7 @@ void main() {
       '/cart': (context) => CartPage(),
       '/offer_details': (context) => OfferDetails(),
       '/garage_history': (context) => PurchaseHistory(),
-      '/purchased_product' :(context) => ShowProductbought(),
+      '/purchased_product': (context) => ShowProductbought(),
     },
   ));
 }

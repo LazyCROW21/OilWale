@@ -11,10 +11,9 @@ class _OfferProductTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: MaterialButton(
-        padding: EdgeInsets.zero,
-        onPressed: () {
-          Navigator.pushNamed(context, "/cust_product", arguments: product);
+      child: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/cust_product', arguments: product);
         },
         child: Container(
             margin: EdgeInsets.symmetric(vertical: 4.0),
@@ -92,84 +91,89 @@ class OfferCard extends StatelessWidget {
     return Card(
       elevation: 4,
       margin: EdgeInsets.symmetric(vertical: 4),
-      child: Container(
-        padding: EdgeInsets.all(8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              offer.schemeName,
-              textAlign: TextAlign.center,
-              style: textStyle('h5', AppColorSwatche.primary),
-            ),
-            SizedBox(
-              height: 4,
-            ),
-            status == 'upcoming'
-                ? Text(
-                    'Offer starts at: ${getFormattedDT(offer.startedAt)}',
-                    textAlign: TextAlign.start,
-                    style: textStyle('p2', Colors.lightBlue),
-                  )
-                : Text(
-                    'Offer ends at: ${getFormattedDT(offer.endsAt)}',
-                    textAlign: TextAlign.end,
-                    style: textStyle('p2', Colors.lightBlue),
-                  ),
-            SizedBox(
-              height: 8,
-            ),
-            Text(
-              offer.description,
-              textAlign: TextAlign.justify,
-              style: textStyle('p1', AppColorSwatche.black),
-            ),
-            GestureDetector(
-              onTap: () {
-                print("Pressing !");
-                Navigator.of(context).push(
-                  HeroDialogRoute(
-                    builder: (context) => Center(
-                      child: Hero(
-                        tag: ValueKey(offer.schemeId),
-                        child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 8.0),
-                          padding: EdgeInsets.all(8),
-                          height: MediaQuery.of(context).size.height * 0.6,
-                          decoration: BoxDecoration(
-                              color: Colors.white60,
-                              borderRadius: BorderRadius.circular(12)),
-                          child: ListView.builder(
-                            itemCount: offer.productList.length,
-                            itemBuilder: (context, index) {
-                              return _OfferProductTile(
-                                  offer.productList[index]);
-                            },
+      child: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/cust_offer', arguments: offer);
+        },
+        child: Container(
+          padding: EdgeInsets.all(8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                offer.schemeName,
+                textAlign: TextAlign.center,
+                style: textStyle('h5', AppColorSwatche.primary),
+              ),
+              SizedBox(
+                height: 4,
+              ),
+              status == 'upcoming'
+                  ? Text(
+                      'Offer starts at: ${getFormattedDT(offer.startedAt)}',
+                      textAlign: TextAlign.start,
+                      style: textStyle('p2', Colors.lightBlue),
+                    )
+                  : Text(
+                      'Offer ends at: ${getFormattedDT(offer.endsAt)}',
+                      textAlign: TextAlign.end,
+                      style: textStyle('p2', Colors.lightBlue),
+                    ),
+              SizedBox(
+                height: 8,
+              ),
+              Text(
+                offer.description,
+                textAlign: TextAlign.justify,
+                style: textStyle('p1', AppColorSwatche.black),
+              ),
+              GestureDetector(
+                onTap: () {
+                  print("Pressing !");
+                  Navigator.of(context).push(
+                    HeroDialogRoute(
+                      builder: (context) => Center(
+                        child: Hero(
+                          tag: ValueKey(offer.schemeId),
+                          child: Container(
+                            margin: EdgeInsets.symmetric(horizontal: 8.0),
+                            padding: EdgeInsets.all(8),
+                            height: MediaQuery.of(context).size.height * 0.6,
+                            decoration: BoxDecoration(
+                                color: Colors.white60,
+                                borderRadius: BorderRadius.circular(12)),
+                            child: ListView.builder(
+                              itemCount: offer.productList.length,
+                              itemBuilder: (context, index) {
+                                return _OfferProductTile(
+                                    offer.productList[index]);
+                              },
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                );
-              },
-              child: Hero(
-                tag: ValueKey(offer.schemeId),
-                child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 8.0),
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(18.0),
-                      color: AppColorSwatche.primary),
-                  // color: AppColorSwatche.primary,
-                  child: Text(
-                    'PRODUCT LIST',
-                    textAlign: TextAlign.center,
-                    style: textStyle('p1', AppColorSwatche.white),
+                  );
+                },
+                child: Hero(
+                  tag: ValueKey(offer.schemeId),
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 8.0),
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(18.0),
+                        color: AppColorSwatche.primary),
+                    // color: AppColorSwatche.primary,
+                    child: Text(
+                      'PRODUCT LIST',
+                      textAlign: TextAlign.center,
+                      style: textStyle('p1', AppColorSwatche.white),
+                    ),
                   ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

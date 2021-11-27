@@ -14,21 +14,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int idx = 0;
-  void tabSelect(int index) {
-    setState(() {
-      idx = index;
-    });
-  }
 
-  VehiclesScreen vehiclesScreen = VehiclesScreen();
-  GarageScreen garageScreen = GarageScreen();
-  ProductScreen productScreen = ProductScreen();
-  ProfileScreen profileScreen = ProfileScreen();
-  OffersScreen offersScreen = OffersScreen();
+  PageController _pageController = PageController(initialPage: 0);
+
   // @override
   // void initState() {
   //   super.initState();
   // }
+
   @override
   void setState(VoidCallback fn) {
     if (mounted) {
@@ -36,21 +29,10 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Widget getItem(idx) {
-    switch (idx) {
-      case 0:
-        return vehiclesScreen;
-      case 1:
-        return offersScreen;
-      case 2:
-        return productScreen;
-      case 3:
-        return garageScreen;
-      case 4:
-        return profileScreen;
-      default:
-        return Container();
-    }
+  void tabSelect(int index) {
+    setState(() {
+      idx = index;
+    });
   }
 
   @override
@@ -74,18 +56,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 image: AssetImage('assets/img/bgsq.png'),
                 colorFilter: ColorFilter.mode(
                     Colors.white.withOpacity(0.21), BlendMode.dstATop))),
-        child: AnimatedSwitcher(
-            reverseDuration: Duration.zero,
-            duration: Duration(milliseconds: 500),
-            child: getItem(idx),
-            transitionBuilder: (Widget child, Animation<double> animation) {
-              return SlideTransition(
-                key: ValueKey(idx),
-                position: Tween<Offset>(begin: Offset(2, 0), end: Offset.zero)
-                    .animate(animation),
-                child: child,
-              );
-            }),
+        child: PageView(
+          controller: _pageController,
+          onPageChanged: tabSelect,
+          children: [
+            VehiclesScreen(),
+            OffersScreen(),
+            ProductScreen(),
+            GarageScreen(),
+            ProfileScreen()
+          ],
+        ),
       ),
       bottomNavigationBar: CurvedNavigationBar(
         height: 60,
@@ -114,7 +95,10 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],
         index: idx,
-        onTap: tabSelect,
+        onTap: (int index) {
+          _pageController.animateToPage(index,
+              duration: Duration(milliseconds: 400), curve: Curves.ease);
+        },
       ),
     );
   }

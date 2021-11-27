@@ -20,8 +20,9 @@ class _CartWidgetState extends State<CartWidget> {
     setState(() {
       visibilitytag = false;
       context.read<CartProvider>().decrement();
-      context.read<CartProvider>().cartProduct.remove(widget.item);
+      context.read<CartProvider>().removeProduct(widget.item);
     });
+    Future.delayed(Duration(milliseconds: 100));
   }
 
   @override

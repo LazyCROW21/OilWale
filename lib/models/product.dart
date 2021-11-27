@@ -5,7 +5,6 @@ class Product {
   late final String specification;
   late final String packingSize;
   late final String? image;
-
   Product(
       {required this.id,
       required this.name,

@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:oilwale/models/customer.dart';
+import 'package:oilwale/models/garage.dart';
 import 'package:oilwale/service/customer_api.dart';
+import 'package:oilwale/service/garage_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String base_url = "https://oilwale.herokuapp.com/api";
@@ -31,14 +33,38 @@ class AuthManager {
               await CustomerAPIManager.getCustomerDetail(jsonMap['id']);
           SharedPreferences preferences = await SharedPreferences.getInstance();
           preferences.setString('token', jsonMap['token']);
-          preferences.setString('role', "customer");
+          preferences.setString('role', 'customer');
           print(customerdetail);
           return true;
         } else {
           return false;
         }
       } else {
-        return true;
+        Map<String, String> loginData = {
+          'id': phone,
+          'password': pwd,
+          'role': 'garage'
+        };
+        String dataString = jsonEncode(loginData);
+        var client = http.Client();
+        var url = Uri.parse(urlStr);
+        print(dataString);
+        var response = await client.post(url,
+            body: dataString, headers: {'Content-Type': 'application/json'});
+        if (response.statusCode == 200) {
+          var jsonString = response.body;
+          Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+          print(jsonMap);
+          Garage? garageDetails =
+              await GarageAPIManager.getGarageDetails(jsonMap['id']);
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          preferences.setString('token', jsonMap['token']);
+          preferences.setString('role', 'garage');
+          print(garageDetails);
+          return true;
+        } else {
+          return false;
+        }
       }
     } catch (e, s) {
       print("Exception $e");

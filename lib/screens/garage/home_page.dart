@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:oilwale/models/offers.dart';
 import 'package:oilwale/service/offers_api.dart';
 import 'package:oilwale/theme/themedata.dart';
-import 'package:oilwale/widgets/OffersWidget.dart';
+import 'package:oilwale/widgets/Garage_offersWidget.dart';
 import 'package:oilwale/screens/garage/globals.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,6 +16,7 @@ class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState(this.gotoOffer);
 }
+
 class _HomePageState extends State<HomePage> {
   int custNumber = 0;
   String refferalCode = "";

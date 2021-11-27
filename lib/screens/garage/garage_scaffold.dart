@@ -4,7 +4,7 @@ import 'package:oilwale/screens/garage/offers.dart';
 import 'package:oilwale/screens/garage/products.dart';
 import 'package:oilwale/screens/garage/home_page.dart';
 import 'package:oilwale/screens/garage/profile.dart';
-import '../garage/globals.dart';
+import 'package:provider/provider.dart';
 
 class GarageScaffold extends StatefulWidget {
   const GarageScaffold({Key? key}) : super(key: key);
@@ -15,21 +15,9 @@ class GarageScaffold extends StatefulWidget {
 
 class _GarageScaffoldState extends State<GarageScaffold> {
   int _currentindex = 0;
-  int numberOfProducts = cartProduct.length;
   void gotoOffers() {
     setState(() {
       _currentindex = 1;
-    });
-  }
-
-  void CartNumber(bool cartNumber) {
-    setState(() {
-      if(cartNumber) {
-        cartnum++;
-      }
-      else{
-        cartnum--;
-      }
     });
   }
 
@@ -77,7 +65,7 @@ class _GarageScaffoldState extends State<GarageScaffold> {
                         color: Colors.deepOrange,
                         borderRadius: BorderRadius.circular(6)),
                     child: Text(
-                      "$numberOfProducts",
+                      "${context.watch<CartProvider>().cartnumprovider}",
                       style: TextStyle(color: Colors.white),
                       textAlign: TextAlign.center,
                     ))),

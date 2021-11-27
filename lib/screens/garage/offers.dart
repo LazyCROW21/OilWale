@@ -3,7 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:oilwale/models/offers.dart';
 import 'package:oilwale/service/offers_api.dart';
 import 'package:oilwale/theme/themedata.dart';
-import 'package:oilwale/widgets/OffersWidget.dart';
+import 'package:oilwale/widgets/Garage_offersWidget.dart';
 
 class OffersPage extends StatefulWidget {
   const OffersPage({Key? key}) : super(key: key);

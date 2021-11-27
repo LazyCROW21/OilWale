@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:oilwale/models/product.dart';
 import 'package:oilwale/screens/garage/globals.dart';
+import 'package:provider/src/provider.dart';
 import '../screens/garage/Providers/CartProvider.dart';
 
 class ItemWidget extends StatefulWidget {
   final Product product;
-  // final Function(bool) addtoCartNum;
+
   ItemWidget({Key? key, required this.product}) : super(key: key);
 
   @override
@@ -16,10 +17,14 @@ class _ItemWidgetState extends State<ItemWidget> {
   var count = " Add to Cart ";
   Color added = Colors.deepOrange[200]!.withOpacity(.1);
   Color cartaddedtext = Colors.deepOrange;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () { Navigator.pushNamed(context, '/cust_product',arguments: widget.product);},
+      onTap: () {
+        Navigator.pushNamed(context, '/cust_product',
+            arguments: widget.product);
+      },
       child: Padding(
           padding: EdgeInsets.only(left: 10.0, right: 15.0, top: 15.0),
           child: Container(
@@ -70,7 +75,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                       ),
                       Container(
                         child: Text(
-                         "Grade :" + widget.product.grade,
+                          "Grade :" + widget.product.grade,
                           style: TextStyle(fontSize: 10.0, color: Colors.grey),
                         ),
                       ),
@@ -84,23 +89,24 @@ class _ItemWidgetState extends State<ItemWidget> {
                             child: TextButton(
                                 onPressed: () {
                                   setState(() {
-                                    if (widget.product.inCart) {
-                                      added = Colors.deepOrange[200]!.withOpacity(.3);
+                                    if (context.read<CartProvider>().cartProduct.contains(widget.product) == true) {
+                                      added = Colors.deepOrange[200]!
+                                          .withOpacity(.3);
                                       count = "Add to Cart";
                                       cartaddedtext = Colors.deepOrange;
-                                      widget.product.inCart = false;
-                                      // context.read<CartProvider>().decrement();
-                                      if(cartProduct.contains(widget.product))
-                                      cartProduct.remove(widget.product);
+                                      context.read<CartProvider>().decrement();
+                                        context.read<CartProvider>().cartProduct.remove(widget.product);
+                                        cartProductList.remove(widget.product.id);
                                     } else {
                                       count = "Added to Cart";
                                       added = Colors.green;
-                                      widget.product.inCart = true;
+                                      context.read<CartProvider>().increment();
                                       cartaddedtext = Colors.white;
-                                      if(cartProduct.contains(widget.product) != true )
-                                      cartProduct.add(widget.product);
+                                        context.read<CartProvider>().cartProduct.add(widget.product);
+                                        cartProductList.add(widget.product.id);
+                                      }
                                     }
-                                  });
+                                  );
                                 },
                                 style: TextButton.styleFrom(
                                     backgroundColor: added.withOpacity(0.7)),
@@ -122,5 +128,3 @@ class _ItemWidgetState extends State<ItemWidget> {
     );
   }
 }
-
-

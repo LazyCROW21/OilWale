@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:oilwale/models/customer.dart';
 import 'package:oilwale/service/customer_api.dart';
+import 'package:oilwale/service/service_api.dart';
 import 'package:oilwale/theme/themedata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,6 +14,7 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool isEditing = false;
+  int _totalNoOfService = -1;
   Customer? undoCustomer;
   Customer customer = Customer(
       active: true,
@@ -28,21 +30,37 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   void initState() {
-    customerDetail = CustomerDetail(customer);
+    customerDetail = CustomerDetail(customer, _totalNoOfService);
     super.initState();
     getCustomerPrefs().then((value) {
-      setState(() {
-        customerDetail = CustomerDetail(customer);
-        undoCustomer = new Customer(
-            active: customer.active,
-            createdAt: '',
-            customerAddress: customer.customerAddress,
-            customerId: customer.customerId,
-            customerName: customer.customerName,
-            customerPhoneNumber: customer.customerPhoneNumber,
-            customerPincode: customer.customerPincode,
-            updatedAt: '');
+      ServiceAPIManager.getTotalNoOfService(customer.customerId)
+          .then((_result) {
+        setState(() {
+          _totalNoOfService = _result;
+          customerDetail = CustomerDetail(customer, _totalNoOfService);
+          undoCustomer = new Customer(
+              active: customer.active,
+              createdAt: '',
+              customerAddress: customer.customerAddress,
+              customerId: customer.customerId,
+              customerName: customer.customerName,
+              customerPhoneNumber: customer.customerPhoneNumber,
+              customerPincode: customer.customerPincode,
+              updatedAt: '');
+        });
       });
+      // setState(() {
+      //   customerDetail = CustomerDetail(customer, _totalNoOfService);
+      //   undoCustomer = new Customer(
+      //       active: customer.active,
+      //       createdAt: '',
+      //       customerAddress: customer.customerAddress,
+      //       customerId: customer.customerId,
+      //       customerName: customer.customerName,
+      //       customerPhoneNumber: customer.customerPhoneNumber,
+      //       customerPincode: customer.customerPincode,
+      //       updatedAt: '');
+      // });
     });
   }
 
@@ -55,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Widget showCustomerForm() {
     if (isEditing) {
-      return EditCustomer(customer, setCustomer);
+      return EditCustomer(customer, _totalNoOfService, setCustomer);
     } else {
       return customerDetail ?? Container();
     }
@@ -160,8 +178,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 class CustomerDetail extends StatelessWidget {
   final Customer customer;
+  final int totalNoOfServices;
 
-  CustomerDetail(this.customer, {Key? key}) : super(key: key);
+  CustomerDetail(this.customer, this.totalNoOfServices, {Key? key})
+      : super(key: key);
 
   final Color borderColor = AppColorSwatche.primary;
   final Color textColor = AppColorSwatche.black;
@@ -268,7 +288,7 @@ class CustomerDetail extends StatelessWidget {
                     style: textStyle('p2', borderColor),
                   ),
                   Text(
-                    '12',
+                    totalNoOfServices == -1 ? '-' : '$totalNoOfServices',
                     style: textStyle('h5', textColor),
                   ),
                   Divider(
@@ -288,12 +308,12 @@ class CustomerDetail extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(18.0),
                               ))),
                           onPressed: () {
-                            SharedPreferences.getInstance()
-                                .then((SharedPreferences preferences) {
-                              preferences.clear();
-                            });
-                            Navigator.pushNamedAndRemoveUntil(context, '/login',
-                                (Route<dynamic> route) {
+                            // SharedPreferences.getInstance()
+                            //     .then((SharedPreferences preferences) {
+                            //   preferences.clear();
+                            // });
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, '/logout', (Route<dynamic> route) {
                               return false;
                             });
                           },
@@ -317,8 +337,10 @@ class CustomerDetail extends StatelessWidget {
 
 class EditCustomer extends StatefulWidget {
   final Customer customer;
+  final int totalNoOfServices;
   final Function(Customer) emitCustomerDetails;
-  EditCustomer(this.customer, this.emitCustomerDetails, {Key? key})
+  EditCustomer(this.customer, this.totalNoOfServices, this.emitCustomerDetails,
+      {Key? key})
       : super(key: key);
 
   @override
@@ -493,7 +515,9 @@ class _EditCustomerState extends State<EditCustomer> {
                   style: textStyle('p2', Colors.deepOrange),
                 ),
                 Text(
-                  '12',
+                  widget.totalNoOfServices == -1
+                      ? '-'
+                      : '${widget.totalNoOfServices}',
                   style: textStyle('h5', AppColorSwatche.black),
                 ),
                 Divider(

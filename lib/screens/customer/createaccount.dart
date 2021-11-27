@@ -19,6 +19,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   String? _pwd;
   String? _confpwd;
   bool formSubmit = false;
+  bool _hidePWD1 = true;
+  bool _hidePWD2 = true;
 
   // constants
   final TextStyle errorTS =
@@ -287,7 +289,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: TextFormField(
-                      obscureText: true,
+                      obscureText: _hidePWD1,
                       onChanged: (String? inp) {
                         this._pwd = inp;
                       },
@@ -295,6 +297,17 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       inputFormatters: [LengthLimitingTextInputFormatter(32)],
                       style: TextStyle(fontSize: _textInputfontSize),
                       decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          color: AppColorSwatche.primary,
+                          icon: Icon(_hidePWD1
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              _hidePWD1 = !_hidePWD1;
+                            });
+                          },
+                        ),
                         prefixIcon:
                             Icon(Icons.lock, color: AppColorSwatche.primary),
                         hintText: 'secret',
@@ -314,7 +327,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 8.0),
                     child: TextFormField(
-                      obscureText: true,
+                      obscureText: _hidePWD2,
                       onChanged: (String? inp) {
                         this._confpwd = inp;
                       },
@@ -322,6 +335,17 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       inputFormatters: [LengthLimitingTextInputFormatter(32)],
                       style: TextStyle(fontSize: _textInputfontSize),
                       decoration: InputDecoration(
+                        suffixIcon: IconButton(
+                          color: AppColorSwatche.primary,
+                          icon: Icon(_hidePWD2
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                          onPressed: () {
+                            setState(() {
+                              _hidePWD2 = !_hidePWD2;
+                            });
+                          },
+                        ),
                         prefixIcon:
                             Icon(Icons.lock, color: AppColorSwatche.primary),
                         hintText: 'secret',
@@ -394,6 +418,8 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       }
                     },
                     style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(AppColorSwatche.primary),
                         shape:
                             MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(

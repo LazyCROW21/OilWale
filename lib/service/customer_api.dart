@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:oilwale/models/customer.dart';
 import 'package:http/http.dart' as http;
 import 'package:oilwale/models/customervehicle.dart';
-import 'package:oilwale/service/vehicle_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String base_url = "https://oilwale.herokuapp.com/api";
@@ -118,14 +117,10 @@ class CustomerAPIManager {
         print(jsonString);
         List jsonMap = jsonDecode(jsonString);
         for (int i = 0; i < jsonMap.length; i++) {
-          dynamic element = jsonMap[i];
-          dynamic vehicleDetails =
-              await VehicleAPIManager.getVehicle(element['vehicleId']);
-          element['model'] = vehicleDetails['vehicleModel'];
-          element['brand'] = vehicleDetails['vehicleCompany']['vehicleCompany'];
-          element['suggestedProducts'] =
-              vehicleDetails['suggestedProductDetails'];
-          print(vehicleDetails['suggestedProduct']);
+          dynamic element = jsonMap[i]['customerVehicle'];
+          element['model'] = jsonMap[i]['vehicle']['vehicleModel'];
+          element['brand'] = jsonMap[i]['vehicleCompany']['vehicleCompany'];
+          element['suggestedProducts'] = jsonMap[i]['products'];
           customerVehicles.add(CustomerVehicle.fromJSON(element));
           print(element);
         }

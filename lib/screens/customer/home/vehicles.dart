@@ -14,7 +14,8 @@ class VehiclesScreen extends StatefulWidget {
 }
 
 class _VehiclesScreenState extends State<VehiclesScreen> {
-  List<CustomerVehicle>? customerVehicleList;
+  List<CustomerVehicle> customerVehicleList = [];
+  bool isLoadingCVs = true;
   String? customerId;
 
   @override
@@ -28,6 +29,7 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
       }
       CustomerAPIManager.getCustomerVehicles(customerId ?? '').then((result) {
         setState(() {
+          isLoadingCVs = false;
           customerVehicleList = result;
         });
       });
@@ -42,13 +44,13 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
   }
 
   Widget vehicleListLoader() {
-    if (customerVehicleList == null) {
+    if (isLoadingCVs) {
       return Container(
         child: Center(
           child: SpinKitRing(color: AppColorSwatche.primary),
         ),
       );
-    } else if (customerVehicleList!.length == 0) {
+    } else if (customerVehicleList.length == 0) {
       return Container(
         child: Text(
           'No vehicles added! Try adding one by clicking add vehicle below',
@@ -57,8 +59,7 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
       );
     }
     return ListView.builder(
-        itemCount: customerVehicleList?.length ?? 0,
-        itemBuilder: vehicleItemBuilder);
+        itemCount: customerVehicleList.length, itemBuilder: vehicleItemBuilder);
   }
 
   Widget vehicleItemBuilder(context, index) {
@@ -67,7 +68,7 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
       child: Dismissible(
           onDismissed: (DismissDirection direction) async {
             bool result = await CustomerAPIManager.deleteCustomerVehicle(
-                customerVehicleList![index].customerVehicleId);
+                customerVehicleList[index].customerVehicleId);
             if (!result) {
               Fluttertoast.showToast(
                   msg: "Error in deleting! try later",
@@ -79,7 +80,7 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
                   fontSize: 16.0);
               return;
             }
-            customerVehicleList!.removeAt(index);
+            customerVehicleList.removeAt(index);
           },
           confirmDismiss: (DismissDirection direction) {
             AlertDialog errorAlert = AlertDialog(
@@ -126,27 +127,26 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
               ),
             ),
           ),
-          key: ValueKey(customerVehicleList![index].customerVehicleId),
+          key: ValueKey(customerVehicleList[index].customerVehicleId),
           child: MaterialButton(
               padding: EdgeInsets.zero,
               onPressed: () async {
                 CustomerVehicle result = await Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) {
-                  return VehicleDetails(customerVehicleList![index]);
+                  return VehicleDetails(customerVehicleList[index]);
                 }));
                 setState(() {
-                  customerVehicleList![index].vehicleId = result.vehicleId;
-                  customerVehicleList![index].model = result.model;
-                  customerVehicleList![index].brand = result.brand;
-                  customerVehicleList![index].vehicleCompanyId =
+                  customerVehicleList[index].vehicleId = result.vehicleId;
+                  customerVehicleList[index].model = result.model;
+                  customerVehicleList[index].brand = result.brand;
+                  customerVehicleList[index].vehicleCompanyId =
                       result.vehicleCompanyId;
-                  customerVehicleList![index].currentKM = result.currentKM;
-                  customerVehicleList![index].kmperday = result.kmperday;
-                  customerVehicleList![index].numberPlate = result.numberPlate;
+                  customerVehicleList[index].currentKM = result.currentKM;
+                  customerVehicleList[index].kmperday = result.kmperday;
+                  customerVehicleList[index].numberPlate = result.numberPlate;
                 });
               },
-              child:
-                  VehicleCard(customerVehicle: customerVehicleList![index]))),
+              child: VehicleCard(customerVehicle: customerVehicleList[index]))),
     );
   }
 
@@ -177,12 +177,13 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
                   try {
                     if (result as bool) {
                       setState(() {
-                        customerVehicleList = null;
+                        isLoadingCVs = true;
                       });
                       CustomerAPIManager.getCustomerVehicles(customerId ?? '')
                           .then((result) {
                         setState(() {
                           customerVehicleList = result;
+                          isLoadingCVs = false;
                         });
                       });
                     }

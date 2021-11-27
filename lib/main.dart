@@ -13,6 +13,7 @@ import 'package:oilwale/screens/garage/garage_scaffold.dart';
 import 'package:oilwale/screens/garage/offerdetails.dart';
 import 'package:oilwale/screens/garage/offers.dart';
 import 'package:oilwale/screens/login.dart';
+import 'package:oilwale/screens/logout.dart';
 import 'package:oilwale/theme/themedata.dart';
 
 void main() {
@@ -31,6 +32,7 @@ void main() {
     routes: {
       // '/': (context) => SplashScreen(),
       '/login': (context) => LoginScreen(),
+      '/logout': (context) => LogoutScreen(),
       '/cust_home': (context) => HomeScreen(),
       // '/cust_vehicle': (context) => VehicleDetails(),
       '/cust_offer': (context) => CustomerOfferDetails(),

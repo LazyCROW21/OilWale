@@ -61,10 +61,10 @@ class GarageAPIManager {
   }
 
   // return customer object on success or false on error
-  static Future<dynamic> getGarageById(String garageId) async {
+  static Future<dynamic> getGarageForLogin(String garageId) async {
     try {
       var client = http.Client();
-      String urlStr = base_url + "/getGarageById/" + garageId;
+      String urlStr = base_url + "/garage/" + garageId;
       var url = Uri.parse(urlStr);
       var response = await client.get(url);
       if (response.statusCode == 200) {
@@ -103,5 +103,26 @@ class GarageAPIManager {
       print("StackTrace $s");
     }
     return false;
+  }
+
+  // return customer object on success or false on error
+  static Future<dynamic> getGarageById(String garageId) async {
+    try {
+      var client = http.Client();
+      String urlStr = base_url + "/garage/" + garageId;
+      var url = Uri.parse(urlStr);
+      var response = await client.get(url);
+      if (response.statusCode == 200) {
+        var jsonString = response.body;
+        Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+        print(jsonMap);
+        return jsonMap;
+      }
+      return null;
+    } catch (e, s) {
+      print("Exception $e");
+      print("StackTrace $s");
+    }
+    return null;
   }
 }

@@ -1,11 +1,15 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:oilwale/components/editvehicledetail.dart';
 import 'package:oilwale/components/product_tile.dart';
+import 'package:oilwale/components/servicecard.dart';
 import 'package:oilwale/models/customervehicle.dart';
 import 'package:oilwale/models/product.dart';
+import 'package:oilwale/models/service.dart';
 import 'package:oilwale/service/customer_api.dart';
+import 'package:oilwale/service/service_api.dart';
 import 'package:oilwale/theme/themedata.dart';
 
 class VehicleDetails extends StatefulWidget {
@@ -18,11 +22,30 @@ class VehicleDetails extends StatefulWidget {
 class _VehicleDetailsState extends State<VehicleDetails> {
   late CustomerVehicle customerVehicle;
   late CustomerVehicle backUpCustomerVehicle;
+  late List<ServiceHistory> serviceHistory = [];
+  DateTime? nextServiceDate = null;
+  String? nextServiceDateStr = null;
   bool isEditing = false;
 
   @override
   void initState() {
     customerVehicle = widget.customerVehicle;
+    ServiceAPIManager.getServiceHistory(customerVehicle.customerVehicleId)
+        .then((_result) {
+      setState(() {
+        if (_result.length > 0) {
+          nextServiceDate = DateTime.tryParse(_result[0].dateOfService);
+          if (nextServiceDate != null) {
+            // 3 months OR 1500 KM
+            int cntDays = (1500 / customerVehicle.kmperday).round();
+            nextServiceDate!.add(Duration(days: cntDays));
+            DateFormat formatter = DateFormat('dd MMM, y');
+            nextServiceDateStr = formatter.format(nextServiceDate);
+          }
+        }
+        serviceHistory = _result;
+      });
+    });
     super.initState();
   }
 
@@ -31,10 +54,6 @@ class _VehicleDetailsState extends State<VehicleDetails> {
     if (mounted) {
       super.setState(fn);
     }
-  }
-
-  CustomerVehicle getCustomerVehicle() {
-    return this.customerVehicle;
   }
 
   void updateVehicle(CustomerVehicle updVehicle) {
@@ -230,7 +249,7 @@ class _VehicleDetailsState extends State<VehicleDetails> {
                           style: textStyle('h4', AppColorSwatche.black)),
                       Divider(),
                       Text(
-                        "Recommended Date: 24 Oct, 2021",
+                        "Recommended Date: $nextServiceDateStr",
                         style: textStyle('p1', AppColorSwatche.black),
                       ),
                     ],
@@ -244,24 +263,23 @@ class _VehicleDetailsState extends State<VehicleDetails> {
                 child: Container(
                   padding: EdgeInsets.all(8.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Last Serviced",
-                        style: textStyle('h4', AppColorSwatche.black),
-                      ),
-                      Divider(),
-                      Text(
-                        "Date: 04 Oct, 2021",
-                        style: textStyle('p1', AppColorSwatche.black),
-                      ),
-                      Text(
-                        "Product(s):",
-                        style: textStyle('p1', AppColorSwatche.black),
-                      ),
-                    ],
-                  ),
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text("Service History",
+                            style: textStyle('h4', AppColorSwatche.black)),
+                      ]),
                 ),
+              ),
+              // Service History
+              Container(
+                padding: EdgeInsets.all(8.0),
+                child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: serviceHistory.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ServiceCard(serviceHistory[index]);
+                    }),
               ),
               // Recommended Vehicle
               Card(
@@ -297,4 +315,6 @@ class _VehicleDetailsState extends State<VehicleDetails> {
           ),
         ));
   }
+
+  DateFormat(String s) {}
 }

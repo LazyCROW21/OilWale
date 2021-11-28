@@ -5,6 +5,7 @@ class Garage {
   late final String area;
   late final String garageName;
   late final String? gstNumber;
+  late final String? panCard;
   late final String? image;
   late final String ownerName;
   late final String phoneNumber;
@@ -13,7 +14,6 @@ class Garage {
   late final int totalScore;
   late final int totaCustomer;
 
-
   Garage({
     required this.garageId,
     required this.address,
@@ -21,6 +21,7 @@ class Garage {
     required this.area,
     required this.garageName,
     this.gstNumber,
+    this.panCard,
     this.image,
     required this.totaCustomer,
     required this.totalScore,
@@ -37,8 +38,9 @@ class Garage {
     this.area = json['area'];
     this.garageName = json['garageName'];
     this.gstNumber = json['gstNumber'];
+    this.panCard = json['panCard'];
     this.image = json['image'];
-    this.totaCustomer =json['totalCustomer'];
+    this.totaCustomer = json['totalCustomer'];
     this.totalScore = json['totalScore'];
     this.ownerName = json['name'];
     this.phoneNumber = json['phoneNumber'];

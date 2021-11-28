@@ -22,10 +22,14 @@ void main() {
       statusBarColor: Colors.transparent));
   runApp(MaterialApp(
     theme: ThemeData(
-      splashColor: Colors.deepOrange,
-      accentColor: Colors.deepOrange,
-      highlightColor: Colors.deepOrange,
-      accentColorBrightness: Brightness.light,
+      splashColor: AppColorSwatche.primary,
+      colorScheme: ThemeData().colorScheme.copyWith(
+            primary: AppColorSwatche.primary,
+            secondary: AppColorSwatche.primaryAccent,
+            brightness: Brightness.light,
+          ),
+      // accentColor: AppColorSwatche.primary,
+      highlightColor: AppColorSwatche.primary,
     ),
     initialRoute: '/login',
     home: LoginScreen(),

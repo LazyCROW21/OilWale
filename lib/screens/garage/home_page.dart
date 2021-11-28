@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
       garageId: 'loading ..',
       phoneNumber: 'loading ..',
       area: 'loading ..',
-      totaCustomer: 0,
+      totalCustomer: 0,
       address: 'loading ..',
       ownerName: 'loading ..',
       totalScore: 0,
@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     SharedPreferences.getInstance().then((garagePreferences) {
       setState(() {
-      garage.totaCustomer = garagePreferences.getInt("totalCustomer") ?? 0;
+      garage.totalCustomer = garagePreferences.getInt("totalCustomer") ?? 0;
       garage.totalScore = garagePreferences.getInt("totalScore") ?? 0;
       garage.referralCode = garagePreferences.getString("referralCode") ?? "Not found";
       });
@@ -135,9 +135,9 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(30.0, 40.0, 5.0, 25.0),
+                          padding: EdgeInsets.fromLTRB(30.0, 40.0, 5.0, 18.0),
                           child: Text(
-                            "${garage.totaCustomer}",
+                            "${garage.totalCustomer}",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
@@ -159,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(38.0, 40.0, 5.0, 25.0),
+                          padding: EdgeInsets.fromLTRB(38.0, 40.0, 5.0, 18.0),
                           child: Center(
                             child: Text(
                               "${garage.totalScore}",

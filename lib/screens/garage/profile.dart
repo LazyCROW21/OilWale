@@ -17,7 +17,7 @@ class _ProfileState extends State<Profile> {
       garageId: 'loading ..',
       phoneNumber: 'loading ..',
       area: 'loading ..',
-      totaCustomer: 0,
+      totalCustomer: 0,
       address: 'loading ..',
       ownerName: 'loading ..',
       totalScore: 0,
@@ -63,7 +63,7 @@ class _ProfileState extends State<Profile> {
         garage.referralCode =
             garagePreference.getString("referralCode") ?? "Not found";
         garage.totalScore = garagePreference.getInt("totalScore") ?? 0;
-        garage.totaCustomer = garagePreference.getInt("totalCustomer") ?? 0;
+        garage.totalCustomer = garagePreference.getInt("totalCustomer") ?? 0;
       }) ;} );
 
   }
@@ -90,9 +90,7 @@ class _ProfileState extends State<Profile> {
                       child: Stack(
                         fit: StackFit.expand,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8.0),
+                          Container(
                             child: Image.network(
                               e,
                               height: 600,
@@ -106,11 +104,6 @@ class _ProfileState extends State<Profile> {
                         .toList(),
                   ),
                 )
-              // child: CircleAvatar(
-              //   radius: 60.0,
-              //   backgroundImage: NetworkImage(
-              //       'https://thecinemaholic.com/wp-content/uploads/2021/03/0_iRU5IQ2KGkDyGzyw.jpg'),
-              // ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),

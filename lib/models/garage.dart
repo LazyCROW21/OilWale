@@ -12,7 +12,7 @@ class Garage {
   late String? panCard;
   late String referralCode;
   late  int totalScore;
-  late int totaCustomer;
+  late int totalCustomer;
 
   Garage({
     required this.garageId,
@@ -23,7 +23,7 @@ class Garage {
     required this.garageName,
     this.gstNumber,
     this.image,
-    required this.totaCustomer,
+    required this.totalCustomer,
     required this.totalScore,
     required this.ownerName,
     required this.phoneNumber,
@@ -40,7 +40,7 @@ class Garage {
     this.garageName = json['garageName'];
     this.gstNumber = json['gstNumber'];
     this.image = json['image'];
-    this.totaCustomer =json['totalCustomer'];
+    this.totalCustomer =json['totalCustomer'];
     this.totalScore = json['totalScore'];
     this.ownerName = json['name'];
     this.phoneNumber = json['phoneNumber'];

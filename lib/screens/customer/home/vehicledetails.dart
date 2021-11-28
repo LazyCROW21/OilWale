@@ -23,8 +23,7 @@ class _VehicleDetailsState extends State<VehicleDetails> {
   late CustomerVehicle customerVehicle;
   late CustomerVehicle backUpCustomerVehicle;
   late List<ServiceHistory> serviceHistory = [];
-  DateTime? nextServiceDate = null;
-  String? nextServiceDateStr = null;
+  String? nextServiceDateStr;
   bool isEditing = false;
 
   @override
@@ -34,11 +33,12 @@ class _VehicleDetailsState extends State<VehicleDetails> {
         .then((_result) {
       setState(() {
         if (_result.length > 0) {
-          nextServiceDate = DateTime.tryParse(_result[0].dateOfService);
+          DateTime? nextServiceDate =
+              DateTime.tryParse(_result[0].dateOfService);
           if (nextServiceDate != null) {
             // 3 months OR 1500 KM
             int cntDays = (1500 / customerVehicle.kmperday).round();
-            nextServiceDate!.add(Duration(days: cntDays));
+            nextServiceDate.add(Duration(days: cntDays));
             DateFormat formatter = DateFormat('dd MMM, y');
             nextServiceDateStr = formatter.format(nextServiceDate);
           }
@@ -315,6 +315,4 @@ class _VehicleDetailsState extends State<VehicleDetails> {
           ),
         ));
   }
-
-  DateFormat(String s) {}
 }

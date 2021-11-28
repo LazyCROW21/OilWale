@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oilwale/models/offers.dart';
+import 'package:oilwale/models/offer.dart';
 
 class OffersWidget extends StatelessWidget {
   const OffersWidget({Key? key, required this.offers}) : super(key: key);

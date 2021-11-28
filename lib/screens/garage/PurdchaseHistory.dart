@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:oilwale/models/offers.dart';
+import 'package:oilwale/models/offer.dart';
 
 class PurchaseHistory extends StatefulWidget {
   const PurchaseHistory({Key? key}) : super(key: key);

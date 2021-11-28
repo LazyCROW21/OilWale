@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:oilwale/models/offers.dart';
+import 'package:oilwale/models/offer.dart';
 import 'package:oilwale/service/offer_api.dart';
 import 'package:oilwale/widgets/OffersWidget.dart';
 import 'package:oilwale/screens/garage/globals.dart';

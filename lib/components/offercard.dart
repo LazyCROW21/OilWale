@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:oilwale/models/offers.dart';
+import 'package:oilwale/models/offer.dart';
 import 'package:oilwale/models/product.dart';
 import 'package:oilwale/theme/themedata.dart';
 import 'package:oilwale/components/herodialogroute.dart';

@@ -13,6 +13,7 @@ class OfferDetails extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         elevation: 3.0,
         centerTitle: true,
         title: Text(

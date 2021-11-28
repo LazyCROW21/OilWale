@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:oilwale/models/garage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,6 +23,13 @@ class _ProfileState extends State<Profile> {
       totalScore: 0,
       garageName: 'loading ..'
   );
+
+  final List<String> imageURLList = [
+    'https://picsum.photos/200',
+    'https://picsum.photos/200',
+    'https://picsum.photos/200',
+    'https://picsum.photos/200'
+  ];
 
   @override
   void setState(VoidCallback fn) {
@@ -68,11 +76,41 @@ class _ProfileState extends State<Profile> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Center(
-              child: CircleAvatar(
-                radius: 60.0,
-                backgroundImage: NetworkImage(
-                    'https://thecinemaholic.com/wp-content/uploads/2021/03/0_iRU5IQ2KGkDyGzyw.jpg'),
-              ),
+               child : Hero(
+                  tag: ValueKey(garage.garageId),
+                  child: CarouselSlider(
+                    options: CarouselOptions(
+                        height:
+                        MediaQuery.of(context).size.height / 3.0,
+                        enlargeCenterPage: true,
+                        enableInfiniteScroll: false),
+                    items: imageURLList
+                        .map((e) => ClipRRect(
+                      borderRadius: BorderRadius.circular(12.0),
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0),
+                            child: Image.network(
+                              e,
+                              height: 600,
+                              width: 600,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        ],
+                      ),
+                    ))
+                        .toList(),
+                  ),
+                )
+              // child: CircleAvatar(
+              //   radius: 60.0,
+              //   backgroundImage: NetworkImage(
+              //       'https://thecinemaholic.com/wp-content/uploads/2021/03/0_iRU5IQ2KGkDyGzyw.jpg'),
+              // ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 30.0, bottom: 10.0),

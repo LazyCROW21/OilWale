@@ -22,7 +22,6 @@ class _CartWidgetState extends State<CartWidget> {
       context.read<CartProvider>().decrement();
       context.read<CartProvider>().removeProduct(widget.item);
     });
-    Future.delayed(Duration(milliseconds: 100));
   }
 
   @override

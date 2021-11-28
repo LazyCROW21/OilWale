@@ -71,19 +71,19 @@ class GarageAPIManager {
         SharedPreferences preferences = await SharedPreferences.getInstance();
 
         // store in preferences
-        preferences.setString('garageId', jsonMap['garageId']);
-        preferences.setString('garageName', jsonMap['garageName']);
-        preferences.setString('address', jsonMap['address']);
-        preferences.setString('pincode', jsonMap['pincode']);
-        preferences.setString('name', jsonMap['name']);
-        preferences.setString('phoneNumber', jsonMap['phoneNumber']);
-        preferences.setString('alternateNumber', jsonMap['alternateNumber']);
-        preferences.setString('gstNumber', jsonMap['gstNumber']);
-        preferences.setString('panCard', jsonMap['panCard']);
-        preferences.setString('area', jsonMap['area']);
-        preferences.setString('referralCode', jsonMap['referralCode']);
-        preferences.setInt('totalScore', jsonMap['totalScore']);
-        preferences.setInt('totalCustomer', jsonMap['totalCustomer']);
+        preferences.setString('garageId', jsonMap['garageId'] ?? "");
+        preferences.setString('garageName', jsonMap['garageName'] ?? "");
+        preferences.setString('address', jsonMap['address'] ?? "");
+        preferences.setString('pincode', jsonMap['pincode'] ?? "");
+        preferences.setString('name', jsonMap['name']?? "");
+        preferences.setString('phoneNumber', jsonMap['phoneNumber']  ?? "");
+        preferences.setString('alternateNumber', jsonMap['alternateNumber']  ?? "");
+        preferences.setString('gstNumber', jsonMap['gstNumber']  ?? "--");
+        preferences.setString('panCard', jsonMap['panCard']  ?? "--");
+        preferences.setString('area', jsonMap['area'] ?? "");
+        preferences.setString('referralCode', jsonMap['referralCode']  ?? "");
+        preferences.setInt('totalScore', jsonMap['totalScore']  ?? 0);
+        preferences.setInt('totalCustomer', jsonMap['totalCustomer']  ?? 0);
 
         return garage;
       } else {

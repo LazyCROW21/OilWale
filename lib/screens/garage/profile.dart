@@ -1,7 +1,7 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:oilwale/models/garage.dart';
-import 'package:oilwale/service/garage_api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -9,20 +9,56 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  Garage garage = Garage(
-      totalScore: 0,
-      ownerName: 'Chunnilaal',
-      address: 'Chunilaaal ka ghar , munnilaal k ghar k saamne ,laalnagar , laalbaad, laaldesh',
-      area: 'Laalnagar',
+
+  Garage garage =Garage(
+      referralCode: '',
+      pincode: 'loading ..',
+      garageId: 'loading ..',
+      phoneNumber: 'loading ..',
+      area: 'loading ..',
       totaCustomer: 0,
-      garageName: 'Chunnilaal ka garage',
-      phoneNumber: '1234567892',
-      garageId: '',
-      referralCode: 'ASDFG986',
-      pincode: '382330',
-      panCard: 'AGXP7892F',
-      gstNumber: 'ASDFGHj120988123'
+      address: 'loading ..',
+      ownerName: 'loading ..',
+      totalScore: 0,
+      garageName: 'loading ..'
   );
+
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
+  void initState() {
+
+    super.initState();
+    SharedPreferences.getInstance().then((garagePreference) {
+      setState(()
+
+      {
+        garage.garageName =
+            garagePreference.getString("garageName") ?? " Not found";
+        garage.pincode = garagePreference.getString("pincode") ?? "Not found";
+        garage.ownerName = garagePreference.getString("name") ?? " Not found";
+        garage.alternateNumber =
+            garagePreference.getString("alternateNumber") ?? "Not found";
+        garage.phoneNumber =
+            garagePreference.getString("phoneNumber") ?? " Not found";
+        garage.garageId = garagePreference.getString("garageId") ?? "Not found";
+        garage.gstNumber =
+            garagePreference.getString("gstNumber") ?? " Not found";
+        garage.panCard = garagePreference.getString("panCard") ?? "Not found";
+        garage.area = garagePreference.getString("area") ?? " Not found";
+        garage.address = garagePreference.getString("address") ?? "Not found";
+        garage.referralCode =
+            garagePreference.getString("referralCode") ?? "Not found";
+        garage.totalScore = garagePreference.getInt("totalScore") ?? 0;
+        garage.totaCustomer = garagePreference.getInt("totalCustomer") ?? 0;
+      }) ;} );
+
+  }
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

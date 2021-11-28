@@ -31,6 +31,13 @@ class _ProductViewState extends State<ProductView> {
   bool isSearching = true;
 
   @override
+  void setState(VoidCallback fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
     ProductAPIManager.getAllProducts().then((resp) {

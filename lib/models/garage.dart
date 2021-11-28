@@ -1,18 +1,18 @@
 class Garage {
-  late final String garageId;
-  late final String address;
-  late final String? alternateNumber;
-  late final String area;
-  late final String garageName;
-  late final String? gstNumber;
-  late final String? image;
-  late final String ownerName;
-  late final String phoneNumber;
-  late final String pincode;
-  late final String? panCard;
-  late final String referralCode;
-  late final int totalScore;
-  late final int totaCustomer;
+  late  String garageId;
+  late  String address;
+  late  String? alternateNumber;
+  late  String area;
+  late  String garageName;
+  late  String? gstNumber;
+  late  String? image;
+  late  String ownerName;
+  late  String phoneNumber;
+  late String pincode;
+  late String? panCard;
+  late String referralCode;
+  late  int totalScore;
+  late int totaCustomer;
 
   Garage({
     required this.garageId,

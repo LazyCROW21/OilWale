@@ -14,8 +14,7 @@ import 'package:oilwale/screens/garage/offerdetails.dart';
 import 'package:oilwale/screens/garage/offers.dart';
 import 'package:oilwale/screens/login.dart';
 import 'package:oilwale/theme/themedata.dart';
-import 'package:oilwale/screens/garage/PurdchaseHistory.dart';
-import 'package:oilwale/screens/garage/ShowProductsbought.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

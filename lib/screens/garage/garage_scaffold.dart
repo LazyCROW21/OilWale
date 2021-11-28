@@ -5,6 +5,7 @@ import 'package:oilwale/screens/garage/products.dart';
 import 'package:oilwale/screens/garage/home_page.dart';
 import 'package:oilwale/screens/garage/profile.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class GarageScaffold extends StatefulWidget {
   const GarageScaffold({Key? key}) : super(key: key);
@@ -84,12 +85,14 @@ class _GarageScaffoldState extends State<GarageScaffold> {
         actions: _currentindex == 3
             ? [
                 PopupMenuButton(
-                    onSelected: (result) {
+                    onSelected:  (result) async {
                       if (result == 0) {
                         Navigator.pushNamed(context, '/garage_history');
                       } else if (result == 1) {
                         Navigator.pushNamed(context, '/garage_home');
                       } else if (result == 2) {
+                        SharedPreferences sp = await SharedPreferences.getInstance();
+                        sp.clear();
                         Navigator.pushNamedAndRemoveUntil(
                             context, '/login', ModalRoute.withName('/login'));
                       }

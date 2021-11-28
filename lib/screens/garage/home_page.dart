@@ -248,7 +248,7 @@ class _HomePageState extends State<HomePage> {
       Center(
         child: Container(
           padding: EdgeInsets.only(top: 20),
-          child: Text("No Recent Offers at the moment ", style: TextStyle(color: Colors.deepOrangeAccent),),
+          child: Text("No Recent Offers at the moment ", style: TextStyle(fontWeight: FontWeight.bold),),
         ),
       ) : Container(),
       Expanded(

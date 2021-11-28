@@ -40,6 +40,7 @@ class _HomePageState extends State<HomePage> {
   );
 
   bool isLoading = true;
+  bool offersEmpty = false;
 
   SpinKitRing loadingRing = SpinKitRing(
     color: AppColorSwatche.primary,
@@ -51,6 +52,10 @@ class _HomePageState extends State<HomePage> {
     if (mounted) {
       super.setState(fn);
     }
+  }
+
+  void _changed(){
+    offersEmpty = true;
   }
 
   @override
@@ -77,7 +82,7 @@ class _HomePageState extends State<HomePage> {
           }
         }
         if(_offList.isEmpty) {
-
+          _changed();
         }
         custNumber = 500;
         refferalCode = "ADF657";
@@ -239,6 +244,13 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
+      offersEmpty ?
+      Center(
+        child: Container(
+          padding: EdgeInsets.only(top: 20),
+          child: Text("No Recent Offers at the moment ", style: TextStyle(color: Colors.deepOrangeAccent),),
+        ),
+      ) : Container(),
       Expanded(
         child: isLoading
             ? loadingRing
@@ -251,6 +263,8 @@ class _HomePageState extends State<HomePage> {
               );
             }),
       ),
+
+
     ]);
   }
 }

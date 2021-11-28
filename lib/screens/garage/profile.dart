@@ -141,8 +141,7 @@ class _ProfileState extends State<Profile> {
                       style: TextStyle(
                           color: Colors.orangeAccent[700], fontSize: 10.0)),
                   Text(
-                    garage.garageName ??
-                    "-",
+                    garage.garageName ,
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                   ),
@@ -153,8 +152,7 @@ class _ProfileState extends State<Profile> {
                       style: TextStyle(
                           color: Colors.orangeAccent[700], fontSize: 10.0)),
                   Text(
-                    garage.ownerName??
-                    "-",
+                    garage.ownerName,
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                   ),
@@ -165,8 +163,7 @@ class _ProfileState extends State<Profile> {
                       style: TextStyle(
                           color: Colors.orangeAccent[700], fontSize: 10.0)),
                   Text(
-                    garage.phoneNumber ??
-                    " 8781115157 ",
+                    garage.phoneNumber,
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                   ),
@@ -190,8 +187,7 @@ class _ProfileState extends State<Profile> {
                       style: TextStyle(
                           color: Colors.orangeAccent[700], fontSize: 10.0)),
                   Text(
-                    garage.address ??
-                    "-",
+                    garage.address ,
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                   ),
@@ -202,8 +198,7 @@ class _ProfileState extends State<Profile> {
                       style: TextStyle(
                           color: Colors.orangeAccent[700], fontSize: 10.0)),
                   Text(
-                    garage.area ??
-                    "-",
+                    garage.area ,
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                   ),
@@ -214,8 +209,7 @@ class _ProfileState extends State<Profile> {
                       style: TextStyle(
                           color: Colors.orangeAccent[700], fontSize: 10.0)),
                   Text(
-                    garage.pincode ??
-                    "-",
+                    garage.pincode ,
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
                   ),

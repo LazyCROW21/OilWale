@@ -34,6 +34,7 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
   String? vehicleCompanyIdErrorText;
   String? vehicleIdInput;
   String? vehicleIdErrorText;
+  String? numberplateErrorText;
 
   Text loadingDDM = Text(
     'Loading Options..',
@@ -44,14 +45,29 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
 
   // regex [A-Z]{2}[0-9]{1,2}[A-Z0-9]{1,2}[0-9]{4}
   RegExp numberPlateRegExp = new RegExp(
-    r"^[A-Z]{2}[0-9]{1,2}[A-Z0-9]{1,2}[0-9]{4}$",
+    r"^[A-Z]{2}-[0-9]{1,2}-[A-Z0-9]{1,2}-[0-9]{4}$",
     caseSensitive: true,
     multiLine: false,
   );
 
+  FocusNode numberPlateF1 = FocusNode();
+  String numberPlateInp1 = '';
+  FocusNode numberPlateF2 = FocusNode();
+  String numberPlateInp2 = '';
+  FocusNode numberPlateF3 = FocusNode();
+  String numberPlateInp3 = '';
+  FocusNode numberPlateF4 = FocusNode();
+  String numberPlateInp4 = '';
+  // String initValueForNumberPlate = '';
+
   @override
   void initState() {
     super.initState();
+    // initValueForNumberPlate = customerVehicle.numberPlate;
+    numberPlateInp1 = customerVehicle.numberPlate.substring(0, 2);
+    numberPlateInp2 = customerVehicle.numberPlate.substring(3, 5);
+    numberPlateInp3 = customerVehicle.numberPlate.substring(6, 8);
+    numberPlateInp4 = customerVehicle.numberPlate.substring(9);
     vehicleCompanyIdInput = customerVehicle.vehicleCompanyId;
     vehicleIdInput = customerVehicle.vehicleId;
     print(vehicleIdInput);
@@ -99,6 +115,33 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
             style: textStyle('p1', AppColorSwatche.black)));
   }
 
+  void validateNumberPlate() {
+    String numplatePlate = numberPlateInp1 +
+        '-' +
+        numberPlateInp2 +
+        '-' +
+        numberPlateInp3 +
+        '-' +
+        numberPlateInp4;
+    customerVehicle.numberPlate = numplatePlate;
+    if (numplatePlate == '') {
+      errorNPinput = true;
+      setState(() {
+        numberplateErrorText = '* Required';
+      });
+    } else if (!numberPlateRegExp.hasMatch(numplatePlate)) {
+      errorNPinput = true;
+      setState(() {
+        numberplateErrorText = '* Invalid format';
+      });
+    } else {
+      setState(() {
+        numberplateErrorText = '';
+      });
+    }
+    errorNPinput = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -117,6 +160,7 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
               height: 24.0,
               color: AppColorSwatche.primary,
             ),
+            // Vehicle Company Select
             Container(
               padding: const EdgeInsets.all(8.0),
               margin: const EdgeInsets.only(bottom: 8.0),
@@ -241,44 +285,168 @@ class _EditVehicleDetailBlockState extends State<EditVehicleDetailBlock> {
                     ),
                   ),
             // Number Plate Input
-            TextFormField(
-              onChanged: (String inp) {
-                customerVehicle.numberPlate = inp;
-              },
-              autovalidateMode: AutovalidateMode.always,
-              validator: (String? inp) {
-                // check numberplateInput
-                if (inp == null || inp == '') {
-                  errorNPinput = true;
-                  return '* Required';
-                } else if (!numberPlateRegExp.hasMatch(inp)) {
-                  errorNPinput = true;
-                  return '* Invalid format';
-                }
-                errorNPinput = false;
-                return null;
-              },
-              initialValue: customerVehicle.numberPlate,
-              keyboardType: TextInputType.text,
-              textCapitalization: TextCapitalization.characters,
-              decoration: InputDecoration(
-                prefixIcon:
-                    Icon(Icons.drive_eta, color: AppColorSwatche.primary),
-                hintText: 'AB-XX-CD-XXXX',
-                labelText: 'Enter vehicle reg. number',
-                labelStyle: TextStyle(color: AppColorSwatche.primary),
-                focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.deepOrange,
-                  ),
-                ),
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.deepOrange,
-                  ),
-                ),
-                hintStyle: TextStyle(color: AppColorSwatche.primary),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: RichText(
+                textAlign: TextAlign.start,
+                text: TextSpan(children: <TextSpan>[
+                  TextSpan(
+                      text: 'Number Plate ',
+                      style: textStyle('p1', AppColorSwatche.primary)),
+                  TextSpan(
+                      text: (numberplateErrorText ?? ''),
+                      style: TextStyle(
+                          color: Colors.red, fontStyle: FontStyle.italic))
+                ]),
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Number plate input 1
+                Expanded(
+                  flex: 3,
+                  child: TextFormField(
+                      textCapitalization: TextCapitalization.characters,
+                      keyboardType: TextInputType.text,
+                      textAlign: TextAlign.center,
+                      focusNode: numberPlateF1,
+                      initialValue: numberPlateInp1,
+                      onChanged: (String newVal) {
+                        numberPlateInp1 = newVal;
+                        validateNumberPlate();
+                        if (newVal.length == 2) {
+                          numberPlateF1.unfocus();
+                          FocusScope.of(context).requestFocus(numberPlateF2);
+                        }
+                      },
+                      decoration: InputDecoration(
+                        prefixIcon: Icon(Icons.drive_eta,
+                            color: AppColorSwatche.primary),
+                        hintText: 'AB',
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.deepOrange,
+                          ),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.deepOrange,
+                          ),
+                        ),
+                        hintStyle: TextStyle(color: AppColorSwatche.primary),
+                      )),
+                ),
+                Text(" - "),
+                // Number plate input 2
+                Expanded(
+                  flex: 2,
+                  child: TextFormField(
+                      textAlign: TextAlign.center,
+                      keyboardType: TextInputType.number,
+                      focusNode: numberPlateF2,
+                      initialValue: numberPlateInp2,
+                      onChanged: (String newVal) {
+                        numberPlateInp2 = newVal;
+                        validateNumberPlate();
+                        if (newVal.length == 2) {
+                          numberPlateF2.unfocus();
+                          FocusScope.of(context).requestFocus(numberPlateF3);
+                        }
+                        if (newVal == '') {
+                          numberPlateF2.unfocus();
+                          FocusScope.of(context).requestFocus(numberPlateF1);
+                        }
+                      },
+                      decoration: InputDecoration(
+                        hintText: '12',
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.deepOrange,
+                          ),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.deepOrange,
+                          ),
+                        ),
+                        hintStyle: TextStyle(color: AppColorSwatche.primary),
+                      )),
+                ),
+                Text(" - "),
+                // Number plate input 3
+                Expanded(
+                  flex: 2,
+                  child: TextFormField(
+                      textCapitalization: TextCapitalization.characters,
+                      keyboardType: TextInputType.text,
+                      initialValue: numberPlateInp3,
+                      textAlign: TextAlign.center,
+                      focusNode: numberPlateF3,
+                      onChanged: (String newVal) {
+                        numberPlateInp3 = newVal;
+                        validateNumberPlate();
+                        if (newVal.length == 2) {
+                          numberPlateF3.unfocus();
+                          FocusScope.of(context).requestFocus(numberPlateF4);
+                        }
+                        if (newVal == '') {
+                          numberPlateF3.unfocus();
+                          FocusScope.of(context).requestFocus(numberPlateF2);
+                        }
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'CD',
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.deepOrange,
+                          ),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.deepOrange,
+                          ),
+                        ),
+                        hintStyle: TextStyle(color: AppColorSwatche.primary),
+                      )),
+                ),
+                Text(" - "),
+                // Number Plate input 4
+                Expanded(
+                  flex: 4,
+                  child: TextFormField(
+                      textAlign: TextAlign.center,
+                      keyboardType: TextInputType.number,
+                      initialValue: numberPlateInp4,
+                      focusNode: numberPlateF4,
+                      onChanged: (String newVal) {
+                        numberPlateInp4 = newVal;
+                        validateNumberPlate();
+                        if (newVal.length == 4) {
+                          numberPlateF4.unfocus();
+                        }
+                        if (newVal == '') {
+                          numberPlateF4.unfocus();
+                          FocusScope.of(context).requestFocus(numberPlateF3);
+                        }
+                      },
+                      decoration: InputDecoration(
+                        hintText: '3456',
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.deepOrange,
+                          ),
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.deepOrange,
+                          ),
+                        ),
+                        hintStyle: TextStyle(color: AppColorSwatche.primary),
+                      )),
+                )
+              ],
             ),
             SizedBox(
               height: 8.0,

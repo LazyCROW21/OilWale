@@ -18,8 +18,8 @@ import 'package:oilwale/theme/themedata.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: AppColorSwatche.white,
-      statusBarColor: AppColorSwatche.white));
+      // systemNavigationBarColor: AppColorSwatche.white,
+      statusBarColor: Colors.transparent));
   runApp(MaterialApp(
     theme: ThemeData(
       splashColor: Colors.deepOrange,

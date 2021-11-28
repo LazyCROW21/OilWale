@@ -298,6 +298,7 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                           child: TextField(
                               textCapitalization: TextCapitalization.characters,
                               keyboardType: TextInputType.text,
+                              maxLength: 2,
                               textAlign: TextAlign.center,
                               focusNode: numberPlateF1,
                               onChanged: (String newVal) {
@@ -332,6 +333,7 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                           flex: 2,
                           child: TextField(
                               textAlign: TextAlign.center,
+                              maxLength: 2,
                               keyboardType: TextInputType.number,
                               focusNode: numberPlateF2,
                               onChanged: (String newVal) {
@@ -372,6 +374,7 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                               keyboardType: TextInputType.text,
                               textAlign: TextAlign.center,
                               focusNode: numberPlateF3,
+                              maxLength: 2,
                               onChanged: (String newVal) {
                                 numberPlateInp3 = newVal;
                                 if (newVal.length == 2) {
@@ -409,6 +412,7 @@ class _AddVehicleFormState extends State<AddVehicleForm> {
                               textAlign: TextAlign.center,
                               keyboardType: TextInputType.number,
                               focusNode: numberPlateF4,
+                              maxLength: 4,
                               onChanged: (String newVal) {
                                 numberPlateInp4 = newVal;
                                 if (newVal.length == 4) {

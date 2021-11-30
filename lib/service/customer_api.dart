@@ -69,6 +69,32 @@ class CustomerAPIManager {
     return false;
   }
 
+  // returns true if phone already registered else false
+  static Future<bool> checkPhoneAvailibilty(String phone) async {
+    try {
+      String dataString = jsonEncode({'data': phone});
+      var client = http.Client();
+      String urlStr = base_url + "/checkPhoneNumber";
+      var url = Uri.parse(urlStr);
+      print(dataString);
+      var response = await client.post(url,
+          body: dataString, headers: {'Content-Type': 'application/json'});
+      if (response.statusCode == 200) {
+        var jsonString = response.body;
+        Map<String, dynamic> jsonMap = jsonDecode(jsonString);
+        print(jsonMap);
+        if (jsonMap['available'] != null && jsonMap['available'] == true) {
+          return true;
+        }
+      }
+      return false;
+    } catch (e, s) {
+      print("Exception $e");
+      print("StackTrace $s");
+    }
+    return false;
+  }
+
   // updates existing customer return true on success
   static Future<bool> updateCustomer(Customer customer) async {
     try {

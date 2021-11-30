@@ -28,6 +28,9 @@ class _ProductListViewState extends State<ProductListView> {
     color: AppColorSwatche.primary,
   );
   bool isSearching = true;
+  final GlobalKey<AnimatedListState> _productListKey =
+      GlobalKey<AnimatedListState>();
+  final Tween<double> _tween = Tween<double>(begin: 0.5, end: 1.0);
 
   @override
   void initState() {
@@ -35,7 +38,19 @@ class _ProductListViewState extends State<ProductListView> {
     ProductAPIManager.getAllProducts().then((resp) {
       setState(() {
         isSearching = false;
-        _pList = resp;
+        WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+          Future ft = Future(() {});
+          for (int i = 0; i < resp.length; i++) {
+            ft = ft.then((value) {
+              return Future.delayed(Duration(milliseconds: 100), () {
+                _pList.add(resp[i]);
+                _productListKey.currentState!
+                    .insertItem(i, duration: Duration(milliseconds: 200));
+              });
+            });
+          }
+        });
+        // _pList = resp;
       });
     }).onError((error, stackTrace) {
       print(error);
@@ -106,10 +121,13 @@ class _ProductListViewState extends State<ProductListView> {
         Expanded(
           child: isSearching
               ? loadingRing
-              : ListView.builder(
-                  itemCount: _pList.length,
-                  itemBuilder: (context, index) {
-                    return ProductTile(product: _pList[index]);
+              : AnimatedList(
+                  key: _productListKey,
+                  initialItemCount: _pList.length,
+                  itemBuilder: (context, index, animation) {
+                    return SizeTransition(
+                        sizeFactor: animation.drive(_tween),
+                        child: ProductTile(product: _pList[index]));
                   },
                 ),
         ),

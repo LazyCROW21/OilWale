@@ -26,32 +26,44 @@ class GarageTile extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8.0),
                   color: Colors.white),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(right: 12.0),
-                    // flex: 1,
+                  Expanded(
+                    flex: 1,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8.0),
-                      child: Image.network('https://picsum.photos/200'),
+                      child: Image.network(
+                        'https://picsum.photos/200',
+                        height: 80,
+                        width: 80,
+                      ),
                     ),
-                    height: 80, width: 80,
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "${garage.garageName}",
-                        style: heading,
-                      ),
-                      Text(
-                        "Area: ${garage.pincode}",
-                        style: para,
-                      ),
-                      Text(
-                        "${garage.address}",
-                        style: para,
-                      )
-                    ],
+                  SizedBox(
+                    width: 8.0,
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          "${garage.garageName}",
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: heading,
+                        ),
+                        Text(
+                          "Area: ${garage.pincode}",
+                          style: para,
+                        ),
+                        Text(
+                          "${garage.address}",
+                          overflow: TextOverflow.ellipsis,
+                          style: para,
+                        )
+                      ],
+                    ),
                   ),
                 ],
               )),

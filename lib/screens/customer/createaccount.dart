@@ -385,6 +385,20 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                       data['garageReferralCode'] = _refcode;
                       data['customerAddress'] = _addr;
                       data['password'] = _pwd;
+
+                      if (!await CustomerAPIManager.checkPhoneAvailibilty(
+                          _phone ?? '')) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                          "Phone number already registered",
+                          style: textStyle('p1', AppColorSwatche.white),
+                        )));
+                        setState(() {
+                          formSubmit = false;
+                        });
+                        return;
+                      }
+
                       bool response =
                           await CustomerAPIManager.addCustomer(data);
                       if (response) {

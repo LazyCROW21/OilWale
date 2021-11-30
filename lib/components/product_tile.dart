@@ -43,7 +43,7 @@ class ProductTile extends StatelessWidget {
                       flex: 3,
                       child: Container(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
                             Text(
                               product.name,

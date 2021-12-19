@@ -60,86 +60,105 @@ class _OffersScreenState extends State<OffersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(8),
-        child: Column(
-          children: [
-            // Upcoming Offers
-            Row(
-              children: [
-                Expanded(child: Divider()),
-                Text(
-                  'Upcoming Offers !!!',
-                  style: textStyle('h5', AppColorSwatche.black),
-                ),
-                Expanded(child: Divider())
-              ],
-            ),
-            _isLoadingUpComingOffers
-                ? Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: Center(
-                      child: SpinKitRing(
-                        color: AppColorSwatche.primary,
-                      ),
-                    ),
-                  )
-                : (_upComingOffers.length == 0
-                    ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('Nothing to show yet, keep checking'),
-                      )
-                    : Container(
-                        child: ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: _upComingOffers.length,
-                          itemBuilder: (context, index) {
-                            return OfferCard(_upComingOffers[index], 'active');
-                          },
-                        ),
-                      )),
+    return RefreshIndicator(
+      onRefresh: () async {
+        await OffersAPIManager.getUpComingCustomerSchemes().then((_upcoming) {
+          setState(() {
+            _isLoadingUpComingOffers = false;
+            _upComingOffers = _upcoming;
+          });
+        });
 
-            SizedBox(
-              height: 16,
-            ),
-            // Current Offers
-            Row(
-              children: [
-                Expanded(child: Divider()),
-                Text(
-                  'Active Offers !!!',
-                  style: textStyle('h5', AppColorSwatche.black),
-                ),
-                Expanded(child: Divider())
-              ],
-            ),
-            _isLoadingActiveOffers
-                ? Padding(
-                    padding: const EdgeInsets.only(top: 16.0),
-                    child: Center(
-                      child: SpinKitRing(
-                        color: AppColorSwatche.primary,
-                      ),
-                    ),
-                  )
-                : (_activeOffers.length == 0
-                    ? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text('Nothing to show yet, keep checking'),
-                      )
-                    : Container(
-                        child: ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: _activeOffers.length,
-                          itemBuilder: (context, index) {
-                            return OfferCard(_activeOffers[index], 'active');
-                          },
+        await OffersAPIManager.getActiveCustomerSchemes().then((_result) {
+          setState(() {
+            _isLoadingActiveOffers = false;
+            _activeOffers = _result;
+          });
+        });
+      },
+      child: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: Column(
+            children: [
+              // Upcoming Offers
+              Row(
+                children: [
+                  Expanded(child: Divider()),
+                  Text(
+                    'Upcoming Offers !!!',
+                    style: textStyle('h5', AppColorSwatche.black),
+                  ),
+                  Expanded(child: Divider())
+                ],
+              ),
+              _isLoadingUpComingOffers
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: Center(
+                        child: SpinKitRing(
+                          color: AppColorSwatche.primary,
                         ),
-                      ))
-          ],
+                      ),
+                    )
+                  : (_upComingOffers.length == 0
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('Nothing to show yet, keep checking'),
+                        )
+                      : Container(
+                          child: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: _upComingOffers.length,
+                            itemBuilder: (context, index) {
+                              return OfferCard(
+                                  _upComingOffers[index], 'active');
+                            },
+                          ),
+                        )),
+
+              SizedBox(
+                height: 16,
+              ),
+              // Current Offers
+              Row(
+                children: [
+                  Expanded(child: Divider()),
+                  Text(
+                    'Active Offers !!!',
+                    style: textStyle('h5', AppColorSwatche.black),
+                  ),
+                  Expanded(child: Divider())
+                ],
+              ),
+              _isLoadingActiveOffers
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: Center(
+                        child: SpinKitRing(
+                          color: AppColorSwatche.primary,
+                        ),
+                      ),
+                    )
+                  : (_activeOffers.length == 0
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text('Nothing to show yet, keep checking'),
+                        )
+                      : Container(
+                          child: ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: _activeOffers.length,
+                            itemBuilder: (context, index) {
+                              return OfferCard(_activeOffers[index], 'active');
+                            },
+                          ),
+                        ))
+            ],
+          ),
         ),
       ),
     );

@@ -27,16 +27,33 @@ class _GarageListViewState extends State<GarageListView> {
   SpinKitRing loadingRing = SpinKitRing(
     color: AppColorSwatche.primary,
   );
+  String searchQry = "";
   bool isSearching = true;
+  final GlobalKey<AnimatedListState> _garageListKey =
+      GlobalKey<AnimatedListState>();
+  final Tween<double> _tween = Tween<double>(begin: 0.5, end: 1.0);
 
   @override
   void initState() {
     super.initState();
-    GarageAPIManager.getAllGarages().then((_result) {
+    GarageAPIManager.getAllGarages().then((resp) {
       setState(() {
         isSearching = false;
-        _gList = _result;
+        WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+          Future ft = Future(() {});
+          for (int i = 0; i < resp.length; i++) {
+            ft = ft.then((value) {
+              return Future.delayed(Duration(milliseconds: 100), () {
+                _gList.add(resp[i]);
+                _garageListKey.currentState!
+                    .insertItem(i, duration: Duration(milliseconds: 200));
+              });
+            });
+          }
+        });
       });
+    }).onError((error, stackTrace) {
+      print(error);
     });
   }
 
@@ -45,6 +62,16 @@ class _GarageListViewState extends State<GarageListView> {
     if (mounted) {
       super.setState(fn);
     }
+  }
+
+  void _clearAllItems() {
+    for (var i = 0; i < _gList.length; i++) {
+      _garageListKey.currentState!.removeItem(0,
+          (BuildContext context, Animation<double> animation) {
+        return Container();
+      });
+    }
+    _gList.clear();
   }
 
   @override
@@ -62,18 +89,39 @@ class _GarageListViewState extends State<GarageListView> {
               setState(() {
                 isSearching = true;
               });
+              searchQry = input;
+              _clearAllItems();
               if (input == "") {
                 GarageAPIManager.getAllGarages().then((_result) {
                   setState(() {
                     isSearching = false;
-                    _gList = _result;
+                    // _pList = _result;
+                    Future ft = Future(() {});
+                    for (int i = 0; i < _result.length; i++) {
+                      ft = ft.then((value) {
+                        return Future.delayed(Duration(milliseconds: 100), () {
+                          _gList.add(_result[i]);
+                          _garageListKey.currentState!.insertItem(i,
+                              duration: Duration(milliseconds: 200));
+                        });
+                      });
+                    }
                   });
                 });
               } else {
                 GarageAPIManager.searchGarage(inpLowercase).then((_result) {
                   setState(() {
                     isSearching = false;
-                    _gList = _result;
+                    Future ft = Future(() {});
+                    for (int i = 0; i < _result.length; i++) {
+                      ft = ft.then((value) {
+                        return Future.delayed(Duration(milliseconds: 100), () {
+                          _gList.add(_result[i]);
+                          _garageListKey.currentState!.insertItem(i,
+                              duration: Duration(milliseconds: 200));
+                        });
+                      });
+                    }
                   });
                 });
               }
@@ -105,11 +153,54 @@ class _GarageListViewState extends State<GarageListView> {
           // height: (MediaQuery.of(context).size.height - 179),
           child: isSearching
               ? loadingRing
-              : ListView.builder(
-                  itemCount: _gList.length,
-                  itemBuilder: (context, index) {
-                    return GarageTile(garage: _gList[index]);
+              : RefreshIndicator(
+                  onRefresh: () {
+                    _clearAllItems();
+                    if (searchQry == "") {
+                      return GarageAPIManager.getAllGarages().then((_result) {
+                        setState(() {
+                          isSearching = false;
+                          Future ft = Future(() {});
+                          for (int i = 0; i < _result.length; i++) {
+                            ft = ft.then((value) {
+                              return Future.delayed(Duration(milliseconds: 100),
+                                  () {
+                                _gList.add(_result[i]);
+                                _garageListKey.currentState!.insertItem(i,
+                                    duration: Duration(milliseconds: 200));
+                              });
+                            });
+                          }
+                        });
+                      });
+                    } else {
+                      return GarageAPIManager.searchGarage(searchQry)
+                          .then((_result) {
+                        setState(() {
+                          isSearching = false;
+                          Future ft = Future(() {});
+                          for (int i = 0; i < _result.length; i++) {
+                            ft = ft.then((value) {
+                              return Future.delayed(Duration(milliseconds: 100),
+                                  () {
+                                _gList.add(_result[i]);
+                                _garageListKey.currentState!.insertItem(i,
+                                    duration: Duration(milliseconds: 200));
+                              });
+                            });
+                          }
+                        });
+                      });
+                    }
                   },
+                  child: AnimatedList(
+                      key: _garageListKey,
+                      initialItemCount: _gList.length,
+                      itemBuilder: (context, index, animation) {
+                        return SizeTransition(
+                            sizeFactor: animation.drive(_tween),
+                            child: GarageTile(garage: _gList[index]));
+                      }),
                 ),
         ),
       ],

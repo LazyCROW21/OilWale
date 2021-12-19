@@ -41,6 +41,8 @@ class _VehicleDetailsState extends State<VehicleDetails> {
             nextServiceDate.add(Duration(days: cntDays));
             DateFormat formatter = DateFormat('dd MMM, y');
             nextServiceDateStr = formatter.format(nextServiceDate);
+          } else {
+            nextServiceDateStr = ' - ';
           }
         }
         serviceHistory = _result;

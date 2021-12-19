@@ -27,6 +27,7 @@ class _ProductListViewState extends State<ProductListView> {
   SpinKitRing loadingRing = SpinKitRing(
     color: AppColorSwatche.primary,
   );
+  String searchQry = "";
   bool isSearching = true;
   final GlobalKey<AnimatedListState> _productListKey =
       GlobalKey<AnimatedListState>();
@@ -64,6 +65,16 @@ class _ProductListViewState extends State<ProductListView> {
     }
   }
 
+  void _clearAllItems() {
+    for (var i = 0; i < _pList.length; i++) {
+      _productListKey.currentState!.removeItem(0,
+          (BuildContext context, Animation<double> animation) {
+        return Container();
+      });
+    }
+    _pList.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -79,18 +90,39 @@ class _ProductListViewState extends State<ProductListView> {
               setState(() {
                 isSearching = true;
               });
+              searchQry = input;
+              _clearAllItems();
               if (input == "") {
                 ProductAPIManager.getAllProducts().then((_result) {
                   setState(() {
                     isSearching = false;
-                    _pList = _result;
+                    // _pList = _result;
+                    Future ft = Future(() {});
+                    for (int i = 0; i < _result.length; i++) {
+                      ft = ft.then((value) {
+                        return Future.delayed(Duration(milliseconds: 100), () {
+                          _pList.add(_result[i]);
+                          _productListKey.currentState!.insertItem(i,
+                              duration: Duration(milliseconds: 200));
+                        });
+                      });
+                    }
                   });
                 });
               } else {
                 ProductAPIManager.searchProduct(inpLowercase).then((_result) {
                   setState(() {
                     isSearching = false;
-                    _pList = _result;
+                    Future ft = Future(() {});
+                    for (int i = 0; i < _result.length; i++) {
+                      ft = ft.then((value) {
+                        return Future.delayed(Duration(milliseconds: 100), () {
+                          _pList.add(_result[i]);
+                          _productListKey.currentState!.insertItem(i,
+                              duration: Duration(milliseconds: 200));
+                        });
+                      });
+                    }
                   });
                 });
               }
@@ -121,14 +153,56 @@ class _ProductListViewState extends State<ProductListView> {
         Expanded(
           child: isSearching
               ? loadingRing
-              : AnimatedList(
-                  key: _productListKey,
-                  initialItemCount: _pList.length,
-                  itemBuilder: (context, index, animation) {
-                    return SizeTransition(
-                        sizeFactor: animation.drive(_tween),
-                        child: ProductTile(product: _pList[index]));
+              : RefreshIndicator(
+                  onRefresh: () {
+                    _clearAllItems();
+                    if (searchQry == "") {
+                      return ProductAPIManager.getAllProducts().then((_result) {
+                        setState(() {
+                          isSearching = false;
+                          // _pList = _result;
+                          Future ft = Future(() {});
+                          for (int i = 0; i < _result.length; i++) {
+                            ft = ft.then((value) {
+                              return Future.delayed(Duration(milliseconds: 100),
+                                  () {
+                                _pList.add(_result[i]);
+                                _productListKey.currentState!.insertItem(i,
+                                    duration: Duration(milliseconds: 200));
+                              });
+                            });
+                          }
+                        });
+                      });
+                    } else {
+                      return ProductAPIManager.searchProduct(searchQry)
+                          .then((_result) {
+                        setState(() {
+                          isSearching = false;
+                          Future ft = Future(() {});
+                          for (int i = 0; i < _result.length; i++) {
+                            ft = ft.then((value) {
+                              return Future.delayed(Duration(milliseconds: 100),
+                                  () {
+                                _pList.add(_result[i]);
+                                _productListKey.currentState!.insertItem(i,
+                                    duration: Duration(milliseconds: 200));
+                              });
+                            });
+                          }
+                        });
+                      });
+                    }
                   },
+                  child: AnimatedList(
+                    key: _productListKey,
+                    initialItemCount: _pList.length,
+                    itemBuilder: (context, index, animation) {
+                      return SizeTransition(
+                          sizeFactor: animation.drive(_tween),
+                          child: ProductTile(product: _pList[index]));
+                    },
+                  ),
                 ),
         ),
       ],

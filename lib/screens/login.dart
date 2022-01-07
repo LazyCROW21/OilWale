@@ -5,15 +5,12 @@ import 'package:oilwale/theme/themedata.dart';
 import 'package:oilwale/service/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum Choice { Customer, Garage }
-
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  Choice? _choice = Choice.Customer;
   String _phone = "", _pwd = "";
   bool onLogin = false;
   bool preLoginCheckComplete = false;
@@ -143,34 +140,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                   hintStyle: TextStyle(
                                       color: AppColorSwatche.primary)),
                             ),
-                            SizedBox(
-                              height: 36,
-                              child: RadioListTile<Choice>(
-                                activeColor: AppColorSwatche.primary,
-                                title: const Text('Login as Customer'),
-                                value: Choice.Customer,
-                                groupValue: _choice,
-                                onChanged: (Choice? value) {
-                                  setState(() {
-                                    _choice = value;
-                                  });
-                                },
-                              ),
-                            ),
-                            SizedBox(
-                              height: 36,
-                              child: RadioListTile<Choice>(
-                                activeColor: AppColorSwatche.primary,
-                                title: const Text('Login as Garage Dealer'),
-                                value: Choice.Garage,
-                                groupValue: _choice,
-                                onChanged: (Choice? value) {
-                                  setState(() {
-                                    _choice = value;
-                                  });
-                                },
-                              ),
-                            ),
                           ])),
                       SizedBox(
                         height: 16,
@@ -184,33 +153,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           setState(() {
                             onLogin = true;
                           });
-                          if (_choice == Choice.Customer) {
-                            if (await AuthManager.login(_phone, _pwd, true)) {
-                              Navigator.pushNamedAndRemoveUntil(
-                                  context, '/cust_home',
-                                  (Route<dynamic> route) {
-                                return false;
-                              });
-                            } else {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                      content: Text(
-                                "Invalid credentials",
-                                style: textStyle('p1', AppColorSwatche.white),
-                              )));
-                            }
-                          } else if (_choice == Choice.Garage) {
-                            if (await AuthManager.login(_phone, _pwd, false)) {
-                              Navigator.pushReplacementNamed(
-                                  context, '/garage_home');
-                            } else {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(SnackBar(
-                                      content: Text(
-                                "Invalid credentials",
-                                style: textStyle('p1', AppColorSwatche.white),
-                              )));
-                            }
+                          if (await AuthManager.login(_phone, _pwd, true)) {
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, '/cust_home', (Route<dynamic> route) {
+                              return false;
+                            });
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                              "Invalid credentials",
+                              style: textStyle('p1', AppColorSwatche.white),
+                            )));
                           }
                           setState(() {
                             onLogin = false;

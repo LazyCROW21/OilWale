@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:oilwale/screens/customer/home/offers.dart';
 import 'package:oilwale/screens/customer/home/vehicles.dart';
 import 'package:oilwale/screens/customer/home/profile.dart';
@@ -17,10 +18,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   PageController _pageController = PageController(initialPage: 0);
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+    super.initState();
+  }
 
   @override
   void setState(VoidCallback fn) {

@@ -28,7 +28,6 @@ void main() {
     initialRoute: '/login',
     home: LoginScreen(),
     routes: {
-      // '/': (context) => SplashScreen(),
       '/login': (context) => LoginScreen(),
       '/logout': (context) => LogoutScreen(),
       '/cust_home': (context) => HomeScreen(),

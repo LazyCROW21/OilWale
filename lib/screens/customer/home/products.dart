@@ -28,10 +28,9 @@ class _ProductListViewState extends State<ProductListView> {
     color: AppColorSwatche.primary,
   );
   String searchQry = "";
+  DateTime lastInp = DateTime.now();
   bool isSearching = true;
-  final GlobalKey<AnimatedListState> _productListKey =
-      GlobalKey<AnimatedListState>();
-  final Tween<double> _tween = Tween<double>(begin: 0.5, end: 1.0);
+  bool searchAgain = false;
 
   @override
   void initState() {
@@ -39,23 +38,40 @@ class _ProductListViewState extends State<ProductListView> {
     ProductAPIManager.getAllProducts().then((resp) {
       setState(() {
         isSearching = false;
-        WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-          Future ft = Future(() {});
-          for (int i = 0; i < resp.length; i++) {
-            ft = ft.then((value) {
-              return Future.delayed(Duration(milliseconds: 100), () {
-                _pList.add(resp[i]);
-                _productListKey.currentState!
-                    .insertItem(i, duration: Duration(milliseconds: 200));
-              });
-            });
-          }
-        });
-        // _pList = resp;
+        _pList = resp;
       });
     }).onError((error, stackTrace) {
       print(error);
     });
+  }
+
+  void buildProductList() {
+    String currentStr = searchQry;
+    print('At call: ' + searchQry);
+    setState(() {
+      isSearching = true;
+    });
+    if (searchQry == "") {
+      ProductAPIManager.getAllProducts().then((_result) {
+        setState(() {
+          _pList = _result;
+          isSearching = false;
+        });
+        if (currentStr != searchQry) {
+          buildProductList();
+        }
+      });
+    } else {
+      ProductAPIManager.searchProduct(searchQry).then((_result) {
+        setState(() {
+          _pList = _result;
+          isSearching = false;
+        });
+        if (currentStr != searchQry) {
+          buildProductList();
+        }
+      });
+    }
   }
 
   @override
@@ -63,16 +79,6 @@ class _ProductListViewState extends State<ProductListView> {
     if (mounted) {
       super.setState(fn);
     }
-  }
-
-  void _clearAllItems() {
-    for (var i = 0; i < _pList.length; i++) {
-      _productListKey.currentState!.removeItem(0,
-          (BuildContext context, Animation<double> animation) {
-        return Container();
-      });
-    }
-    _pList.clear();
   }
 
   @override
@@ -85,47 +91,14 @@ class _ProductListViewState extends State<ProductListView> {
           padding: EdgeInsets.all(4.0),
           child: TextFormField(
             onChanged: (String input) {
-              print("User entered: " + input);
               String inpLowercase = input.toLowerCase();
-              setState(() {
-                isSearching = true;
-              });
-              searchQry = input;
-              _clearAllItems();
-              if (input == "") {
-                ProductAPIManager.getAllProducts().then((_result) {
-                  setState(() {
-                    isSearching = false;
-                    // _pList = _result;
-                    Future ft = Future(() {});
-                    for (int i = 0; i < _result.length; i++) {
-                      ft = ft.then((value) {
-                        return Future.delayed(Duration(milliseconds: 100), () {
-                          _pList.add(_result[i]);
-                          _productListKey.currentState!.insertItem(i,
-                              duration: Duration(milliseconds: 200));
-                        });
-                      });
-                    }
-                  });
-                });
-              } else {
-                ProductAPIManager.searchProduct(inpLowercase).then((_result) {
-                  setState(() {
-                    isSearching = false;
-                    Future ft = Future(() {});
-                    for (int i = 0; i < _result.length; i++) {
-                      ft = ft.then((value) {
-                        return Future.delayed(Duration(milliseconds: 100), () {
-                          _pList.add(_result[i]);
-                          _productListKey.currentState!.insertItem(i,
-                              duration: Duration(milliseconds: 200));
-                        });
-                      });
-                    }
-                  });
-                });
+              searchQry = inpLowercase.trim();
+              print('At input: ' + searchQry);
+              if (isSearching) {
+                // searchAgain = true;
+                return;
               }
+              buildProductList();
             },
             decoration: InputDecoration(
                 isDense: true,
@@ -155,52 +128,27 @@ class _ProductListViewState extends State<ProductListView> {
               ? loadingRing
               : RefreshIndicator(
                   onRefresh: () {
-                    _clearAllItems();
                     if (searchQry == "") {
                       return ProductAPIManager.getAllProducts().then((_result) {
                         setState(() {
+                          _pList = _result;
                           isSearching = false;
-                          // _pList = _result;
-                          Future ft = Future(() {});
-                          for (int i = 0; i < _result.length; i++) {
-                            ft = ft.then((value) {
-                              return Future.delayed(Duration(milliseconds: 100),
-                                  () {
-                                _pList.add(_result[i]);
-                                _productListKey.currentState!.insertItem(i,
-                                    duration: Duration(milliseconds: 200));
-                              });
-                            });
-                          }
                         });
                       });
                     } else {
                       return ProductAPIManager.searchProduct(searchQry)
                           .then((_result) {
                         setState(() {
+                          _pList = _result;
                           isSearching = false;
-                          Future ft = Future(() {});
-                          for (int i = 0; i < _result.length; i++) {
-                            ft = ft.then((value) {
-                              return Future.delayed(Duration(milliseconds: 100),
-                                  () {
-                                _pList.add(_result[i]);
-                                _productListKey.currentState!.insertItem(i,
-                                    duration: Duration(milliseconds: 200));
-                              });
-                            });
-                          }
                         });
                       });
                     }
                   },
-                  child: AnimatedList(
-                    key: _productListKey,
-                    initialItemCount: _pList.length,
-                    itemBuilder: (context, index, animation) {
-                      return SizeTransition(
-                          sizeFactor: animation.drive(_tween),
-                          child: ProductTile(product: _pList[index]));
+                  child: ListView.builder(
+                    itemCount: _pList.length,
+                    itemBuilder: (context, index) {
+                      return ProductTile(product: _pList[index]);
                     },
                   ),
                 ),

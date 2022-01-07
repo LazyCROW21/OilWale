@@ -18,7 +18,7 @@ class ProductAPIManager {
         List jsonMap = jsonDecode(jsonString);
         jsonMap.forEach((element) {
           products.add(Product.fromJSON(element));
-          print(element);
+          // print(element);
         });
       }
       return products;
@@ -62,7 +62,7 @@ class ProductAPIManager {
         List jsonMap = jsonDecode(jsonString);
         jsonMap.forEach((element) {
           products.add(Product.fromJSON(element));
-          print(element);
+          // print(element);
         });
         return products;
       } else {

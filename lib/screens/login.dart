@@ -38,6 +38,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
     super.initState();
     SharedPreferences.getInstance().then((SharedPreferences preferences) {
       if (preferences.getString('token') != null) {

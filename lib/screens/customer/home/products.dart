@@ -93,7 +93,6 @@ class _ProductListViewState extends State<ProductListView> {
             onChanged: (String input) {
               String inpLowercase = input.toLowerCase();
               searchQry = inpLowercase.trim();
-              print('At input: ' + searchQry);
               if (isSearching) {
                 // searchAgain = true;
                 return;

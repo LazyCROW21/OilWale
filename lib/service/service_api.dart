@@ -3,17 +3,27 @@ import 'package:http/http.dart' as http;
 import 'package:oilwale/models/service.dart';
 import 'package:oilwale/service/garage_api.dart';
 import 'package:oilwale/service/product_api.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const String base_url = "https://oilwale.herokuapp.com/api";
 
 class ServiceAPIManager {
   // return TotalNoOfService (int) or -1 on error
   static Future<int> getTotalNoOfService(String customerId) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String authToken = preferences.getString('token') ?? '';
+    if (authToken == '') {
+      return -1;
+    }
+    Map<String, String> reqHeader = {
+      'Authorization': 'Bearer $authToken',
+      // 'Content-Type': 'application/json'
+    };
     try {
       var client = http.Client();
       String urlStr = base_url + "/service/customer/" + customerId;
       var url = Uri.parse(urlStr);
-      var response = await client.get(url);
+      var response = await client.get(url, headers: reqHeader);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         print(jsonString);
@@ -31,11 +41,20 @@ class ServiceAPIManager {
   static Future<List<ServiceHistory>> getServiceHistory(
       String customerVehicleId) async {
     List<ServiceHistory> serviceHistory = [];
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String authToken = preferences.getString('token') ?? '';
+    if (authToken == '') {
+      return serviceHistory;
+    }
+    Map<String, String> reqHeader = {
+      'Authorization': 'Bearer $authToken',
+      // 'Content-Type': 'application/json'
+    };
     try {
       var client = http.Client();
       String urlStr = base_url + "/service/" + customerVehicleId;
       var url = Uri.parse(urlStr);
-      var response = await client.get(url);
+      var response = await client.get(url, headers: reqHeader);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         print(jsonString);

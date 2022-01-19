@@ -29,9 +29,8 @@ class _GarageListViewState extends State<GarageListView> {
   );
   String searchQry = "";
   bool isSearching = true;
-  final GlobalKey<AnimatedListState> _garageListKey =
-      GlobalKey<AnimatedListState>();
-  final Tween<double> _tween = Tween<double>(begin: 0.5, end: 1.0);
+  DateTime lastInp = DateTime.now();
+  bool searchAgain = false;
 
   @override
   void initState() {
@@ -39,22 +38,40 @@ class _GarageListViewState extends State<GarageListView> {
     GarageAPIManager.getAllGarages().then((resp) {
       setState(() {
         isSearching = false;
-        WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-          Future ft = Future(() {});
-          for (int i = 0; i < resp.length; i++) {
-            ft = ft.then((value) {
-              return Future.delayed(Duration(milliseconds: 100), () {
-                _gList.add(resp[i]);
-                _garageListKey.currentState!
-                    .insertItem(i, duration: Duration(milliseconds: 200));
-              });
-            });
-          }
-        });
+        _gList = resp;
       });
     }).onError((error, stackTrace) {
       print(error);
     });
+  }
+
+  void buildProductList() {
+    String currentStr = searchQry;
+    print('At call: ' + searchQry);
+    setState(() {
+      isSearching = true;
+    });
+    if (searchQry == "") {
+      GarageAPIManager.getAllGarages().then((_result) {
+        setState(() {
+          _gList = _result;
+          isSearching = false;
+        });
+        if (currentStr != searchQry) {
+          buildProductList();
+        }
+      });
+    } else {
+      GarageAPIManager.searchGarage(searchQry).then((_result) {
+        setState(() {
+          _gList = _result;
+          isSearching = false;
+        });
+        if (currentStr != searchQry) {
+          buildProductList();
+        }
+      });
+    }
   }
 
   @override
@@ -62,16 +79,6 @@ class _GarageListViewState extends State<GarageListView> {
     if (mounted) {
       super.setState(fn);
     }
-  }
-
-  void _clearAllItems() {
-    for (var i = 0; i < _gList.length; i++) {
-      _garageListKey.currentState!.removeItem(0,
-          (BuildContext context, Animation<double> animation) {
-        return Container();
-      });
-    }
-    _gList.clear();
   }
 
   @override
@@ -84,47 +91,13 @@ class _GarageListViewState extends State<GarageListView> {
               borderRadius: BorderRadius.circular(24.0), color: Colors.white),
           child: TextFormField(
             onChanged: (String input) {
-              print("User entered: " + input);
               String inpLowercase = input.toLowerCase();
-              setState(() {
-                isSearching = true;
-              });
-              searchQry = input;
-              _clearAllItems();
-              if (input == "") {
-                GarageAPIManager.getAllGarages().then((_result) {
-                  setState(() {
-                    isSearching = false;
-                    // _pList = _result;
-                    Future ft = Future(() {});
-                    for (int i = 0; i < _result.length; i++) {
-                      ft = ft.then((value) {
-                        return Future.delayed(Duration(milliseconds: 100), () {
-                          _gList.add(_result[i]);
-                          _garageListKey.currentState!.insertItem(i,
-                              duration: Duration(milliseconds: 200));
-                        });
-                      });
-                    }
-                  });
-                });
-              } else {
-                GarageAPIManager.searchGarage(inpLowercase).then((_result) {
-                  setState(() {
-                    isSearching = false;
-                    Future ft = Future(() {});
-                    for (int i = 0; i < _result.length; i++) {
-                      ft = ft.then((value) {
-                        return Future.delayed(Duration(milliseconds: 100), () {
-                          _gList.add(_result[i]);
-                          _garageListKey.currentState!.insertItem(i,
-                              duration: Duration(milliseconds: 200));
-                        });
-                      });
-                    }
-                  });
-                });
+              searchQry = inpLowercase.trim();
+              if (isSearching) {
+                // searchAgain = true;
+                return;
               }
+              buildProductList();
             },
             decoration: InputDecoration(
               isDense: true,
@@ -155,22 +128,11 @@ class _GarageListViewState extends State<GarageListView> {
               ? loadingRing
               : RefreshIndicator(
                   onRefresh: () {
-                    _clearAllItems();
                     if (searchQry == "") {
                       return GarageAPIManager.getAllGarages().then((_result) {
                         setState(() {
                           isSearching = false;
-                          Future ft = Future(() {});
-                          for (int i = 0; i < _result.length; i++) {
-                            ft = ft.then((value) {
-                              return Future.delayed(Duration(milliseconds: 100),
-                                  () {
-                                _gList.add(_result[i]);
-                                _garageListKey.currentState!.insertItem(i,
-                                    duration: Duration(milliseconds: 200));
-                              });
-                            });
-                          }
+                          _gList = _result;
                         });
                       });
                     } else {
@@ -178,28 +140,15 @@ class _GarageListViewState extends State<GarageListView> {
                           .then((_result) {
                         setState(() {
                           isSearching = false;
-                          Future ft = Future(() {});
-                          for (int i = 0; i < _result.length; i++) {
-                            ft = ft.then((value) {
-                              return Future.delayed(Duration(milliseconds: 100),
-                                  () {
-                                _gList.add(_result[i]);
-                                _garageListKey.currentState!.insertItem(i,
-                                    duration: Duration(milliseconds: 200));
-                              });
-                            });
-                          }
+                          _gList = _result;
                         });
                       });
                     }
                   },
-                  child: AnimatedList(
-                      key: _garageListKey,
-                      initialItemCount: _gList.length,
-                      itemBuilder: (context, index, animation) {
-                        return SizeTransition(
-                            sizeFactor: animation.drive(_tween),
-                            child: GarageTile(garage: _gList[index]));
+                  child: ListView.builder(
+                      itemCount: _gList.length,
+                      itemBuilder: (context, index) {
+                        return GarageTile(garage: _gList[index]);
                       }),
                 ),
         ),

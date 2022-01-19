@@ -8,11 +8,20 @@ const String base_url = "https://oilwale.herokuapp.com/api";
 class GarageAPIManager {
   // return list of garages on success or false on error
   static Future<dynamic> getAllGarages() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String authToken = preferences.getString('token') ?? '';
+    if (authToken == '') {
+      return false;
+    }
+    Map<String, String> reqHeader = {
+      'Authorization': 'Bearer $authToken',
+      // 'Content-Type': 'application/json'
+    };
     try {
       var client = http.Client();
       String urlStr = base_url + "/garage/active";
       var url = Uri.parse(urlStr);
-      var response = await client.get(url);
+      var response = await client.get(url, headers: reqHeader);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         print(jsonString);
@@ -35,11 +44,20 @@ class GarageAPIManager {
 
   // return the search result from all garage list
   static Future<dynamic> searchGarage(String inp) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String authToken = preferences.getString('token') ?? '';
+    if (authToken == '') {
+      return false;
+    }
+    Map<String, String> reqHeader = {
+      'Authorization': 'Bearer $authToken',
+      // 'Content-Type': 'application/json'
+    };
     try {
       var client = http.Client();
       String urlStr = base_url + "/garage/search/" + Uri.encodeComponent(inp);
       var url = Uri.parse(urlStr);
-      var response = await client.get(url);
+      var response = await client.get(url, headers: reqHeader);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         print(jsonString);
@@ -62,11 +80,20 @@ class GarageAPIManager {
 
   // return customer object on success or false on error
   static Future<dynamic> getGarageForLogin(String garageId) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String authToken = preferences.getString('token') ?? '';
+    if (authToken == '') {
+      return false;
+    }
+    Map<String, String> reqHeader = {
+      'Authorization': 'Bearer $authToken',
+      // 'Content-Type': 'application/json'
+    };
     try {
       var client = http.Client();
       String urlStr = base_url + "/garage/" + garageId;
       var url = Uri.parse(urlStr);
-      var response = await client.get(url);
+      var response = await client.get(url, headers: reqHeader);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         Map<String, dynamic> jsonMap = jsonDecode(jsonString);
@@ -107,11 +134,20 @@ class GarageAPIManager {
 
   // return customer object on success or false on error
   static Future<dynamic> getGarageById(String garageId) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String authToken = preferences.getString('token') ?? '';
+    if (authToken == '') {
+      return null;
+    }
+    Map<String, String> reqHeader = {
+      'Authorization': 'Bearer $authToken',
+      // 'Content-Type': 'application/json'
+    };
     try {
       var client = http.Client();
       String urlStr = base_url + "/garage/" + garageId;
       var url = Uri.parse(urlStr);
-      var response = await client.get(url);
+      var response = await client.get(url, headers: reqHeader);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         Map<String, dynamic> jsonMap = jsonDecode(jsonString);

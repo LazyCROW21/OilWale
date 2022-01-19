@@ -9,17 +9,22 @@ const String base_url = "https://oilwale.herokuapp.com/api";
 class CustomerAPIManager {
   // return customer object on success or false on error
   static Future<dynamic> getCustomerDetail(String customerId) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String authToken = preferences.getString('token') ?? '';
+    if (authToken == '') {
+      return false;
+    }
+    Map<String, String> reqHeader = {'Authorization': 'Bearer $authToken'};
     try {
       var client = http.Client();
       String urlStr = base_url + "/customer/" + customerId;
       var url = Uri.parse(urlStr);
-      var response = await client.get(url);
+      var response = await client.get(url, headers: reqHeader);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         Map<String, dynamic> jsonMap = jsonDecode(jsonString);
         print(jsonMap);
         Customer customer = Customer.fromJSON(jsonMap);
-        SharedPreferences preferences = await SharedPreferences.getInstance();
 
         // store in preferences
         preferences.setString('customerId', jsonMap['customerId']);
@@ -46,14 +51,23 @@ class CustomerAPIManager {
 
   // adds customer and return bool representing success of operation
   static Future<bool> addCustomer(Map<String, dynamic> data) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String authToken = preferences.getString('token') ?? '';
+    if (authToken == '') {
+      return false;
+    }
+    Map<String, String> reqHeader = {
+      'Authorization': 'Bearer $authToken',
+      'Content-Type': 'application/json'
+    };
     try {
       String dataString = jsonEncode(data);
       var client = http.Client();
       String urlStr = base_url + "/customer";
       var url = Uri.parse(urlStr);
       print(dataString);
-      var response = await client.post(url,
-          body: dataString, headers: {'Content-Type': 'application/json'});
+      var response =
+          await client.post(url, body: dataString, headers: reqHeader);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         Map<String, dynamic> jsonMap = jsonDecode(jsonString);
@@ -71,14 +85,23 @@ class CustomerAPIManager {
 
   // returns true if phone already registered else false
   static Future<bool> checkPhoneAvailibilty(String phone) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String authToken = preferences.getString('token') ?? '';
+    if (authToken == '') {
+      return false;
+    }
+    Map<String, String> reqHeader = {
+      'Authorization': 'Bearer $authToken',
+      'Content-Type': 'application/json'
+    };
     try {
       String dataString = jsonEncode({'data': phone});
       var client = http.Client();
       String urlStr = base_url + "/checkPhoneNumber";
       var url = Uri.parse(urlStr);
       print(dataString);
-      var response = await client.post(url,
-          body: dataString, headers: {'Content-Type': 'application/json'});
+      var response =
+          await client.post(url, body: dataString, headers: reqHeader);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         Map<String, dynamic> jsonMap = jsonDecode(jsonString);
@@ -97,6 +120,15 @@ class CustomerAPIManager {
 
   // updates existing customer return true on success
   static Future<bool> updateCustomer(Customer customer) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String authToken = preferences.getString('token') ?? '';
+    if (authToken == '') {
+      return false;
+    }
+    Map<String, String> reqHeader = {
+      'Authorization': 'Bearer $authToken',
+      'Content-Type': 'application/json'
+    };
     try {
       Map<String, dynamic> data = {
         "active": true,
@@ -112,8 +144,8 @@ class CustomerAPIManager {
       String urlStr = base_url + "/customer";
       var url = Uri.parse(urlStr);
       print(dataString);
-      var response = await client.put(url,
-          body: dataString, headers: {'Content-Type': 'application/json'});
+      var response =
+          await client.put(url, body: dataString, headers: reqHeader);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         Map<String, dynamic> jsonMap = jsonDecode(jsonString);
@@ -132,12 +164,21 @@ class CustomerAPIManager {
   // returns list of customer vehicle under the specified customer
   static Future<List<CustomerVehicle>> getCustomerVehicles(
       String customerId) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String authToken = preferences.getString('token') ?? '';
+    if (authToken == '') {
+      return <CustomerVehicle>[];
+    }
+    Map<String, String> reqHeader = {
+      'Authorization': 'Bearer $authToken',
+      // 'Content-Type': 'application/json'
+    };
     List<CustomerVehicle> customerVehicles = [];
     try {
       var client = http.Client();
       String urlStr = base_url + "/customervehicle/customer/" + customerId;
       var url = Uri.parse(urlStr);
-      var response = await client.get(url);
+      var response = await client.get(url, headers: reqHeader);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         print(jsonString);
@@ -163,14 +204,23 @@ class CustomerAPIManager {
 
   // return true on successfully adding customervehicle, else false
   static Future<bool> addCustomerVehicle(Map<String, dynamic> data) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String authToken = preferences.getString('token') ?? '';
+    if (authToken == '') {
+      return false;
+    }
+    Map<String, String> reqHeader = {
+      'Authorization': 'Bearer $authToken',
+      'Content-Type': 'application/json'
+    };
     try {
       String dataString = jsonEncode(data);
       var client = http.Client();
       String urlStr = base_url + "/customervehicle";
       var url = Uri.parse(urlStr);
       print(dataString);
-      var response = await client.post(url,
-          body: dataString, headers: {'Content-Type': 'application/json'});
+      var response =
+          await client.post(url, body: dataString, headers: reqHeader);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         Map<String, dynamic> jsonMap = jsonDecode(jsonString);
@@ -189,6 +239,15 @@ class CustomerAPIManager {
   // return on successfully editing customervehicle, else false
   static Future<bool> updateCustomerVehicle(
       CustomerVehicle customerVehicle) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String authToken = preferences.getString('token') ?? '';
+    if (authToken == '') {
+      return false;
+    }
+    Map<String, String> reqHeader = {
+      'Authorization': 'Bearer $authToken',
+      'Content-Type': 'application/json'
+    };
     try {
       Map<String, dynamic> data = {
         "active": true,
@@ -206,8 +265,8 @@ class CustomerAPIManager {
       String urlStr = base_url + "/customervehicle";
       var url = Uri.parse(urlStr);
       print(dataString);
-      var response = await client.put(url,
-          body: dataString, headers: {'Content-Type': 'application/json'});
+      var response =
+          await client.put(url, body: dataString, headers: reqHeader);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         Map<String, dynamic> jsonMap = jsonDecode(jsonString);
@@ -225,12 +284,21 @@ class CustomerAPIManager {
 
   // returns true/false upon trying to delete customervehicle under the specified customer
   static Future<bool> deleteCustomerVehicle(String customerVehicleId) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String authToken = preferences.getString('token') ?? '';
+    if (authToken == '') {
+      return false;
+    }
+    Map<String, String> reqHeader = {
+      'Authorization': 'Bearer $authToken',
+      // 'Content-Type': 'application/json'
+    };
     try {
       var client = http.Client();
       String urlStr =
           base_url + "/customervehicle/vehicle/" + customerVehicleId;
       var url = Uri.parse(urlStr);
-      var response = await client.delete(url);
+      var response = await client.delete(url, headers: reqHeader);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         print(jsonString);

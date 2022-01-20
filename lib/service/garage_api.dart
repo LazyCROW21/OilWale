@@ -8,10 +8,12 @@ const String base_url = "https://oilwale.herokuapp.com/api";
 class GarageAPIManager {
   // return list of garages on success or false on error
   static Future<dynamic> getAllGarages() async {
+    List<Garage> garages = [];
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String authToken = preferences.getString('token') ?? '';
     if (authToken == '') {
-      return false;
+      print('Token not found');
+      return garages;
     }
     Map<String, String> reqHeader = {
       'Authorization': 'Bearer $authToken',
@@ -26,20 +28,19 @@ class GarageAPIManager {
         var jsonString = response.body;
         print(jsonString);
         List jsonMap = jsonDecode(jsonString);
-        List<Garage> garages = [];
         jsonMap.forEach((element) {
           garages.add(Garage.fromJSON(element));
           print(element);
         });
         return garages;
       } else {
-        return false;
+        return garages;
       }
     } catch (e, s) {
       print("Exception $e");
       print("StackTrace $s");
     }
-    return false;
+    return garages;
   }
 
   // return the search result from all garage list
@@ -99,7 +100,7 @@ class GarageAPIManager {
         Map<String, dynamic> jsonMap = jsonDecode(jsonString);
         print(jsonMap);
         Garage garage = Garage.fromJSON(jsonMap);
-        SharedPreferences preferences = await SharedPreferences.getInstance();
+        // SharedPreferences preferences = await SharedPreferences.getInstance();
 
         // store in preferences
         try {

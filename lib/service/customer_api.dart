@@ -12,12 +12,16 @@ class CustomerAPIManager {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     String authToken = preferences.getString('token') ?? '';
     if (authToken == '') {
+      print('Auth Token not found');
+      print(authToken);
       return false;
     }
     Map<String, String> reqHeader = {'Authorization': 'Bearer $authToken'};
+    // print(reqHeader);
     try {
       var client = http.Client();
       String urlStr = base_url + "/customer/" + customerId;
+      print(urlStr);
       var url = Uri.parse(urlStr);
       var response = await client.get(url, headers: reqHeader);
       if (response.statusCode == 200) {
@@ -40,6 +44,7 @@ class CustomerAPIManager {
 
         return customer;
       } else {
+        print('ASDASDASD');
         return false;
       }
     } catch (e, s) {

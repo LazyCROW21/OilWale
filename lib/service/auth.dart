@@ -27,11 +27,11 @@ class AuthManager {
           var jsonString = response.body;
           Map<String, dynamic> jsonMap = jsonDecode(jsonString);
           print(jsonMap);
-          Customer customerdetail =
-              await CustomerAPIManager.getCustomerDetail(jsonMap['id']);
           SharedPreferences preferences = await SharedPreferences.getInstance();
           preferences.setString('token', jsonMap['token']);
           preferences.setString('role', 'customer');
+          Customer customerdetail =
+              await CustomerAPIManager.getCustomerDetail(jsonMap['id']);
           print(customerdetail);
           return true;
         } else {

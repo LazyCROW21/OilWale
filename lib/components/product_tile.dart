@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oilwale/models/product.dart';
-import 'package:oilwale/theme/themedata.dart';
+import 'package:oilmart/models/product.dart';
+import 'package:oilmart/theme/themedata.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;

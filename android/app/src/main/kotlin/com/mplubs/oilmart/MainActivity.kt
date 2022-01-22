@@ -1,4 +1,4 @@
-package com.mplubs.oilwale
+package com.mplubs.oilmart
 
 import io.flutter.embedding.android.FlutterActivity
 

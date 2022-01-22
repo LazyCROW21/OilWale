@@ -2,9 +2,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
-import 'package:oilwale/components/product_tile.dart';
-import 'package:oilwale/models/offer.dart';
-import 'package:oilwale/theme/themedata.dart';
+import 'package:oilmart/components/product_tile.dart';
+import 'package:oilmart/models/offer.dart';
+import 'package:oilmart/theme/themedata.dart';
 
 class CustomerOfferDetails extends StatefulWidget {
   @override

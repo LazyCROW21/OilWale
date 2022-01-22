@@ -1,5 +1,5 @@
-import 'package:oilwale/models/garage.dart';
-import 'package:oilwale/models/product.dart';
+import 'package:oilmart/models/garage.dart';
+import 'package:oilmart/models/product.dart';
 
 class ServiceHistory {
   late final String serviceId;

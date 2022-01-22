@@ -2,15 +2,15 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import 'package:oilwale/components/editvehicledetail.dart';
-import 'package:oilwale/components/product_tile.dart';
-import 'package:oilwale/components/servicecard.dart';
-import 'package:oilwale/models/customervehicle.dart';
-import 'package:oilwale/models/product.dart';
-import 'package:oilwale/models/service.dart';
-import 'package:oilwale/service/customer_api.dart';
-import 'package:oilwale/service/service_api.dart';
-import 'package:oilwale/theme/themedata.dart';
+import 'package:oilmart/components/editvehicledetail.dart';
+import 'package:oilmart/components/product_tile.dart';
+import 'package:oilmart/components/servicecard.dart';
+import 'package:oilmart/models/customervehicle.dart';
+import 'package:oilmart/models/product.dart';
+import 'package:oilmart/models/service.dart';
+import 'package:oilmart/service/customer_api.dart';
+import 'package:oilmart/service/service_api.dart';
+import 'package:oilmart/theme/themedata.dart';
 
 class VehicleDetails extends StatefulWidget {
   final CustomerVehicle customerVehicle;

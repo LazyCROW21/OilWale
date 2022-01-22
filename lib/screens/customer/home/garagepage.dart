@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/rendering.dart';
-import 'package:oilwale/models/garage.dart';
-import 'package:oilwale/theme/themedata.dart';
+import 'package:oilmart/models/garage.dart';
+import 'package:oilmart/theme/themedata.dart';
 
 class GaragePage extends StatefulWidget {
   @override

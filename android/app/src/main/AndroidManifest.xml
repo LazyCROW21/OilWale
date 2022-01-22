@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mplubs.oilwale">
+    package="com.mplubs.oilmart">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="Oilwale"
+        android:label="OilMart"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

@@ -1,10 +1,10 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:oilwale/models/customer.dart';
-import 'package:oilwale/service/customer_api.dart';
-import 'package:oilwale/service/service_api.dart';
-import 'package:oilwale/theme/themedata.dart';
+import 'package:oilmart/models/customer.dart';
+import 'package:oilmart/service/customer_api.dart';
+import 'package:oilmart/service/service_api.dart';
+import 'package:oilmart/theme/themedata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {

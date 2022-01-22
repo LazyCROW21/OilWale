@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:oilwale/components/vehiclecard.dart';
-import 'package:oilwale/models/customervehicle.dart';
-import 'package:oilwale/screens/customer/home/vehicledetails.dart';
-import 'package:oilwale/service/customer_api.dart';
-import 'package:oilwale/theme/themedata.dart';
+import 'package:oilmart/components/vehiclecard.dart';
+import 'package:oilmart/models/customervehicle.dart';
+import 'package:oilmart/screens/customer/home/vehicledetails.dart';
+import 'package:oilmart/service/customer_api.dart';
+import 'package:oilmart/theme/themedata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class VehiclesScreen extends StatefulWidget {

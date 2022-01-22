@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:oilwale/models/garage.dart';
+import 'package:oilmart/models/garage.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

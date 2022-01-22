@@ -1,4 +1,4 @@
-import 'package:oilwale/models/product.dart';
+import 'package:oilmart/models/product.dart';
 
 class Offer {
   // late bool status;

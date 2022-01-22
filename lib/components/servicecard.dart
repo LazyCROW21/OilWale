@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:oilwale/components/garage_tile.dart';
-import 'package:oilwale/models/product.dart';
-import 'package:oilwale/models/service.dart';
-import 'package:oilwale/theme/themedata.dart';
-import 'package:oilwale/components/herodialogroute.dart';
+import 'package:oilmart/components/garage_tile.dart';
+import 'package:oilmart/models/product.dart';
+import 'package:oilmart/models/service.dart';
+import 'package:oilmart/theme/themedata.dart';
+import 'package:oilmart/components/herodialogroute.dart';
 
 class _ServiceProductTile extends StatelessWidget {
   final Product product;

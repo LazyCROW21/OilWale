@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:oilwale/models/product.dart';
-import 'package:oilwale/models/vehicle.dart';
-import 'package:oilwale/service/vehicle_api.dart';
-import 'package:oilwale/theme/themedata.dart';
+import 'package:oilmart/models/product.dart';
+import 'package:oilmart/models/vehicle.dart';
+import 'package:oilmart/service/vehicle_api.dart';
+import 'package:oilmart/theme/themedata.dart';
 
 class ProductPage extends StatefulWidget {
   @override

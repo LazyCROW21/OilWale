@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:oilwale/theme/themedata.dart';
-import 'package:oilwale/service/auth.dart';
+import 'package:oilmart/theme/themedata.dart';
+import 'package:oilmart/service/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {

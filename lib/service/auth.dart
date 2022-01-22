@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:oilwale/models/customer.dart';
-import 'package:oilwale/service/customer_api.dart';
+import 'package:oilmart/models/customer.dart';
+import 'package:oilmart/service/customer_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String base_url = "https://oilwale.herokuapp.com/api";

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:oilwale/screens/customer/createaccount.dart';
-import 'package:oilwale/screens/customer/home.dart';
-import 'package:oilwale/screens/customer/home/garagepage.dart';
-import 'package:oilwale/screens/customer/home/offerdetails.dart';
-import 'package:oilwale/screens/customer/home/productpage.dart';
-import 'package:oilwale/components/addvehicleform.dart';
-import 'package:oilwale/screens/login.dart';
-import 'package:oilwale/screens/logout.dart';
-import 'package:oilwale/theme/themedata.dart';
+import 'package:oilmart/screens/customer/createaccount.dart';
+import 'package:oilmart/screens/customer/home.dart';
+import 'package:oilmart/screens/customer/home/garagepage.dart';
+import 'package:oilmart/screens/customer/home/offerdetails.dart';
+import 'package:oilmart/screens/customer/home/productpage.dart';
+import 'package:oilmart/components/addvehicleform.dart';
+import 'package:oilmart/screens/login.dart';
+import 'package:oilmart/screens/logout.dart';
+import 'package:oilmart/theme/themedata.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

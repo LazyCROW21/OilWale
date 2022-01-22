@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:oilwale/components/garage_tile.dart';
-import 'package:oilwale/models/garage.dart';
-import 'package:oilwale/service/garage_api.dart';
-import 'package:oilwale/theme/themedata.dart';
+import 'package:oilmart/components/garage_tile.dart';
+import 'package:oilmart/models/garage.dart';
+import 'package:oilmart/service/garage_api.dart';
+import 'package:oilmart/theme/themedata.dart';
 
 class GarageScreen extends StatelessWidget {
   @override

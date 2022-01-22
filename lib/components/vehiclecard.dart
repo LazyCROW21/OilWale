@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oilwale/models/customervehicle.dart';
-import 'package:oilwale/theme/themedata.dart';
+import 'package:oilmart/models/customervehicle.dart';
+import 'package:oilmart/theme/themedata.dart';
 
 class VehicleCard extends StatefulWidget {
   final CustomerVehicle customerVehicle;

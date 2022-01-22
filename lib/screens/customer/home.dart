@@ -1,12 +1,12 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:oilwale/screens/customer/home/offers.dart';
-import 'package:oilwale/screens/customer/home/vehicles.dart';
-import 'package:oilwale/screens/customer/home/profile.dart';
-import 'package:oilwale/screens/customer/home/garages.dart';
-import 'package:oilwale/screens/customer/home/products.dart';
-import 'package:oilwale/theme/themedata.dart';
+import 'package:oilmart/screens/customer/home/offers.dart';
+import 'package:oilmart/screens/customer/home/vehicles.dart';
+import 'package:oilmart/screens/customer/home/profile.dart';
+import 'package:oilmart/screens/customer/home/garages.dart';
+import 'package:oilmart/screens/customer/home/products.dart';
+import 'package:oilmart/theme/themedata.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: AppColorSwatche.white,
         centerTitle: true,
         title: Text(
-          "Oilwale",
+          "OilMart",
           style: TextStyle(
               color: AppColorSwatche.primaryAccent,
               letterSpacing: 2,

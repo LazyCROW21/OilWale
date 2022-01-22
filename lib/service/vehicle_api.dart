@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:oilwale/models/vehicle.dart';
-import 'package:oilwale/models/vehiclecompany.dart';
+import 'package:oilmart/models/vehicle.dart';
+import 'package:oilmart/models/vehiclecompany.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

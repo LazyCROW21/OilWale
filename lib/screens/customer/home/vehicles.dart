@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:oilmart/components/vehiclecard.dart';
+import 'package:oilmart/main.dart';
 import 'package:oilmart/models/customervehicle.dart';
 import 'package:oilmart/screens/customer/home/vehicledetails.dart';
 import 'package:oilmart/service/customer_api.dart';
+// import 'package:oilmart/service/notfication_api.dart';
 import 'package:oilmart/theme/themedata.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,6 +44,24 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
     if (mounted) {
       super.setState(fn);
     }
+  }
+
+  void showNotification() async {
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        'oilmart', 'oilmart', 'channel for oilmart notification',
+        icon: 'notification_icon');
+
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails(
+        sound: 'a_long_cold_sting.wav',
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true);
+    var platformChannelSpecifics = NotificationDetails(
+        android: androidPlatformChannelSpecifics,
+        iOS: iOSPlatformChannelSpecifics);
+
+    await flutterLocalNotificationsPlugin.show(
+        0, 'OilMart', 'Buy Oil from us', platformChannelSpecifics);
   }
 
   Widget vehicleListLoader() {
@@ -160,6 +181,29 @@ class _VehiclesScreenState extends State<VehiclesScreen> {
           children: [
             Expanded(
               child: vehicleListLoader(),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all(AppColorSwatche.primary),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                    ))),
+                onPressed: () async {
+                  showNotification();
+                },
+                child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: Text(
+                        "show notification",
+                        style: textStyle('p1', AppColorSwatche.white),
+                      ),
+                    )),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

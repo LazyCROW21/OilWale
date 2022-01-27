@@ -56,13 +56,13 @@ class CustomerAPIManager {
 
   // adds customer and return bool representing success of operation
   static Future<bool> addCustomer(Map<String, dynamic> data) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String authToken = preferences.getString('token') ?? '';
-    if (authToken == '') {
-      return false;
-    }
+    // SharedPreferences preferences = await SharedPreferences.getInstance();
+    // String authToken = preferences.getString('token') ?? '';
+    // if (authToken == '') {
+    //   return false;
+    // }
     Map<String, String> reqHeader = {
-      'Authorization': 'Bearer $authToken',
+      // 'Authorization': 'Bearer $authToken',
       'Content-Type': 'application/json'
     };
     try {
@@ -90,13 +90,13 @@ class CustomerAPIManager {
 
   // returns true if phone already registered else false
   static Future<bool> checkPhoneAvailibilty(String phone) async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String authToken = preferences.getString('token') ?? '';
-    if (authToken == '') {
-      return false;
-    }
+    // SharedPreferences preferences = await SharedPreferences.getInstance();
+    // String authToken = preferences.getString('token') ?? '';
+    // if (authToken == '') {
+    //   return false;
+    // }
     Map<String, String> reqHeader = {
-      'Authorization': 'Bearer $authToken',
+      // 'Authorization': 'Bearer $authToken',
       'Content-Type': 'application/json'
     };
     try {
